@@ -112,29 +112,34 @@ export function ActivityPage({ profile, onNotify }: ActivityPageProps) {
         icon={Activity}
       />
 
-      <section className="relative mb-4 overflow-hidden rounded-[26px] border border-plum-100 bg-gradient-to-br from-plum-50 via-white to-amber-50 p-4 shadow-sm shadow-plum-900/5">
+      <section className="relative mb-4 overflow-hidden rounded-[30px] border border-plum-100 bg-gradient-to-br from-plum-50 via-white to-amber-50 shadow-sm shadow-plum-900/5">
         <div className="pointer-events-none absolute -left-8 -top-10 h-28 w-28 rounded-full bg-plum-200/40 blur-2xl" />
-        <div className="relative z-10 max-w-[64%]">
-          <p className="text-[10px] font-black tracking-[0.18em] text-plum-600">A GENTLE START</p>
-          <p className="mt-1 text-lg font-black leading-snug text-plum-950">
-            今天也要
-            <br />
-            好好照顧自己
-          </p>
-          <p className="mt-1.5 text-[11px] leading-relaxed text-slate-500">
-            每一次紀錄，都是對自己的溫柔。
-          </p>
+        <div className="pointer-events-none absolute right-0 top-1/2 h-44 w-44 -translate-y-1/2 rounded-full bg-plum-100/60 blur-2xl" />
+
+        <div className="relative flex items-center gap-1 p-4 pr-2">
+          <div className="min-w-0 flex-1 py-1">
+            <p className="text-[11px] font-black tracking-[0.18em] text-plum-600">
+              A GENTLE START
+            </p>
+            <p className="mt-2 text-[26px] font-black leading-[1.22] tracking-tight text-plum-950">
+              今天也要
+              <br />
+              好好照顧自己
+            </p>
+            <p className="mt-2 text-xs leading-relaxed text-slate-500">
+              每一次紀錄，都是對自己的溫柔。
+            </p>
+          </div>
+
+          <div className="relative h-[190px] w-[42%] shrink-0">
+            <img
+              src={heroRunner}
+              alt=""
+              aria-hidden="true"
+              className="h-full w-full object-contain object-bottom mix-blend-multiply"
+            />
+          </div>
         </div>
-        <img
-          src={heroRunner}
-          alt=""
-          aria-hidden="true"
-          style={{
-            maskImage: 'linear-gradient(to bottom, black 70%, transparent 100%)',
-            WebkitMaskImage: 'linear-gradient(to bottom, black 70%, transparent 100%)',
-          }}
-          className="pointer-events-none absolute -right-6 bottom-0 h-[145%] w-36 object-cover object-[50%_14%] mix-blend-multiply"
-        />
       </section>
 
       <section className="relative overflow-hidden rounded-[28px] border border-amber-100 bg-white p-5 shadow-sm shadow-amber-900/5">
