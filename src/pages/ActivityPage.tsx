@@ -17,6 +17,7 @@ import { getStepMetrics } from '../lib/health';
 import { dateKey, loadSteps, saveSteps } from '../lib/storage';
 import { PageHeader } from '../components/PageHeader';
 import { SectionHeading } from '../components/SectionHeading';
+import heroRunner from '../assets/hero-runner.jpg';
 
 interface ActivityPageProps {
   profile: Profile;
@@ -111,11 +112,36 @@ export function ActivityPage({ profile, onNotify }: ActivityPageProps) {
         icon={Activity}
       />
 
+      <section className="relative mb-4 overflow-hidden rounded-[26px] border border-plum-100 bg-gradient-to-br from-plum-50 via-white to-amber-50 p-4 shadow-sm shadow-plum-900/5">
+        <div className="pointer-events-none absolute -left-8 -top-10 h-28 w-28 rounded-full bg-plum-200/40 blur-2xl" />
+        <div className="relative z-10 max-w-[64%]">
+          <p className="text-[10px] font-black tracking-[0.18em] text-plum-600">A GENTLE START</p>
+          <p className="mt-1 text-lg font-black leading-snug text-plum-950">
+            今天也要
+            <br />
+            好好照顧自己
+          </p>
+          <p className="mt-1.5 text-[11px] leading-relaxed text-slate-500">
+            每一次紀錄，都是對自己的溫柔。
+          </p>
+        </div>
+        <img
+          src={heroRunner}
+          alt=""
+          aria-hidden="true"
+          style={{
+            maskImage: 'linear-gradient(to bottom, black 70%, transparent 100%)',
+            WebkitMaskImage: 'linear-gradient(to bottom, black 70%, transparent 100%)',
+          }}
+          className="pointer-events-none absolute -right-6 bottom-0 h-[145%] w-36 object-cover object-[50%_14%] mix-blend-multiply"
+        />
+      </section>
+
       <section className="relative overflow-hidden rounded-[28px] border border-amber-100 bg-white p-5 shadow-sm shadow-amber-900/5">
         <div className="pointer-events-none absolute -right-12 -top-12 h-36 w-36 rounded-full bg-amber-100/70" />
         <div className="relative flex items-center justify-between">
           <div className="flex items-center gap-2">
-            <span className="rounded-full bg-blue-50 px-3 py-1 text-xs font-black text-blue-900">
+            <span className="rounded-full bg-plum-50 px-3 py-1 text-xs font-black text-plum-900">
               今日步數
             </span>
             <span className="text-[11px] font-semibold text-slate-400">
@@ -151,7 +177,7 @@ export function ActivityPage({ profile, onNotify }: ActivityPageProps) {
                 cy="80"
                 r={radius}
                 fill="none"
-                stroke="#1e3a8a"
+                stroke="#472a5d"
                 strokeWidth="13"
                 strokeLinecap="round"
                 strokeDasharray={circumference}
@@ -161,7 +187,7 @@ export function ActivityPage({ profile, onNotify }: ActivityPageProps) {
             </svg>
             <div className="absolute inset-0 flex flex-col items-center justify-center">
               <Activity className="mb-1 h-6 w-6 animate-pulse text-amber-500" />
-              <p className="text-[34px] font-black leading-none tracking-tight text-blue-900 tabular-nums">
+              <p className="text-[34px] font-black leading-none tracking-tight text-plum-900 tabular-nums">
                 {steps.toLocaleString()}
               </p>
               <p className="mt-1 text-xs font-bold text-slate-400">步</p>
@@ -198,12 +224,12 @@ export function ActivityPage({ profile, onNotify }: ActivityPageProps) {
               step={500}
               value={goalDraft}
               onChange={(event) => setGoalDraft(event.target.value)}
-              className="h-11 min-w-0 flex-1 rounded-xl border border-amber-200 bg-white px-3 text-base font-bold text-slate-800 focus:border-blue-900 focus:outline-none"
+              className="h-11 min-w-0 flex-1 rounded-xl border border-amber-200 bg-white px-3 text-base font-bold text-slate-800 focus:border-plum-900 focus:outline-none"
             />
             <button
               type="button"
               onClick={handleSaveGoal}
-              className="flex h-11 items-center gap-1 rounded-xl bg-blue-900 px-4 text-sm font-black text-white transition hover:bg-blue-800 active:scale-[0.98]"
+              className="flex h-11 items-center gap-1 rounded-xl bg-plum-900 px-4 text-sm font-black text-white transition hover:bg-plum-800 active:scale-[0.98]"
             >
               <Save className="h-4 w-4" />
               儲存
@@ -234,8 +260,8 @@ export function ActivityPage({ profile, onNotify }: ActivityPageProps) {
           label="活動時間"
           value={metrics.activeMinutes.toLocaleString()}
           unit="分鐘"
-          accent="text-blue-700"
-          soft="bg-blue-50"
+          accent="text-plum-700"
+          soft="bg-plum-50"
         />
       </div>
 
@@ -248,7 +274,7 @@ export function ActivityPage({ profile, onNotify }: ActivityPageProps) {
               key={amount}
               type="button"
               onClick={() => addSteps(amount)}
-              className="flex h-12 items-center justify-center gap-1 rounded-2xl border border-blue-100 bg-blue-50 text-sm font-black text-blue-900 transition hover:bg-blue-100 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-blue-900 active:scale-[0.97]"
+              className="flex h-12 items-center justify-center gap-1 rounded-2xl border border-plum-100 bg-plum-50 text-sm font-black text-plum-900 transition hover:bg-plum-100 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-plum-900 active:scale-[0.97]"
             >
               <Plus className="h-4 w-4" strokeWidth={2.8} />
               {amount.toLocaleString()}
@@ -272,7 +298,7 @@ export function ActivityPage({ profile, onNotify }: ActivityPageProps) {
             onKeyDown={(event) => {
               if (event.key === 'Enter') handleAddCustom();
             }}
-            className="h-12 min-w-0 flex-1 rounded-2xl border border-slate-200 bg-slate-50 px-4 text-base font-semibold text-slate-800 placeholder:text-sm placeholder:font-medium placeholder:text-slate-400 focus:border-blue-900 focus:bg-white focus:outline-none"
+            className="h-12 min-w-0 flex-1 rounded-2xl border border-slate-200 bg-slate-50 px-4 text-base font-semibold text-slate-800 placeholder:text-sm placeholder:font-medium placeholder:text-slate-400 focus:border-plum-900 focus:bg-white focus:outline-none"
           />
           <button
             type="button"
@@ -314,21 +340,21 @@ export function ActivityPage({ profile, onNotify }: ActivityPageProps) {
                 <div key={day.key} className="flex h-full flex-1 flex-col items-center justify-end">
                   <span
                     className={`mb-1 text-[10px] font-bold tabular-nums ${
-                      day.isToday ? 'text-blue-900' : 'text-slate-400'
+                      day.isToday ? 'text-plum-900' : 'text-slate-400'
                     }`}
                   >
                     {day.value > 0 ? `${Math.round(day.value / 100) / 10}k` : '–'}
                   </span>
                   <div
                     className={`w-full max-w-8 rounded-t-lg transition-all duration-500 ${
-                      day.isToday ? 'bg-blue-900' : 'bg-blue-200'
+                      day.isToday ? 'bg-plum-900' : 'bg-plum-200'
                     }`}
                     style={{ height: `${height}%` }}
                     title={`${day.label}：${day.value.toLocaleString()} 步`}
                   />
                   <span
                     className={`mt-1.5 text-xs font-bold ${
-                      day.isToday ? 'text-blue-900' : 'text-slate-400'
+                      day.isToday ? 'text-plum-900' : 'text-slate-400'
                     }`}
                   >
                     {day.isToday ? '今天' : day.label}

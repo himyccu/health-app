@@ -1,4 +1,6 @@
-import { useCallback, useEffect, useRef, useState } from 'react';
+import { lazy, Suspense, useCallback, useEffect, useRef, useState } from 'react';
+import { LoaderCircle } from 'lucide-react';
+import heroRunner from './assets/hero-runner.jpg';
 import type { Profile, TabId } from './types';
 import {
   DEFAULT_PROFILE,
@@ -14,8 +16,11 @@ import { DisclaimerModal } from './components/DisclaimerModal';
 import { Toast } from './components/Toast';
 import { ActivityPage } from './pages/ActivityPage';
 import { HealthPage } from './pages/HealthPage';
-import { NutritionPage } from './pages/NutritionPage';
 import { SettingsPage } from './pages/SettingsPage';
+
+const NutritionPage = lazy(() =>
+  import('./pages/NutritionPage').then((module) => ({ default: module.NutritionPage })),
+);
 
 export default function App() {
   const [bootstrap] = useState(() => ({
@@ -82,8 +87,17 @@ export default function App() {
   });
 
   return (
-    <div className="min-h-[100dvh] bg-gradient-to-br from-amber-100 via-amber-50 to-blue-100 md:flex md:items-center md:justify-center md:p-6">
-      <div className="relative mx-auto flex h-[100dvh] w-full max-w-md flex-col overflow-hidden bg-amber-50 text-slate-900 shadow-2xl shadow-slate-900/20 md:h-[calc(100dvh-3rem)] md:max-h-[920px] md:rounded-[2.75rem] md:ring-1 md:ring-slate-900/10">
+    <div className="relative min-h-[100dvh] overflow-hidden bg-gradient-to-br from-plum-100 via-[#fbf7ff] to-amber-50 md:flex md:items-center md:justify-center md:p-6">
+      <div className="pointer-events-none absolute -left-32 top-0 h-96 w-96 rounded-full bg-plum-200/45 blur-3xl" />
+      <div className="pointer-events-none absolute -bottom-40 -right-24 h-[28rem] w-[28rem] rounded-full bg-amber-200/30 blur-3xl" />
+      <img
+        src={heroRunner}
+        alt=""
+        aria-hidden="true"
+        className="pointer-events-none absolute -right-24 top-1/2 hidden h-[74vh] w-auto -translate-y-1/2 opacity-[0.08] mix-blend-multiply lg:block"
+      />
+
+      <div className="relative mx-auto flex h-[100dvh] w-full max-w-md flex-col overflow-hidden bg-[#fcfaff] text-slate-900 shadow-2xl shadow-plum-950/20 md:h-[calc(100dvh-3rem)] md:max-h-[920px] md:rounded-[2.75rem] md:ring-1 md:ring-plum-950/10">
         <AppHeader dateLabel={dateLabel} onOpenSettings={() => setActiveTab('settings')} />
 
         <main
@@ -94,7 +108,11 @@ export default function App() {
           {activeTab === 'health' && (
             <HealthPage profile={profile} onOpenSettings={() => setActiveTab('settings')} />
           )}
-          {activeTab === 'nutrition' && <NutritionPage profile={profile} onNotify={notify} />}
+          {activeTab === 'nutrition' && (
+            <Suspense fallback={<PageLoading label="正在載入食物營養資料…" />}>
+              <NutritionPage profile={profile} onNotify={notify} />
+            </Suspense>
+          )}
           {activeTab === 'settings' && (
             <SettingsPage
               profile={profile}
@@ -117,6 +135,15 @@ export default function App() {
         onAccept={handleAcceptDisclaimer}
         onClose={handleCloseDisclaimer}
       />
+    </div>
+  );
+}
+
+function PageLoading({ label }: { label: string }) {
+  return (
+    <div className="flex flex-col items-center justify-center py-20 text-plum-600">
+      <LoaderCircle className="h-7 w-7 animate-spin" />
+      <p className="mt-3 text-xs font-bold text-slate-400">{label}</p>
     </div>
   );
 }

@@ -5,8 +5,22 @@
     "Noto Sans TC", "PingFang TC", "Microsoft JhengHei", "Heiti TC", "Helvetica Neue",
     Arial, sans-serif;
 
+  /* 專屬的暖紫品牌色，以淡紫為底、深紫為主要行動色。 */
+  --color-plum-50: #f8f5fc;
+  --color-plum-100: #f1eaf8;
+  --color-plum-200: #e3d5f1;
+  --color-plum-300: #cdb5e4;
+  --color-plum-400: #b18dd3;
+  --color-plum-500: #9668be;
+  --color-plum-600: #7d4ea6;
+  --color-plum-700: #683d89;
+  --color-plum-800: #563271;
+  --color-plum-900: #472a5d;
+  --color-plum-950: #2f1a3f;
+
   --animate-fade-up: fade-up 0.35s ease-out both;
   --animate-float: float 3.2s ease-in-out infinite;
+  --animate-soft-pulse: soft-pulse 3.6s ease-in-out infinite;
 
   @keyframes fade-up {
     from {
@@ -28,6 +42,18 @@
       transform: translateY(-5px);
     }
   }
+
+  @keyframes soft-pulse {
+    0%,
+    100% {
+      opacity: 0.55;
+      transform: scale(1);
+    }
+    50% {
+      opacity: 0.85;
+      transform: scale(1.04);
+    }
+  }
 }
 
 @layer base {
@@ -38,7 +64,7 @@
   body {
     margin: 0;
     min-width: 320px;
-    background-color: #fffbeb;
+    background-color: #f8f5fc;
     color: #0f172a;
     font-family: var(--font-sans);
     -webkit-font-smoothing: antialiased;
@@ -69,8 +95,8 @@
   }
 
   ::selection {
-    background-color: #fde68a;
-    color: #1e3a8a;
+    background-color: #e3d5f1;
+    color: #2f1a3f;
   }
 }
 

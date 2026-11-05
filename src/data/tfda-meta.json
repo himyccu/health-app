@@ -1,0 +1,14 @@
+{
+  "title": "食品營養成分資料集",
+  "datasetId": "8543",
+  "provider": "衛生福利部食品藥物管理署",
+  "license": "政府資料開放授權條款－第 1 版",
+  "licenseUrl": "https://data.gov.tw/license",
+  "sourceUrl": "https://data.gov.tw/dataset/8543",
+  "downloadUrl": "https://data.fda.gov.tw/data/opendata/export/20/json",
+  "modifiedDate": "2026-10-05",
+  "generatedAt": "2026-11-05T14:17:22.679Z",
+  "foodCount": 2213,
+  "sourceFile": "20_5.json",
+  "note": "數值為每 100 公克可食部分；部分營養素未檢驗時以 null 表示。"
+}

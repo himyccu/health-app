@@ -9,7 +9,7 @@ interface SectionHeadingProps {
 export function SectionHeading({ icon: Icon, title, subtitle }: SectionHeadingProps) {
   return (
     <div className="flex items-start gap-2.5">
-      <div className="mt-0.5 grid h-8 w-8 shrink-0 place-items-center rounded-xl bg-blue-50 text-blue-900">
+      <div className="mt-0.5 grid h-8 w-8 shrink-0 place-items-center rounded-xl bg-plum-50 text-plum-900">
         <Icon className="h-4 w-4" strokeWidth={2.4} />
       </div>
       <div>

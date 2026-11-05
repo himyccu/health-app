@@ -15,6 +15,7 @@ import {
 } from 'lucide-react';
 import type { ActivityLevel, Gender, Profile } from '../types';
 import { ACTIVITY_OPTIONS, calcBmr, calcTdee, getActivityOption } from '../lib/health';
+import { TFDA_META } from '../lib/tfdaMeta';
 import { PageHeader } from '../components/PageHeader';
 import { SectionHeading } from '../components/SectionHeading';
 
@@ -127,8 +128,8 @@ export function SettingsPage({
                     onClick={() => setGender(option.value)}
                     className={`h-12 rounded-2xl border text-base font-black transition active:scale-[0.98] ${
                       selected
-                        ? 'border-blue-900 bg-blue-900 text-white shadow-md shadow-blue-900/20'
-                        : 'border-slate-200 bg-slate-50 text-slate-500 hover:border-blue-200 hover:bg-blue-50'
+                        ? 'border-plum-900 bg-plum-900 text-white shadow-md shadow-plum-900/20'
+                        : 'border-slate-200 bg-slate-50 text-slate-500 hover:border-plum-200 hover:bg-plum-50'
                     }`}
                   >
                     {option.label}
@@ -140,7 +141,7 @@ export function SettingsPage({
 
           <label className="block" htmlFor="profile-age">
             <span className="mb-1.5 block text-xs font-bold text-slate-500">生理年齡</span>
-            <div className="flex items-center rounded-2xl border border-slate-200 bg-slate-50 transition focus-within:border-blue-900 focus-within:bg-white">
+            <div className="flex items-center rounded-2xl border border-slate-200 bg-slate-50 transition focus-within:border-plum-900 focus-within:bg-white">
               <Calendar className="ml-3.5 h-4 w-4 shrink-0 text-slate-400" />
               <input
                 id="profile-age"
@@ -159,7 +160,7 @@ export function SettingsPage({
           <div className="grid grid-cols-2 gap-2.5">
             <label className="block" htmlFor="profile-height">
               <span className="mb-1.5 block text-xs font-bold text-slate-500">身高</span>
-              <div className="flex items-center rounded-2xl border border-slate-200 bg-slate-50 transition focus-within:border-blue-900 focus-within:bg-white">
+              <div className="flex items-center rounded-2xl border border-slate-200 bg-slate-50 transition focus-within:border-plum-900 focus-within:bg-white">
                 <Ruler className="ml-3 h-4 w-4 shrink-0 text-slate-400" />
                 <input
                   id="profile-height"
@@ -177,7 +178,7 @@ export function SettingsPage({
 
             <label className="block" htmlFor="profile-weight">
               <span className="mb-1.5 block text-xs font-bold text-slate-500">體重</span>
-              <div className="flex items-center rounded-2xl border border-slate-200 bg-slate-50 transition focus-within:border-blue-900 focus-within:bg-white">
+              <div className="flex items-center rounded-2xl border border-slate-200 bg-slate-50 transition focus-within:border-plum-900 focus-within:bg-white">
                 <Weight className="ml-3 h-4 w-4 shrink-0 text-slate-400" />
                 <input
                   id="profile-weight"
@@ -212,22 +213,22 @@ export function SettingsPage({
                     onClick={() => setActivity(option.value)}
                     className={`flex w-full items-center justify-between gap-2 rounded-2xl border p-3 text-left transition active:scale-[0.99] ${
                       selected
-                        ? 'border-blue-900 bg-blue-50/80 ring-1 ring-blue-900'
-                        : 'border-slate-200 bg-white hover:border-blue-200 hover:bg-blue-50/40'
+                        ? 'border-plum-900 bg-plum-50/80 ring-1 ring-plum-900'
+                        : 'border-slate-200 bg-white hover:border-plum-200 hover:bg-plum-50/40'
                     }`}
                   >
                     <span className="flex min-w-0 items-start gap-2.5">
                       <span
                         className={`mt-0.5 grid h-5 w-5 shrink-0 place-items-center rounded-full border-2 ${
-                          selected ? 'border-blue-900' : 'border-slate-300'
+                          selected ? 'border-plum-900' : 'border-slate-300'
                         }`}
                       >
-                        {selected && <span className="h-2.5 w-2.5 rounded-full bg-blue-900" />}
+                        {selected && <span className="h-2.5 w-2.5 rounded-full bg-plum-900" />}
                       </span>
                       <span className="min-w-0">
                         <span
                           className={`block text-sm font-black ${
-                            selected ? 'text-blue-900' : 'text-slate-800'
+                            selected ? 'text-plum-900' : 'text-slate-800'
                           }`}
                         >
                           {option.label}
@@ -260,19 +261,19 @@ export function SettingsPage({
           </p>
         )}
 
-        <div className="mt-4 grid grid-cols-2 gap-2 rounded-2xl bg-blue-50 p-3">
+        <div className="mt-4 grid grid-cols-2 gap-2 rounded-2xl bg-plum-50 p-3">
           <div>
-            <p className="text-[11px] font-bold text-blue-600">預估 BMR</p>
-            <p className="mt-0.5 text-lg font-black leading-none text-blue-900 tabular-nums">
+            <p className="text-[11px] font-bold text-plum-600">預估 BMR</p>
+            <p className="mt-0.5 text-lg font-black leading-none text-plum-900 tabular-nums">
               {previewBmr !== null ? previewBmr.toLocaleString() : '—'}
-              <span className="ml-1 text-[10px] font-bold text-blue-500">kcal</span>
+              <span className="ml-1 text-[10px] font-bold text-plum-500">kcal</span>
             </p>
           </div>
           <div>
-            <p className="text-[11px] font-bold text-blue-600">預估 TDEE</p>
-            <p className="mt-0.5 text-lg font-black leading-none text-blue-900 tabular-nums">
+            <p className="text-[11px] font-bold text-plum-600">預估 TDEE</p>
+            <p className="mt-0.5 text-lg font-black leading-none text-plum-900 tabular-nums">
               {previewTdee !== null ? previewTdee.toLocaleString() : '—'}
-              <span className="ml-1 text-[10px] font-bold text-blue-500">kcal</span>
+              <span className="ml-1 text-[10px] font-bold text-plum-500">kcal</span>
             </p>
           </div>
         </div>
@@ -280,7 +281,7 @@ export function SettingsPage({
         <button
           type="button"
           onClick={handleSave}
-          className="mt-3 flex h-12 w-full items-center justify-center gap-1.5 rounded-2xl bg-blue-900 text-base font-black text-white shadow-lg shadow-blue-900/20 transition hover:bg-blue-800 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-blue-900 active:scale-[0.99]"
+          className="mt-3 flex h-12 w-full items-center justify-center gap-1.5 rounded-2xl bg-plum-900 text-base font-black text-white shadow-lg shadow-plum-900/20 transition hover:bg-plum-800 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-plum-900 active:scale-[0.99]"
         >
           <Save className="h-4 w-4" />
           儲存設定
@@ -296,12 +297,12 @@ export function SettingsPage({
         </button>
       </section>
 
-      <section className="mt-4 rounded-[26px] border border-blue-100 bg-white p-4 shadow-sm shadow-amber-900/5">
+      <section className="mt-4 rounded-[26px] border border-plum-100 bg-white p-4 shadow-sm shadow-amber-900/5">
         <div className="flex items-start justify-between gap-2">
           <SectionHeading
             icon={BookOpen}
             title="衛福部資料來源"
-            subtitle="每日飲食指南與成人健康體位"
+            subtitle="飲食指南、健康體位與食品營養資料"
           />
           <span className="flex shrink-0 items-center gap-1 rounded-full bg-emerald-50 px-2 py-1 text-[10px] font-black text-emerald-700">
             <ShieldCheck className="h-3 w-3" />
@@ -309,17 +310,17 @@ export function SettingsPage({
           </span>
         </div>
 
-        <div className="mt-3 rounded-2xl bg-blue-50/70 p-3.5">
+        <div className="mt-3 rounded-2xl bg-plum-50/70 p-3.5">
           <ul className="space-y-2 text-xs leading-relaxed text-slate-600">
             <li className="flex gap-1.5">
-              <span className="mt-1.5 h-1.5 w-1.5 shrink-0 rounded-full bg-blue-800" />
+              <span className="mt-1.5 h-1.5 w-1.5 shrink-0 rounded-full bg-plum-800" />
               <span>
                 衛生福利部國民健康署
                 <a
                   href="https://www.hpa.gov.tw"
                   target="_blank"
                   rel="noreferrer"
-                  className="ml-0.5 inline-flex items-center gap-0.5 font-bold text-blue-800 underline underline-offset-2"
+                  className="ml-0.5 inline-flex items-center gap-0.5 font-bold text-plum-800 underline underline-offset-2"
                 >
                   官方網站
                   <ArrowUpRight className="h-3 w-3" />
@@ -328,8 +329,25 @@ export function SettingsPage({
               </span>
             </li>
             <li className="flex gap-1.5">
-              <span className="mt-1.5 h-1.5 w-1.5 shrink-0 rounded-full bg-blue-800" />
+              <span className="mt-1.5 h-1.5 w-1.5 shrink-0 rounded-full bg-plum-800" />
               <span>衛生福利部成人健康體位定義（BMI 18.5–24 為正常範圍）</span>
+            </li>
+            <li className="flex gap-1.5">
+              <span className="mt-1.5 h-1.5 w-1.5 shrink-0 rounded-full bg-plum-800" />
+              <span>
+                食品藥物管理署
+                <a
+                  href={TFDA_META.sourceUrl}
+                  target="_blank"
+                  rel="noreferrer"
+                  className="ml-0.5 inline-flex items-center gap-0.5 font-bold text-plum-800 underline underline-offset-2"
+                >
+                  《{TFDA_META.title}》
+                  <ArrowUpRight className="h-3 w-3" />
+                </a>
+                （資料集 {TFDA_META.datasetId}
+                {TFDA_META.modifiedDate ? `，更新於 ${TFDA_META.modifiedDate}` : ''}）
+              </span>
             </li>
           </ul>
         </div>
@@ -347,7 +365,7 @@ export function SettingsPage({
         <button
           type="button"
           onClick={onShowDisclaimer}
-          className="mt-3 flex h-11 w-full items-center justify-center gap-1.5 rounded-xl border border-blue-200 bg-white text-sm font-bold text-blue-900 transition hover:bg-blue-50 active:scale-[0.99]"
+          className="mt-3 flex h-11 w-full items-center justify-center gap-1.5 rounded-xl border border-plum-200 bg-white text-sm font-bold text-plum-900 transition hover:bg-plum-50 active:scale-[0.99]"
         >
           查看完整聲明與資料來源
         </button>
@@ -363,11 +381,15 @@ export function SettingsPage({
         <ul className="mt-3 space-y-2 text-xs leading-relaxed text-slate-500">
           <li className="flex gap-2">
             <span className="mt-1.5 h-1.5 w-1.5 shrink-0 rounded-full bg-emerald-500" />
-            生理數據、步數與餐點紀錄皆儲存在瀏覽器 localStorage。
+            生理數據、步數與飲食紀錄皆儲存在這台裝置的瀏覽器 localStorage。
           </li>
           <li className="flex gap-2">
             <span className="mt-1.5 h-1.5 w-1.5 shrink-0 rounded-full bg-emerald-500" />
-            上傳的餐點照片僅在本機預覽，不會上傳或永久保存。
+            食物搜尋與營養計算都在本機完成，不會上傳任何個人紀錄。
+          </li>
+          <li className="flex gap-2">
+            <span className="mt-1.5 h-1.5 w-1.5 shrink-0 rounded-full bg-emerald-500" />
+            新增或刪除紀錄後會立即更新，不需要連線或重新整理。
           </li>
           <li className="flex gap-2">
             <span className="mt-1.5 h-1.5 w-1.5 shrink-0 rounded-full bg-amber-500" />

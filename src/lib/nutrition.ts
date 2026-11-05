@@ -1,4 +1,11 @@
-import type { FoodGroupKey, FoodGroups, MealEntry, Profile } from '../types';
+import type {
+  FoodGroupKey,
+  FoodGroups,
+  MealEntry,
+  MealType,
+  Profile,
+  TfdaFood,
+} from '../types';
 import { calcTdee } from './health';
 
 export interface FoodGroupMeta {
@@ -63,70 +70,18 @@ export const EMPTY_FOOD_GROUPS: FoodGroups = {
   fats: 0,
 };
 
-export interface MealPreset {
-  name: string;
-  calories: number;
-  protein: number;
-  carbs: number;
-  fat: number;
-  groups: FoodGroups;
-  tip: string;
-}
-
-export const MEAL_PRESETS: MealPreset[] = [
-  {
-    name: '香煎雞腿便當',
-    calories: 720,
-    protein: 34,
-    carbs: 88,
-    fat: 26,
-    groups: { grains: 1.5, protein: 2.5, dairy: 0, vegetables: 1.5, fruits: 0, fats: 2 },
-    tip: '蛋白質充足，建議加一份燙青菜並減少炸物配菜。',
-  },
-  {
-    name: '鮭魚酪梨沙拉',
-    calories: 480,
-    protein: 28,
-    carbs: 22,
-    fat: 32,
-    groups: { grains: 0.5, protein: 2, dairy: 0.5, vegetables: 2.5, fruits: 1, fats: 2.5 },
-    tip: '蔬菜與好油脂豐富，可搭配一片全麥麵包補足全穀雜糧。',
-  },
-  {
-    name: '蔬菜蛋餅＋無糖豆漿',
-    calories: 420,
-    protein: 22,
-    carbs: 45,
-    fat: 16,
-    groups: { grains: 1, protein: 1.5, dairy: 0, vegetables: 1, fruits: 0, fats: 1 },
-    tip: '早餐組合清爽，建議再補充一份水果增加膳食纖維。',
-  },
-  {
-    name: '燕麥水果優格碗',
-    calories: 380,
-    protein: 16,
-    carbs: 58,
-    fat: 9,
-    groups: { grains: 1, protein: 0.5, dairy: 1, vegetables: 0, fruits: 2, fats: 0.5 },
-    tip: '富含乳品與水果，適合當早餐；可加一顆蛋提升蛋白質。',
-  },
-  {
-    name: '家常三菜一湯',
-    calories: 560,
-    protein: 26,
-    carbs: 62,
-    fat: 20,
-    groups: { grains: 1.5, protein: 2, dairy: 0, vegetables: 2.5, fruits: 0.5, fats: 1.5 },
-    tip: '蔬菜量不錯，若湯品含加工品可替換為清湯以減少鈉攝取。',
-  },
-];
-
 export interface NutritionTargets {
   calories: number;
   protein: number;
   carbs: number;
   fat: number;
+  fiber: number;
+  sodium: number;
   groups: FoodGroups;
+}
+
+function round1(value: number): number {
+  return Math.round(value * 10) / 10;
 }
 
 export function getGroupTargets(tdee: number): FoodGroups {
@@ -152,6 +107,8 @@ export function getNutritionTargets(profile: Profile): NutritionTargets {
     protein,
     carbs,
     fat,
+    fiber: 25,
+    sodium: 2300,
     groups: getGroupTargets(calories),
   };
 }
@@ -161,6 +118,9 @@ export interface MealTotals {
   protein: number;
   carbs: number;
   fat: number;
+  fiber: number;
+  sugar: number;
+  sodium: number;
   groups: FoodGroups;
 }
 
@@ -171,6 +131,9 @@ export function sumMeals(meals: MealEntry[]): MealTotals {
       protein: totals.protein + meal.protein,
       carbs: totals.carbs + meal.carbs,
       fat: totals.fat + meal.fat,
+      fiber: totals.fiber + (meal.fiber ?? 0),
+      sugar: totals.sugar + (meal.sugar ?? 0),
+      sodium: totals.sodium + (meal.sodium ?? 0),
       groups: {
         grains: totals.groups.grains + meal.groups.grains,
         protein: totals.groups.protein + meal.groups.protein,
@@ -185,22 +148,41 @@ export function sumMeals(meals: MealEntry[]): MealTotals {
       protein: 0,
       carbs: 0,
       fat: 0,
+      fiber: 0,
+      sugar: 0,
+      sodium: 0,
       groups: { ...EMPTY_FOOD_GROUPS },
     },
   );
 }
 
-export function createMealEntry(preset: MealPreset, date: string): MealEntry {
+export function createFoodMealEntry(
+  food: TfdaFood,
+  grams: number,
+  mealType: MealType,
+  date: string,
+): MealEntry {
+  const safeGrams = Math.max(1, Math.min(2000, grams));
+  const factor = safeGrams / 100;
+  const nutrients = food.nutrients;
   const randomPart = Math.random().toString(36).slice(2, 8);
+
   return {
     id: `${Date.now().toString(36)}-${randomPart}`,
     date,
     createdAt: new Date().toISOString(),
-    name: preset.name,
-    calories: preset.calories,
-    protein: preset.protein,
-    carbs: preset.carbs,
-    fat: preset.fat,
-    groups: { ...preset.groups },
+    name: food.name,
+    calories: Math.round((nutrients.calories ?? 0) * factor),
+    protein: round1((nutrients.protein ?? 0) * factor),
+    carbs: round1((nutrients.carbs ?? 0) * factor),
+    fat: round1((nutrients.fat ?? 0) * factor),
+    fiber: round1((nutrients.fiber ?? 0) * factor),
+    sugar: round1((nutrients.sugar ?? 0) * factor),
+    sodium: Math.round((nutrients.sodium ?? 0) * factor),
+    groups: { ...EMPTY_FOOD_GROUPS },
+    source: 'tfda',
+    foodId: food.id,
+    grams: safeGrams,
+    mealType,
   };
 }

@@ -137,6 +137,10 @@ function isFoodGroups(value: unknown): value is FoodGroups {
   );
 }
 
+function isOptionalNumber(value: unknown): boolean {
+  return value === undefined || (typeof value === 'number' && Number.isFinite(value));
+}
+
 function isMealEntry(value: unknown): value is MealEntry {
   if (!isRecord(value)) return false;
   return (
@@ -148,7 +152,18 @@ function isMealEntry(value: unknown): value is MealEntry {
     typeof value.protein === 'number' &&
     typeof value.carbs === 'number' &&
     typeof value.fat === 'number' &&
-    isFoodGroups(value.groups)
+    isFoodGroups(value.groups) &&
+    (value.source === undefined || value.source === 'tfda') &&
+    (value.foodId === undefined || typeof value.foodId === 'string') &&
+    (value.mealType === undefined ||
+      value.mealType === 'breakfast' ||
+      value.mealType === 'lunch' ||
+      value.mealType === 'dinner' ||
+      value.mealType === 'snack') &&
+    isOptionalNumber(value.grams) &&
+    isOptionalNumber(value.fiber) &&
+    isOptionalNumber(value.sugar) &&
+    isOptionalNumber(value.sodium)
   );
 }
 

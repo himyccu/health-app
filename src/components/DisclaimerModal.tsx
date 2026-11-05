@@ -1,5 +1,6 @@
 import { useEffect } from 'react';
-import { BookOpen, Check, HeartPulse, ShieldCheck, X } from 'lucide-react';
+import { ArrowUpRight, BookOpen, Check, HeartPulse, ShieldCheck, X } from 'lucide-react';
+import { TFDA_META } from '../lib/tfdaMeta';
 
 interface DisclaimerModalProps {
   open: boolean;
@@ -36,11 +37,11 @@ export function DisclaimerModal({ open, required, onAccept, onClose }: Disclaime
       >
         <div className="flex items-start justify-between gap-3">
           <div className="flex items-center gap-3">
-            <div className="grid h-11 w-11 shrink-0 place-items-center rounded-2xl bg-blue-900 text-amber-200">
+            <div className="grid h-11 w-11 shrink-0 place-items-center rounded-2xl bg-plum-900 text-amber-200">
               <HeartPulse className="h-6 w-6" />
             </div>
             <div>
-              <p className="text-[10px] font-black tracking-[0.18em] text-blue-700">
+              <p className="text-[10px] font-black tracking-[0.18em] text-plum-700">
                 健康資訊使用同意
               </p>
               <h2 id="disclaimer-title" className="text-lg font-black leading-tight text-slate-900">
@@ -60,14 +61,27 @@ export function DisclaimerModal({ open, required, onAccept, onClose }: Disclaime
           )}
         </div>
 
-        <div className="mt-4 rounded-2xl border border-blue-100 bg-blue-50/80 p-3.5">
-          <p className="flex items-center gap-1.5 text-xs font-black text-blue-900">
+        <div className="mt-4 rounded-2xl border border-plum-100 bg-plum-50/80 p-3.5">
+          <p className="flex items-center gap-1.5 text-xs font-black text-plum-900">
             <BookOpen className="h-4 w-4" />
             資料來源
           </p>
           <ul className="mt-2 space-y-1.5 text-xs leading-relaxed text-slate-600">
             <li>• 衛生福利部國民健康署《每日飲食指南手冊》</li>
             <li>• 衛生福利部成人健康體位定義（BMI 18.5–24 為正常範圍）</li>
+            <li>
+              • 食品藥物管理署
+              <a
+                href={TFDA_META.sourceUrl}
+                target="_blank"
+                rel="noreferrer"
+                className="mx-0.5 inline-flex items-center gap-0.5 font-bold text-plum-800 underline underline-offset-2"
+              >
+                《{TFDA_META.title}》
+                <ArrowUpRight className="h-3 w-3" />
+              </a>
+              （每 100 公克可食部分）
+            </li>
           </ul>
         </div>
 
@@ -82,13 +96,13 @@ export function DisclaimerModal({ open, required, onAccept, onClose }: Disclaime
         </div>
 
         <p className="mt-3 text-xs leading-relaxed text-slate-500">
-          若您有慢性疾病、懷孕、哺乳或特殊飲食需求，請先諮詢醫師或營養師。您的生理數據僅儲存在本機瀏覽器，不會上傳至任何伺服器。
+          若您有慢性疾病、懷孕、哺乳或特殊飲食需求，請先諮詢醫師或營養師。您的生理數據、步數與飲食紀錄僅儲存在本機瀏覽器，不會上傳至任何伺服器。
         </p>
 
         <button
           type="button"
           onClick={onAccept}
-          className="mt-5 flex h-13 w-full items-center justify-center gap-2 rounded-2xl bg-blue-900 px-5 py-3.5 text-base font-black text-white shadow-lg shadow-blue-900/20 transition hover:bg-blue-800 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-blue-900 active:scale-[0.99]"
+          className="mt-5 flex h-13 w-full items-center justify-center gap-2 rounded-2xl bg-plum-900 px-5 py-3.5 text-base font-black text-white shadow-lg shadow-plum-900/20 transition hover:bg-plum-800 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-plum-900 active:scale-[0.99]"
         >
           <Check className="h-5 w-5" strokeWidth={2.6} />
           {required ? '我已閱讀並了解' : '關閉'}

@@ -69,7 +69,7 @@ export function HealthPage({ profile, onOpenSettings }: HealthPageProps) {
         <div className="relative mt-4 flex items-end justify-between gap-3">
           <div>
             <p className="text-xs font-bold text-slate-400">你的 BMI</p>
-            <p className="mt-0.5 text-5xl font-black leading-none tracking-tight text-blue-900 tabular-nums">
+            <p className="mt-0.5 text-5xl font-black leading-none tracking-tight text-plum-900 tabular-nums">
               {bmi.toFixed(1)}
             </p>
             <p className="mt-1.5 text-xs font-medium text-slate-500">
@@ -96,7 +96,7 @@ export function HealthPage({ profile, onOpenSettings }: HealthPageProps) {
           </div>
 
           <div
-            className="absolute top-1/2 z-10 h-[18px] w-[18px] -translate-x-1/2 -translate-y-1/2 rounded-full border-[3px] border-white bg-blue-900 shadow-md shadow-blue-900/30"
+            className="absolute top-1/2 z-10 h-[18px] w-[18px] -translate-x-1/2 -translate-y-1/2 rounded-full border-[3px] border-white bg-plum-900 shadow-md shadow-plum-900/30"
             style={{ left: `clamp(9px, ${markerPercent}%, calc(100% - 9px))` }}
             title={`BMI ${bmi.toFixed(1)}`}
           />
@@ -143,7 +143,7 @@ export function HealthPage({ profile, onOpenSettings }: HealthPageProps) {
         </div>
 
         <div className="rounded-2xl border border-amber-100 bg-white p-3.5 shadow-sm shadow-amber-900/5">
-          <div className="grid h-8 w-8 place-items-center rounded-xl bg-blue-50 text-blue-700">
+          <div className="grid h-8 w-8 place-items-center rounded-xl bg-plum-50 text-plum-700">
             <Activity className="h-4 w-4" strokeWidth={2.4} />
           </div>
           <p className="mt-2 text-xs font-bold text-slate-400">每日總消耗 TDEE</p>
@@ -166,15 +166,15 @@ export function HealthPage({ profile, onOpenSettings }: HealthPageProps) {
           subtitle="依目前身高、體重與活動量估算"
         />
 
-        <div className="mt-3 rounded-2xl bg-blue-50 p-4">
-          <p className="text-xs font-bold text-blue-700">理想體重範圍</p>
+        <div className="mt-3 rounded-2xl bg-plum-50 p-4">
+          <p className="text-xs font-bold text-plum-700">理想體重範圍</p>
           <p className="mt-1 flex items-baseline gap-1.5">
-            <span className="text-3xl font-black leading-none text-blue-900 tabular-nums">
+            <span className="text-3xl font-black leading-none text-plum-900 tabular-nums">
               {ideal ? `${ideal.min}–${ideal.max}` : '—'}
             </span>
-            <span className="text-sm font-black text-blue-700">kg</span>
+            <span className="text-sm font-black text-plum-700">kg</span>
           </p>
-          <p className="mt-1.5 text-xs font-medium text-blue-700/80">
+          <p className="mt-1.5 text-xs font-medium text-plum-700/80">
             對應 BMI 18.5 至 24 的正常範圍
           </p>
         </div>
@@ -246,10 +246,10 @@ export function HealthPage({ profile, onOpenSettings }: HealthPageProps) {
       <button
         type="button"
         onClick={onOpenSettings}
-        className="mt-4 flex w-full items-center justify-between rounded-2xl border border-blue-100 bg-white px-4 py-3.5 text-left shadow-sm transition hover:bg-blue-50 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-blue-900 active:scale-[0.99]"
+        className="mt-4 flex w-full items-center justify-between rounded-2xl border border-plum-100 bg-white px-4 py-3.5 text-left shadow-sm transition hover:bg-plum-50 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-plum-900 active:scale-[0.99]"
       >
         <span className="flex items-center gap-2.5">
-          <span className="grid h-9 w-9 place-items-center rounded-xl bg-blue-900 text-amber-200">
+          <span className="grid h-9 w-9 place-items-center rounded-xl bg-plum-900 text-amber-200">
             <Pencil className="h-4 w-4" />
           </span>
           <span>

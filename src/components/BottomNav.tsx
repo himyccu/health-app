@@ -35,12 +35,12 @@ export function BottomNav({ activeTab, onChange }: BottomNavProps) {
               type="button"
               onClick={() => onChange(tab.id)}
               aria-current={isActive ? 'page' : undefined}
-              className="group flex flex-col items-center rounded-2xl px-1 py-1 transition focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-blue-900"
+              className="group flex flex-col items-center rounded-2xl px-1 py-1 transition focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-plum-900"
             >
               <span
                 className={`grid h-10 w-14 place-items-center rounded-2xl transition-all ${
                   isActive
-                    ? 'bg-blue-900 text-amber-50 shadow-md shadow-blue-900/25'
+                    ? 'bg-plum-900 text-amber-50 shadow-md shadow-plum-900/25'
                     : 'text-slate-400 group-hover:bg-slate-100 group-hover:text-slate-600'
                 }`}
               >
@@ -48,7 +48,7 @@ export function BottomNav({ activeTab, onChange }: BottomNavProps) {
               </span>
               <span
                 className={`mt-0.5 text-xs font-bold tracking-wide ${
-                  isActive ? 'text-blue-900' : 'text-slate-400'
+                  isActive ? 'text-plum-900' : 'text-slate-400'
                 }`}
               >
                 {tab.label}
