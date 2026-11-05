@@ -1,0 +1,264 @@
+import {
+  Activity,
+  ArrowRight,
+  Flame,
+  Heart,
+  HeartPulse,
+  Info,
+  Pencil,
+  Scale,
+} from 'lucide-react';
+import type { Profile } from '../types';
+import {
+  BMI_CATEGORIES,
+  calcBmi,
+  calcBmr,
+  calcTdee,
+  getActivityOption,
+  getBmiCategory,
+  getCalorieSuggestions,
+  getIdealWeightRange,
+} from '../lib/health';
+import { PageHeader } from '../components/PageHeader';
+import { SectionHeading } from '../components/SectionHeading';
+
+interface HealthPageProps {
+  profile: Profile;
+  onOpenSettings: () => void;
+}
+
+const GAUGE_SEGMENTS = [
+  { id: 'underweight', label: '過輕', width: 17.5, className: 'bg-sky-300' },
+  { id: 'normal', label: '正常', width: 27.5, className: 'bg-emerald-400' },
+  { id: 'overweight', label: '過重', width: 15, className: 'bg-amber-400' },
+  { id: 'obese', label: '肥胖', width: 40, className: 'bg-rose-400' },
+];
+
+function gaugePercent(value: number): number {
+  return Math.min(100, Math.max(0, ((value - 15) / 20) * 100));
+}
+
+export function HealthPage({ profile, onOpenSettings }: HealthPageProps) {
+  const bmiRaw = calcBmi(profile.weight, profile.height);
+  const bmi = Math.round(bmiRaw * 100) / 100;
+  const category = getBmiCategory(bmiRaw);
+  const bmr = calcBmr(profile);
+  const tdee = calcTdee(profile);
+  const activity = getActivityOption(profile.activity);
+  const ideal = getIdealWeightRange(profile.height);
+  const suggestions = getCalorieSuggestions(profile);
+  const markerPercent = gaugePercent(bmiRaw);
+
+  return (
+    <div>
+      <PageHeader
+        eyebrow="HEALTH"
+        title="健康指數"
+        description="用 BMI 與每日熱量基準，掌握身體的現在。"
+        icon={HeartPulse}
+      />
+
+      <section className="relative overflow-hidden rounded-[28px] border border-amber-100 bg-white p-5 shadow-sm shadow-amber-900/5">
+        <div className="pointer-events-none absolute -right-10 -top-10 h-32 w-32 rounded-full bg-rose-50" />
+        <SectionHeading
+          icon={Heart}
+          title="BMI 身體質量指數"
+          subtitle="衛生福利部成人健康體位標準"
+        />
+
+        <div className="relative mt-4 flex items-end justify-between gap-3">
+          <div>
+            <p className="text-xs font-bold text-slate-400">你的 BMI</p>
+            <p className="mt-0.5 text-5xl font-black leading-none tracking-tight text-blue-900 tabular-nums">
+              {bmi.toFixed(1)}
+            </p>
+            <p className="mt-1.5 text-xs font-medium text-slate-500">
+              {profile.height} cm · {profile.weight} kg
+            </p>
+          </div>
+          <div className="text-right">
+            <span className={`inline-block rounded-full px-4 py-2 text-sm font-black ${category.badgeClass}`}>
+              {category.label}
+            </span>
+            <p className="mt-1.5 text-xs font-semibold text-slate-400">{category.rangeLabel}</p>
+          </div>
+        </div>
+
+        <div className="relative mt-7 pb-5">
+          <div className="flex h-3 overflow-hidden rounded-full">
+            {GAUGE_SEGMENTS.map((segment) => (
+              <div
+                key={segment.id}
+                className={segment.className}
+                style={{ width: `${segment.width}%` }}
+              />
+            ))}
+          </div>
+
+          <div
+            className="absolute top-1/2 z-10 h-[18px] w-[18px] -translate-x-1/2 -translate-y-1/2 rounded-full border-[3px] border-white bg-blue-900 shadow-md shadow-blue-900/30"
+            style={{ left: `clamp(9px, ${markerPercent}%, calc(100% - 9px))` }}
+            title={`BMI ${bmi.toFixed(1)}`}
+          />
+
+          {[
+            { value: 18.5, label: '18.5' },
+            { value: 24, label: '24' },
+            { value: 27, label: '27' },
+          ].map((tick) => (
+            <span
+              key={tick.value}
+              className="absolute top-4 -translate-x-1/2 text-[10px] font-bold text-slate-400"
+              style={{ left: `clamp(12px, ${gaugePercent(tick.value)}%, calc(100% - 12px))` }}
+            >
+              {tick.label}
+            </span>
+          ))}
+          <span className="absolute bottom-0 left-0 text-[10px] font-bold text-sky-500">過輕</span>
+          <span className="absolute bottom-0 right-0 text-[10px] font-bold text-rose-500">肥胖</span>
+        </div>
+
+        <div className={`rounded-2xl border p-3.5 ${category.softClass}`}>
+          <p className={`text-sm font-bold leading-relaxed ${category.textClass}`}>
+            {category.advice}
+          </p>
+        </div>
+      </section>
+
+      <div className="mt-3 grid grid-cols-2 gap-2.5">
+        <div className="rounded-2xl border border-amber-100 bg-white p-3.5 shadow-sm shadow-amber-900/5">
+          <div className="grid h-8 w-8 place-items-center rounded-xl bg-orange-50 text-orange-500">
+            <Flame className="h-4 w-4" strokeWidth={2.4} />
+          </div>
+          <p className="mt-2 text-xs font-bold text-slate-400">基礎代謝率 BMR</p>
+          <p className="mt-0.5 flex items-baseline gap-1">
+            <span className="text-2xl font-black leading-none text-slate-900 tabular-nums">
+              {bmr.toLocaleString()}
+            </span>
+            <span className="text-[11px] font-bold text-slate-400">kcal/日</span>
+          </p>
+          <p className="mt-1.5 text-[11px] leading-relaxed text-slate-400">
+            身體靜止時維持生命所需
+          </p>
+        </div>
+
+        <div className="rounded-2xl border border-amber-100 bg-white p-3.5 shadow-sm shadow-amber-900/5">
+          <div className="grid h-8 w-8 place-items-center rounded-xl bg-blue-50 text-blue-700">
+            <Activity className="h-4 w-4" strokeWidth={2.4} />
+          </div>
+          <p className="mt-2 text-xs font-bold text-slate-400">每日總消耗 TDEE</p>
+          <p className="mt-0.5 flex items-baseline gap-1">
+            <span className="text-2xl font-black leading-none text-slate-900 tabular-nums">
+              {tdee.toLocaleString()}
+            </span>
+            <span className="text-[11px] font-bold text-slate-400">kcal/日</span>
+          </p>
+          <p className="mt-1.5 text-[11px] leading-relaxed text-slate-400">
+            {activity.label} · 活動係數 {activity.factor}
+          </p>
+        </div>
+      </div>
+
+      <section className="mt-4 rounded-[26px] border border-amber-100 bg-white p-4 shadow-sm shadow-amber-900/5">
+        <SectionHeading
+          icon={Scale}
+          title="體位與熱量目標"
+          subtitle="依目前身高、體重與活動量估算"
+        />
+
+        <div className="mt-3 rounded-2xl bg-blue-50 p-4">
+          <p className="text-xs font-bold text-blue-700">理想體重範圍</p>
+          <p className="mt-1 flex items-baseline gap-1.5">
+            <span className="text-3xl font-black leading-none text-blue-900 tabular-nums">
+              {ideal ? `${ideal.min}–${ideal.max}` : '—'}
+            </span>
+            <span className="text-sm font-black text-blue-700">kg</span>
+          </p>
+          <p className="mt-1.5 text-xs font-medium text-blue-700/80">
+            對應 BMI 18.5 至 24 的正常範圍
+          </p>
+        </div>
+
+        <div className="mt-2 grid grid-cols-3 gap-2">
+          {[
+            { label: '維持體重', value: suggestions.maintain, tone: 'bg-slate-50 text-slate-700' },
+            { label: '溫和減脂', value: suggestions.lose, tone: 'bg-emerald-50 text-emerald-700' },
+            { label: '增加體重', value: suggestions.gain, tone: 'bg-amber-50 text-amber-800' },
+          ].map((item) => (
+            <div key={item.label} className={`rounded-2xl p-2.5 ${item.tone}`}>
+              <p className="text-[11px] font-bold opacity-80">{item.label}</p>
+              <p className="mt-1 text-lg font-black leading-none tabular-nums">
+                {item.value.toLocaleString()}
+              </p>
+              <p className="mt-1 text-[10px] font-bold opacity-60">kcal / 日</p>
+            </div>
+          ))}
+        </div>
+
+        <p className="mt-2.5 text-xs leading-relaxed text-slate-400">
+          熱量建議以 TDEE 加減 300 kcal 估算，實際需求會因個人代謝與生活型態而異。
+        </p>
+      </section>
+
+      <section className="mt-4 rounded-[26px] border border-amber-100 bg-white p-4 shadow-sm shadow-amber-900/5">
+        <SectionHeading
+          icon={Info}
+          title="成人健康體位標準"
+          subtitle="衛生福利部國民健康署定義"
+        />
+
+        <div className="mt-3 space-y-2">
+          {BMI_CATEGORIES.map((item) => {
+            const isCurrent = item.id === category.id;
+            return (
+              <div
+                key={item.id}
+                className={`flex items-center justify-between gap-2 rounded-2xl border px-3.5 py-2.5 ${
+                  isCurrent ? item.softClass : 'border-slate-100 bg-slate-50/70'
+                }`}
+              >
+                <div className="flex items-center gap-2.5">
+                  <span className={`h-2.5 w-2.5 rounded-full ${item.barClass}`} />
+                  <span
+                    className={`text-sm font-black ${
+                      isCurrent ? item.textClass : 'text-slate-600'
+                    }`}
+                  >
+                    {item.label}
+                  </span>
+                  {isCurrent && (
+                    <span className="rounded-full bg-white/80 px-2 py-0.5 text-[10px] font-black text-slate-600 shadow-sm">
+                      目前
+                    </span>
+                  )}
+                </div>
+                <span className="text-xs font-bold text-slate-500">{item.rangeLabel}</span>
+              </div>
+            );
+          })}
+        </div>
+
+        <p className="mt-3 text-xs leading-relaxed text-slate-400">
+          BMI 僅為初步篩檢工具，無法區分肌肉與脂肪比例；兒童、孕婦、運動員及高齡者應由專業人員另行評估。
+        </p>
+      </section>
+
+      <button
+        type="button"
+        onClick={onOpenSettings}
+        className="mt-4 flex w-full items-center justify-between rounded-2xl border border-blue-100 bg-white px-4 py-3.5 text-left shadow-sm transition hover:bg-blue-50 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-blue-900 active:scale-[0.99]"
+      >
+        <span className="flex items-center gap-2.5">
+          <span className="grid h-9 w-9 place-items-center rounded-xl bg-blue-900 text-amber-200">
+            <Pencil className="h-4 w-4" />
+          </span>
+          <span>
+            <span className="block text-sm font-black text-slate-900">更新生理數據</span>
+            <span className="block text-xs text-slate-500">身高或體重改變時重新計算</span>
+          </span>
+        </span>
+        <ArrowRight className="h-5 w-5 text-slate-400" />
+      </button>
+    </div>
+  );
+}
