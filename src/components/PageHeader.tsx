@@ -11,7 +11,7 @@ export function PageHeader({ eyebrow, title, description, icon: Icon }: PageHead
   return (
     <div className="mb-5 flex items-start justify-between gap-3">
       <div className="min-w-0">
-        <p className="text-[11px] font-black tracking-[0.18em] text-plum-700">{eyebrow}</p>
+        <p className="text-xs font-black tracking-[0.18em] text-plum-700">{eyebrow}</p>
         <h2 className="mt-1 text-2xl font-black leading-tight tracking-tight text-slate-900">
           {title}
         </h2>
