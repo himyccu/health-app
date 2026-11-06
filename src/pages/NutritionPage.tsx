@@ -321,8 +321,19 @@ export function NutritionPage({ profile, onNotify }: NutritionPageProps) {
           })}
         </div>
 
-        <p className="mt-3 text-[11px] leading-relaxed text-slate-400">
-          依《每日飲食指南手冊》（107 年版）1,800 kcal 基準估算；完成基本資料後，會依你的每日熱量需求調整。此卡為建議量，不是本次實際攝取份數。
+        <div className="mt-3 rounded-2xl bg-plum-50/70 px-3 py-2.5">
+          <p className="text-[11px] font-semibold leading-relaxed text-plum-900">
+            「碗」與「份」是不同單位，不能直接比大小。
+          </p>
+          <p className="mt-1 text-[11px] leading-relaxed text-slate-500">
+            1 碗穀物約 4 份（約 280 kcal）；1 份蔬菜約 100 公克（約 25 kcal）；1
+            份水果約 100 公克（約 60 kcal）。所以 3 碗穀物的熱量會高於 3 份蔬菜。
+          </p>
+        </div>
+
+        <p className="mt-2.5 text-[11px] leading-relaxed text-slate-400">
+          依《每日飲食指南手冊》（115 年版，2026）1,800 kcal
+          基準估算；完成基本資料後，會依你的每日熱量需求調整。此卡為建議量，不是本次實際攝取份數。
         </p>
       </section>
 

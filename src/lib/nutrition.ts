@@ -16,12 +16,18 @@ export interface FoodGroupMeta {
   targetAt1800: number;
 }
 
+/**
+ * 依衛生福利部國民健康署《每日飲食指南手冊》115 年版（2026）1,800 kcal 基準。
+ * 「碗」與「份」是不同單位，不能直接互相比較：
+ * 1 碗穀物約 4 份（約 280 kcal）、1 份蔬菜約 100 公克（約 25 kcal）、
+ * 1 份水果約 100 公克（約 60 kcal）。
+ */
 export const FOOD_GROUPS: FoodGroupMeta[] = [
   {
     key: 'grains',
-    name: '全穀雜糧類',
+    name: '穀物雜糧類',
     unit: '碗',
-    description: '糙米、燕麥、地瓜、全麥麵包',
+    description: '糙米、燕麥、地瓜；未精製至少占一半',
     targetAt1800: 3,
   },
   {
@@ -29,34 +35,34 @@ export const FOOD_GROUPS: FoodGroupMeta[] = [
     name: '豆魚蛋肉類',
     unit: '份',
     description: '黃豆製品、魚類、蛋、雞肉、瘦肉',
-    targetAt1800: 5,
+    targetAt1800: 5.5,
   },
   {
     key: 'dairy',
     name: '乳品類',
     unit: '杯',
     description: '鮮奶、無糖優格、起司（1 杯＝240ml）',
-    targetAt1800: 1.5,
+    targetAt1800: 1,
   },
   {
     key: 'vegetables',
     name: '蔬菜類',
     unit: '份',
-    description: '深綠、深黃、紅橙色蔬菜',
+    description: '深綠、深黃、紅橙色蔬菜；1 份約 100 公克',
     targetAt1800: 3,
   },
   {
     key: 'fruits',
     name: '水果類',
     unit: '份',
-    description: '當季水果，每份約一個拳頭',
+    description: '當季水果；1 份約 100 公克',
     targetAt1800: 2,
   },
   {
     key: 'fats',
     name: '油脂與堅果種子類',
     unit: '份',
-    description: '橄欖油、苦茶油、堅果種子',
+    description: '油脂 4 茶匙＋堅果種子 1 份',
     targetAt1800: 5,
   },
 ];

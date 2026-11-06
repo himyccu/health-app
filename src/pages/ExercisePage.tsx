@@ -1,6 +1,5 @@
 import { useEffect, useMemo, useRef, useState } from 'react';
 import {
-  ArrowUpRight,
   Check,
   ChevronRight,
   Dumbbell,
@@ -27,6 +26,7 @@ import {
 import { dateKey, loadWorkouts, saveWorkouts } from '../lib/storage';
 import { PageHeader } from '../components/PageHeader';
 import { SectionHeading } from '../components/SectionHeading';
+import { MuscleMap } from '../components/MuscleMap';
 
 interface ExercisePageProps {
   profile: Profile;
@@ -251,6 +251,11 @@ export function ExercisePage({ profile, onNotify }: ExercisePageProps) {
             </div>
           </div>
 
+          <MuscleMap
+            primaryMuscles={selected.primaryMuscles}
+            secondaryMuscles={selected.secondaryMuscles}
+          />
+
           <div className="mt-3 grid gap-2">
             <div className="rounded-2xl bg-emerald-50/70 p-3">
               <p className="text-xs font-black text-emerald-800">動作要點</p>
@@ -345,16 +350,6 @@ export function ExercisePage({ profile, onNotify }: ExercisePageProps) {
               </p>
             )}
           </div>
-
-          <a
-            href="https://anatomy3datlas.com/body-systems/musculoskeletal/"
-            target="_blank"
-            rel="noreferrer"
-            className="mt-3 flex items-center justify-center gap-1 rounded-xl bg-slate-50 py-2.5 text-xs font-bold text-slate-500 transition hover:bg-slate-100 hover:text-slate-700"
-          >
-            進一步查看人體解剖構造
-            <ArrowUpRight className="h-3.5 w-3.5" />
-          </a>
         </section>
       )}
 
