@@ -19,7 +19,7 @@ export function AppHeader() {
           <p className="text-[10px] font-bold tracking-[0.22em] text-amber-200">
             HEALTH COMPANION
           </p>
-          <h1 className="truncate text-2xl font-black tracking-tight">Hayley 的健康管家</h1>
+          <h1 className="truncate text-2xl font-black tracking-tight">HAYLEY 健康管家</h1>
           <p className="mt-0.5 text-[11px] font-semibold text-plum-200">
             今天的每一步，都算數。
           </p>

@@ -407,7 +407,7 @@ export function ActivityPage({ profile, onNotify, onOpenExercise }: ActivityPage
       />
 
       <section className="mt-4 rounded-[26px] border border-amber-100 bg-white p-4 shadow-sm shadow-amber-900/5">
-        <SectionHeading icon={Plus} title="快速紀錄步數" subtitle="沒有連接計步器時，可手動補登" />
+        <SectionHeading icon={Plus} title="快速紀錄步數" subtitle="查看手機內建的健康 App 後，輸入今天的步數" />
 
         <div className="mt-3 grid grid-cols-3 gap-2">
           {[500, 1000, 2000].map((amount) => (

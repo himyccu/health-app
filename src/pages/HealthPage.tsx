@@ -55,10 +55,9 @@ export function HealthPage({ profile, onOpenSettings }: HealthPageProps) {
           <div className="mx-auto grid h-14 w-14 place-items-center rounded-2xl bg-plum-50 text-plum-700">
             <Sparkles className="h-6 w-6" strokeWidth={2.2} />
           </div>
-          <h3 className="mt-3 text-lg font-black text-slate-900">還沒建立你的專屬生理數據</h3>
+          <h3 className="mt-3 text-lg font-black text-slate-900">建立你的生理數據</h3>
           <p className="mx-auto mt-2 max-w-[17rem] text-sm leading-relaxed text-slate-500">
-            BMI、基礎代謝與熱量建議，都需要你的身高、體重與年齡。
-            完成一次設定，這些數字就會完全屬於你，不再混入任何預設值。
+            填寫身高、體重與年齡，就能看到 BMI、基礎代謝與每日熱量建議。
           </p>
           <button
             type="button"

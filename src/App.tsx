@@ -17,6 +17,7 @@ import { Toast } from './components/Toast';
 import { ActivityPage } from './pages/ActivityPage';
 import { ExercisePage } from './pages/ExercisePage';
 import { HealthPage } from './pages/HealthPage';
+import { HomePage } from './pages/HomePage';
 import { SettingsPage } from './pages/SettingsPage';
 
 const NutritionPage = lazy(() =>
@@ -28,7 +29,7 @@ export default function App() {
     profile: loadProfile(),
     accepted: hasAcceptedDisclaimer(),
   }));
-  const [activeTab, setActiveTab] = useState<TabId>('activity');
+  const [activeTab, setActiveTab] = useState<TabId>('home');
   const [profile, setProfile] = useState<Profile>(() => bootstrap.profile);
   const [disclaimerAccepted, setDisclaimerAccepted] = useState(() => bootstrap.accepted);
   const [disclaimerOpen, setDisclaimerOpen] = useState(() => !bootstrap.accepted);
@@ -99,6 +100,7 @@ export default function App() {
           ref={mainRef}
           className="no-scrollbar flex-1 overflow-y-auto overscroll-contain px-4 pb-6 pt-5"
         >
+          {activeTab === 'home' && <HomePage profile={profile} onNavigate={setActiveTab} />}
           {activeTab === 'activity' && (
             <ActivityPage
               profile={profile}

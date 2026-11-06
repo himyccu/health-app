@@ -120,8 +120,7 @@ export function WalkTracker({ todayDistanceKm, weightKg, onSave }: WalkTrackerPr
     const finalSeconds = Math.floor((Date.now() - startedAtRef.current) / 1000);
     const distanceKm = Math.round(finalMeters / 10) / 100;
     const minutes = Math.max(1, Math.round(finalSeconds / 60));
-    const calories =
-      weightKg > 0 ? Math.round(WALKING_MET * weightKg * (finalSeconds / 3600)) : 0;
+    const calories = weightKg > 0 ? Math.round(WALKING_MET * weightKg * (minutes / 60)) : 0;
 
     setMeters(0);
     setSeconds(0);

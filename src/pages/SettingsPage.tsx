@@ -118,7 +118,7 @@ export function SettingsPage({
         <div className="mt-4 space-y-3">
           {isFreshProfile && (
             <p className="rounded-xl border border-plum-200 bg-plum-50 px-3 py-2 text-xs leading-relaxed text-plum-800">
-              第一次使用：所有欄位都是空白的，填入你自己的數據並儲存後，App 裡的計算就會完全專屬於你。
+              填寫以下資料，作為 BMI、代謝與熱量計算的基準。
             </p>
           )}
           <div>

@@ -2,7 +2,7 @@ export type Gender = 'male' | 'female';
 
 export type ActivityLevel = 'sedentary' | 'light' | 'moderate' | 'active' | 'veryActive';
 
-export type TabId = 'activity' | 'exercise' | 'health' | 'nutrition' | 'settings';
+export type TabId = 'home' | 'activity' | 'exercise' | 'health' | 'nutrition' | 'settings';
 
 export type ExerciseCategory = 'cardio' | 'strength' | 'core' | 'mobility';
 
