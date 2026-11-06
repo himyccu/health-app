@@ -104,14 +104,14 @@ export function NutritionPage({ profile, onNotify }: NutritionPageProps) {
                 {totals.calories.toLocaleString()}
               </span>
               <span className="text-sm font-bold text-plum-200">
-                / {targets.calories.toLocaleString()} kcal
+                {profileReady ? `/ ${targets.calories.toLocaleString()} kcal` : 'kcal'}
               </span>
             </p>
           </div>
           <div className="rounded-2xl bg-white/10 px-3 py-2 text-right">
             <p className="text-[10px] font-bold text-plum-200">達成率</p>
             <p className="text-xl font-black leading-tight tabular-nums text-amber-200">
-              {caloriePercent}%
+              {profileReady ? `${caloriePercent}%` : '—'}
             </p>
           </div>
         </div>
@@ -288,7 +288,7 @@ export function NutritionPage({ profile, onNotify }: NutritionPageProps) {
           <SectionHeading
             icon={Salad}
             title="每日飲食指南六大類"
-            subtitle="建議量參考，非本次攝取量"
+            subtitle={profileReady ? '依你的每日熱量需求估算' : '以 1,800 kcal 為基準'}
           />
           <span className="shrink-0 rounded-full bg-amber-50 px-2.5 py-1 text-[10px] font-black text-amber-800">
             參考
@@ -322,7 +322,7 @@ export function NutritionPage({ profile, onNotify }: NutritionPageProps) {
         </div>
 
         <p className="mt-3 text-[11px] leading-relaxed text-slate-400">
-          建議量以《每日飲食指南手冊》1,800 kcal 基準，依您的 TDEE 比例估算。此卡僅顯示建議量，不代表本次飲食實際攝取份數。
+          依《每日飲食指南手冊》（107 年版）1,800 kcal 基準估算；完成基本資料後，會依你的每日熱量需求調整。此卡為建議量，不是本次實際攝取份數。
         </p>
       </section>
 
@@ -367,8 +367,7 @@ function MacroBar({ label, value, target, unit, barClass }: MacroBarProps) {
         <span className="font-black text-white tabular-nums">
           {Math.round(value)}
           <span className="ml-0.5 font-bold text-plum-300">
-            / {target}
-            {unit}
+            {target > 0 ? `/ ${target}${unit}` : unit}
           </span>
         </span>
       </div>

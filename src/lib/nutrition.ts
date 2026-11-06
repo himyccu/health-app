@@ -29,13 +29,13 @@ export const FOOD_GROUPS: FoodGroupMeta[] = [
     name: '豆魚蛋肉類',
     unit: '份',
     description: '黃豆製品、魚類、蛋、雞肉、瘦肉',
-    targetAt1800: 6,
+    targetAt1800: 5,
   },
   {
     key: 'dairy',
     name: '乳品類',
     unit: '杯',
-    description: '鮮奶、無糖優格、起司',
+    description: '鮮奶、無糖優格、起司（1 杯＝240ml）',
     targetAt1800: 1.5,
   },
   {
@@ -43,14 +43,14 @@ export const FOOD_GROUPS: FoodGroupMeta[] = [
     name: '蔬菜類',
     unit: '份',
     description: '深綠、深黃、紅橙色蔬菜',
-    targetAt1800: 4,
+    targetAt1800: 3,
   },
   {
     key: 'fruits',
     name: '水果類',
     unit: '份',
     description: '當季水果，每份約一個拳頭',
-    targetAt1800: 3,
+    targetAt1800: 2,
   },
   {
     key: 'fats',
@@ -85,7 +85,10 @@ function round1(value: number): number {
 }
 
 export function getGroupTargets(tdee: number): FoodGroups {
-  const scale = tdee / 1800;
+  // 尚未建立生理資料時，先用官方 1,800 kcal 基準顯示六大類建議量，
+  // 避免出現「乳品 1 杯、其餘全為 0」的錯誤畫面。
+  const referenceCalories = tdee > 0 ? tdee : 1800;
+  const scale = referenceCalories / 1800;
   const roundHalf = (value: number) => Math.round(value * 2) / 2;
   return {
     grains: roundHalf(FOOD_GROUPS[0].targetAt1800 * scale),
