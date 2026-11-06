@@ -91,4 +91,6 @@ export interface StepsData {
   days: Record<string, number>;
   /** 每日活動時間（分鐘）。與步數分開記錄，因為同樣步數每個人的實際時間不同。 */
   activeMinutes: Record<string, number>;
+  /** 每日 GPS 實際步行距離（公里）。 */
+  distanceKm: Record<string, number>;
 }

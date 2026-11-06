@@ -108,11 +108,22 @@ function parseMinuteRecords(raw: unknown): Record<string, number> {
   return minutes;
 }
 
+function parseDistanceRecords(raw: unknown): Record<string, number> {
+  const distances: Record<string, number> = {};
+  if (!isRecord(raw)) return distances;
+  Object.entries(raw).forEach(([key, value]) => {
+    if (typeof value === 'number' && Number.isFinite(value) && value >= 0) {
+      distances[key] = Math.round(value * 100) / 100;
+    }
+  });
+  return distances;
+}
+
 export function loadSteps(): StepsData {
   const raw = readJson(KEYS.steps);
   // 首次使用：沒有任何步數紀錄，全部歸零，由使用者逐日累積。
   if (!isRecord(raw) || !isRecord(raw.days)) {
-    return { goal: 10000, days: {}, activeMinutes: {} };
+    return { goal: 10000, days: {}, activeMinutes: {}, distanceKm: {} };
   }
 
   const days: Record<string, number> = {};
@@ -130,6 +141,7 @@ export function loadSteps(): StepsData {
     ),
     days,
     activeMinutes: parseMinuteRecords(raw.activeMinutes),
+    distanceKm: parseDistanceRecords(raw.distanceKm),
   };
 }
 

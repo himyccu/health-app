@@ -16,6 +16,7 @@ import { getStepMetrics, isProfileComplete } from '../lib/health';
 import { dateKey, loadSteps, saveSteps } from '../lib/storage';
 import { PageHeader } from '../components/PageHeader';
 import { SectionHeading } from '../components/SectionHeading';
+import { WalkTracker } from '../components/WalkTracker';
 import dogPhoto from '../assets/dog.png';
 
 interface ActivityPageProps {
@@ -54,6 +55,7 @@ export function ActivityPage({ profile, onNotify }: ActivityPageProps) {
   const today = dateKey();
   const steps = data.days[today] ?? 0;
   const activeMinutes = data.activeMinutes[today] ?? 0;
+  const todayDistanceKm = data.distanceKm[today] ?? 0;
   const metrics = getStepMetrics(steps, profile);
   const profileReady = isProfileComplete(profile);
 
@@ -131,6 +133,17 @@ export function ActivityPage({ profile, onNotify }: ActivityPageProps) {
   const handleResetMinutes = () => {
     updateTodayMinutes(0);
     onNotify('今日活動時間已重設');
+  };
+
+  const handleSaveWalk = (distanceKm: number, minutes: number) => {
+    const nextDistance =
+      Math.round(((data.distanceKm[today] ?? 0) + distanceKm) * 100) / 100;
+    commit({
+      ...data,
+      distanceKm: { ...data.distanceKm, [today]: nextDistance },
+      activeMinutes: { ...data.activeMinutes, [today]: activeMinutes + minutes },
+    });
+    onNotify(`已記錄步行 ${distanceKm.toFixed(2)} 公里、${minutes} 分鐘`);
   };
 
   const rangeData = useMemo(() => {
@@ -355,7 +368,7 @@ export function ActivityPage({ profile, onNotify }: ActivityPageProps) {
         <MetricCard
           icon={MapPin}
           label="行走距離"
-          value={profileReady ? metrics.distanceKm.toFixed(1) : '—'}
+          value={todayDistanceKm.toFixed(2)}
           unit="km"
           accent="text-emerald-600"
           soft="bg-emerald-50"
@@ -369,6 +382,8 @@ export function ActivityPage({ profile, onNotify }: ActivityPageProps) {
           soft="bg-plum-50"
         />
       </div>
+
+      <WalkTracker todayDistanceKm={todayDistanceKm} onSave={handleSaveWalk} />
 
       <section className="mt-4 rounded-[26px] border border-amber-100 bg-white p-4 shadow-sm shadow-amber-900/5">
         <SectionHeading icon={Plus} title="快速紀錄步數" subtitle="沒有連接計步器時，可手動補登" />
@@ -425,11 +440,7 @@ export function ActivityPage({ profile, onNotify }: ActivityPageProps) {
       </section>
 
       <section className="mt-4 rounded-[26px] border border-plum-100 bg-white p-4 shadow-sm shadow-amber-900/5">
-        <SectionHeading icon={Timer} title="活動時間" subtitle="獨立記錄，不與步數綁定" />
-
-        <p className="mt-2 rounded-xl bg-plum-50/70 px-3 py-2 text-[11px] leading-relaxed text-plum-800">
-          同樣走 2,000 步，有人花 20 分鐘、有人花 30 分鐘。活動時間無法從步數反推，所以這裡讓你自己記錄實際花費的時間。
-        </p>
+        <SectionHeading icon={Timer} title="活動時間" subtitle="室內或無法定位時，可手動補登" />
 
         <div className="mt-3 grid grid-cols-4 gap-2">
           {[10, 20, 30, 60].map((amount) => (

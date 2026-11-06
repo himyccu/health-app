@@ -156,20 +156,16 @@ export function getCalorieSuggestions(profile: Profile): CalorieSuggestions {
 }
 
 export interface StepMetrics {
-  distanceKm: number;
   calories: number;
 }
 
 /**
- * 步數可推估距離與熱量，但「活動時間」無法由步數反推
- * （同樣 2,000 步，有人走 20 分鐘、有人走 30 分鐘），因此不在此計算。
+ * 步行距離改由 GPS 實際量測、活動時間由使用者獨立記錄，
+ * 這裡只保留可由步數合理推估的熱量，避免任何假聯動。
  */
 export function getStepMetrics(steps: number, profile: Profile): StepMetrics {
-  const strideMetres = (profile.height * 0.415) / 100;
-  const distanceKm = (steps * strideMetres) / 1000;
   const calories = steps * 0.04 * (profile.weight / 65);
   return {
-    distanceKm: Math.round(distanceKm * 10) / 10,
     calories: Math.round(calories),
   };
 }
