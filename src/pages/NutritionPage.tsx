@@ -23,6 +23,7 @@ import {
 } from '../lib/nutrition';
 import { TFDA_META } from '../lib/tfdaMeta';
 import { dateKey, loadMeals, saveMeals } from '../lib/storage';
+import { isProfileComplete } from '../lib/health';
 import { PageHeader } from '../components/PageHeader';
 import { SectionHeading } from '../components/SectionHeading';
 import { FoodSearchCard } from '../components/FoodSearchCard';
@@ -65,6 +66,7 @@ export function NutritionPage({ profile, onNotify }: NutritionPageProps) {
   const caloriePercent =
     targets.calories > 0 ? Math.round((totals.calories / targets.calories) * 100) : 0;
   const remainingCalories = targets.calories - totals.calories;
+  const profileReady = isProfileComplete(profile);
 
   const handleAddFood = (food: TfdaFood, grams: number, mealType: MealType) => {
     const entry = createFoodMealEntry(food, grams, mealType, today);
@@ -121,9 +123,11 @@ export function NutritionPage({ profile, onNotify }: NutritionPageProps) {
           />
         </div>
         <p className="relative mt-2 text-xs font-medium text-plum-100">
-          {remainingCalories >= 0
-            ? `還可攝取約 ${remainingCalories.toLocaleString()} kcal`
-            : `已超過每日估算 ${Math.abs(remainingCalories).toLocaleString()} kcal`}
+          {!profileReady
+            ? '尚未設定生理數據，完成設定後會自動算出專屬的熱量建議。'
+            : remainingCalories >= 0
+              ? `還可攝取約 ${remainingCalories.toLocaleString()} kcal`
+              : `已超過每日估算 ${Math.abs(remainingCalories).toLocaleString()} kcal`}
         </p>
 
         <div className="relative mt-5 grid gap-3 border-t border-white/10 pt-4">

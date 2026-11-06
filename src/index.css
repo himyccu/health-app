@@ -4,6 +4,8 @@
   --font-sans:
     "Noto Sans TC", "PingFang TC", "Microsoft JhengHei", "Heiti TC", "Helvetica Neue",
     Arial, sans-serif;
+  --font-serif:
+    "Noto Serif TC", "Songti TC", "PMingLiU", "Noto Sans TC", serif;
 
   /* 專屬的暖紫品牌色，以淡紫為底、深紫為主要行動色。 */
   --color-plum-50: #f8f5fc;

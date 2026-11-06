@@ -17,7 +17,7 @@ import { getStepMetrics } from '../lib/health';
 import { dateKey, loadSteps, saveSteps } from '../lib/storage';
 import { PageHeader } from '../components/PageHeader';
 import { SectionHeading } from '../components/SectionHeading';
-import heroRunner from '../assets/hero-runner.jpg';
+import dogPhoto from '../assets/dog.jpg';
 
 interface ActivityPageProps {
   profile: Profile;
@@ -60,6 +60,8 @@ export function ActivityPage({ profile, onNotify }: ActivityPageProps) {
 
   const maxChartValue = Math.max(...week.map((day) => day.value), data.goal, 1) * 1.12;
   const goalLinePercent = (data.goal / maxChartValue) * 100;
+  const weekTotal = week.reduce((sum, day) => sum + day.value, 0);
+  const weekAverage = Math.round(weekTotal / week.length);
 
   const commit = (next: StepsData) => {
     setData(next);
@@ -121,7 +123,7 @@ export function ActivityPage({ profile, onNotify }: ActivityPageProps) {
             <p className="text-[11px] font-black tracking-[0.18em] text-plum-600">
               A GENTLE START
             </p>
-            <p className="mt-2 text-[26px] font-black leading-[1.22] tracking-tight text-plum-950">
+            <p className="mt-2 font-serif text-[20px] font-black leading-[1.45] tracking-wide text-purple-700">
               今天也要
               <br />
               好好照顧自己
@@ -131,12 +133,11 @@ export function ActivityPage({ profile, onNotify }: ActivityPageProps) {
             </p>
           </div>
 
-          <div className="relative h-[190px] w-[42%] shrink-0">
+          <div className="relative h-[168px] w-[42%] shrink-0">
             <img
-              src={heroRunner}
-              alt=""
-              aria-hidden="true"
-              className="h-full w-full object-contain object-bottom mix-blend-multiply"
+              src={dogPhoto}
+              alt="今天也要好好照顧自己"
+              className="h-full w-full rounded-[1.6rem] object-cover shadow-md shadow-plum-900/15 ring-1 ring-white/80"
             />
           </div>
         </div>
@@ -333,6 +334,27 @@ export function ActivityPage({ profile, onNotify }: ActivityPageProps) {
           </div>
         </div>
 
+        <div className="mt-3 grid grid-cols-2 gap-2">
+          <div className="rounded-2xl bg-plum-50 px-3 py-2">
+            <p className="text-[11px] font-bold text-plum-600">近 7 天累積</p>
+            <p className="mt-0.5 flex items-baseline gap-1">
+              <span className="text-lg font-black leading-none tabular-nums text-plum-900">
+                {weekTotal.toLocaleString()}
+              </span>
+              <span className="text-[10px] font-bold text-plum-500">步</span>
+            </p>
+          </div>
+          <div className="rounded-2xl bg-amber-50 px-3 py-2">
+            <p className="text-[11px] font-bold text-amber-700">平均每日</p>
+            <p className="mt-0.5 flex items-baseline gap-1">
+              <span className="text-lg font-black leading-none tabular-nums text-amber-900">
+                {weekAverage.toLocaleString()}
+              </span>
+              <span className="text-[10px] font-bold text-amber-600">步 / 日</span>
+            </p>
+          </div>
+        </div>
+
         <div className="relative mt-5 h-32">
           <div
             className="pointer-events-none absolute inset-x-0 z-0 border-t border-dashed border-amber-400/80"
@@ -371,7 +393,7 @@ export function ActivityPage({ profile, onNotify }: ActivityPageProps) {
         </div>
 
         <p className="mt-3 rounded-xl bg-slate-50 px-3 py-2 text-[11px] leading-relaxed text-slate-500">
-          步數由本機手動紀錄。首次開啟提供示範數據，您可以新增或重設為自己的紀錄。
+          步數由本機紀錄，每天都是全新的起點。今天填的步數只屬於今天，明天會重新歸零並逐日累積成自己的軌跡。
         </p>
       </section>
 

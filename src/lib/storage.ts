@@ -20,11 +20,13 @@ const LEGACY_KEYS = {
   disclaimer: 'health_app_disclaimer_agreed',
 } as const;
 
+// 首次使用的預設值：全部留空（0），由使用者在「設定」自行建立專屬基準。
+// 性別與活動量不影響「看起來像別人的累積數字」，故保留合理初始選項。
 export const DEFAULT_PROFILE: Profile = {
   gender: 'female',
-  age: 30,
-  height: 160,
-  weight: 55,
+  age: 0,
+  height: 0,
+  weight: 0,
   activity: 'light',
 };
 
@@ -53,12 +55,6 @@ export function dateKey(date: Date = new Date()): string {
   return `${year}-${month}-${day}`;
 }
 
-function dateKeyDaysAgo(daysAgo: number): string {
-  const date = new Date();
-  date.setDate(date.getDate() - daysAgo);
-  return dateKey(date);
-}
-
 function isRecord(value: unknown): value is Record<string, unknown> {
   return typeof value === 'object' && value !== null;
 }
@@ -77,9 +73,11 @@ function isActivityLevel(value: unknown): value is ActivityLevel {
   );
 }
 
-function clampNumber(value: unknown, min: number, max: number, fallback: number): number {
-  if (typeof value !== 'number' || !Number.isFinite(value)) return fallback;
-  return Math.min(max, Math.max(min, value));
+function sanNumber(value: unknown, min: number, max: number): number {
+  // 未設定或無效時回傳 0（視為尚未建立），不由系統預設任何數字。
+  if (typeof value !== 'number' || !Number.isFinite(value)) return 0;
+  if (value < min || value > max) return 0;
+  return value;
 }
 
 export function loadProfile(): Profile {
@@ -88,9 +86,9 @@ export function loadProfile(): Profile {
 
   return {
     gender: isGender(raw.gender) ? raw.gender : DEFAULT_PROFILE.gender,
-    age: Math.round(clampNumber(raw.age, 1, 120, DEFAULT_PROFILE.age)),
-    height: Math.round(clampNumber(raw.height, 80, 250, DEFAULT_PROFILE.height)),
-    weight: clampNumber(raw.weight, 20, 300, DEFAULT_PROFILE.weight),
+    age: Math.round(sanNumber(raw.age, 1, 120)),
+    height: Math.round(sanNumber(raw.height, 80, 250)),
+    weight: sanNumber(raw.weight, 20, 300),
     activity: isActivityLevel(raw.activity) ? raw.activity : DEFAULT_PROFILE.activity,
   };
 }
@@ -99,19 +97,10 @@ export function saveProfile(profile: Profile): void {
   writeJson(KEYS.profile, profile);
 }
 
-const DEMO_STEP_VALUES = [6210, 9120, 7240, 10480, 8350, 5920, 8452];
-
-function createDemoSteps(): StepsData {
-  const days: Record<string, number> = {};
-  DEMO_STEP_VALUES.forEach((steps, index) => {
-    days[dateKeyDaysAgo(DEMO_STEP_VALUES.length - 1 - index)] = steps;
-  });
-  return { goal: 10000, days };
-}
-
 export function loadSteps(): StepsData {
   const raw = readJson(KEYS.steps);
-  if (!isRecord(raw) || !isRecord(raw.days)) return createDemoSteps();
+  // 首次使用：没有任何步數紀錄，全部歸零，由使用者逐日累積。
+  if (!isRecord(raw) || !isRecord(raw.days)) return { goal: 10000, days: {} };
 
   const days: Record<string, number> = {};
   Object.entries(raw.days).forEach(([key, value]) => {
@@ -121,7 +110,11 @@ export function loadSteps(): StepsData {
   });
 
   return {
-    goal: Math.round(clampNumber(raw.goal, 1000, 50000, 10000)),
+    goal: Math.round(
+      typeof raw.goal === 'number' && Number.isFinite(raw.goal)
+        ? Math.min(50000, Math.max(1000, raw.goal))
+        : 10000,
+    ),
     days,
   };
 }

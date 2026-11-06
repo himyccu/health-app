@@ -7,6 +7,7 @@ import {
   Info,
   Pencil,
   Scale,
+  Sparkles,
 } from 'lucide-react';
 import type { Profile } from '../types';
 import {
@@ -18,6 +19,7 @@ import {
   getBmiCategory,
   getCalorieSuggestions,
   getIdealWeightRange,
+  isProfileComplete,
 } from '../lib/health';
 import { PageHeader } from '../components/PageHeader';
 import { SectionHeading } from '../components/SectionHeading';
@@ -39,6 +41,38 @@ function gaugePercent(value: number): number {
 }
 
 export function HealthPage({ profile, onOpenSettings }: HealthPageProps) {
+  // 首次使用（尚未建立生理數據）時，不顯示任何預設的計算數字。
+  if (!isProfileComplete(profile)) {
+    return (
+      <div>
+        <PageHeader
+          eyebrow="HEALTH"
+          title="健康指數"
+          description="用 BMI 與每日熱量基準，掌握身體的現在。"
+          icon={HeartPulse}
+        />
+        <section className="rounded-[28px] border border-amber-100 bg-white p-6 text-center shadow-sm shadow-amber-900/5">
+          <div className="mx-auto grid h-14 w-14 place-items-center rounded-2xl bg-plum-50 text-plum-700">
+            <Sparkles className="h-6 w-6" strokeWidth={2.2} />
+          </div>
+          <h3 className="mt-3 text-lg font-black text-slate-900">還沒建立你的專屬生理數據</h3>
+          <p className="mx-auto mt-2 max-w-[17rem] text-sm leading-relaxed text-slate-500">
+            BMI、基礎代謝與熱量建議，都需要你的身高、體重與年齡。
+            完成一次設定，這些數字就會完全屬於你，不再混入任何預設值。
+          </p>
+          <button
+            type="button"
+            onClick={onOpenSettings}
+            className="mt-5 inline-flex h-11 items-center gap-1.5 rounded-2xl bg-plum-900 px-6 text-sm font-black text-white shadow-lg shadow-plum-900/20 transition hover:bg-plum-800 active:scale-[0.98]"
+          >
+            <Pencil className="h-4 w-4" />
+            前往設定我的生理數據
+          </button>
+        </section>
+      </div>
+    );
+  }
+
   const bmiRaw = calcBmi(profile.weight, profile.height);
   const bmi = Math.round(bmiRaw * 100) / 100;
   const category = getBmiCategory(bmiRaw);

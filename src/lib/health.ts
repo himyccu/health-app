@@ -44,6 +44,11 @@ export function getActivityOption(level: ActivityLevel): ActivityOption {
   return ACTIVITY_OPTIONS.find((option) => option.value === level) ?? ACTIVITY_OPTIONS[1];
 }
 
+/** 生理數據是否已由使用者建立（首次使用時年齡、身高、體重皆為 0）。 */
+export function isProfileComplete(profile: Profile): boolean {
+  return profile.age > 0 && profile.height > 0 && profile.weight > 0;
+}
+
 export function calcBmi(weightKg: number, heightCm: number): number {
   const heightM = heightCm / 100;
   if (!Number.isFinite(heightM) || heightM <= 0 || !Number.isFinite(weightKg)) return 0;

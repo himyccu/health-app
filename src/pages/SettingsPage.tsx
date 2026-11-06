@@ -14,7 +14,7 @@ import {
   Weight,
 } from 'lucide-react';
 import type { ActivityLevel, Gender, Profile } from '../types';
-import { ACTIVITY_OPTIONS, calcBmr, calcTdee, getActivityOption } from '../lib/health';
+import { ACTIVITY_OPTIONS, calcBmr, calcTdee, getActivityOption, isProfileComplete } from '../lib/health';
 import { TFDA_META } from '../lib/tfdaMeta';
 import { PageHeader } from '../components/PageHeader';
 import { SectionHeading } from '../components/SectionHeading';
@@ -34,13 +34,17 @@ export function SettingsPage({
   onShowDisclaimer,
   onReset,
 }: SettingsPageProps) {
+  // 首次使用時（數值為 0）輸入欄位保持空白，避免使用者誤以為是別人留下的資料。
+  const toInput = (value: number) => (value > 0 ? String(value) : '');
   const [gender, setGender] = useState<Gender>(profile.gender);
-  const [ageInput, setAgeInput] = useState(String(profile.age));
-  const [heightInput, setHeightInput] = useState(String(profile.height));
-  const [weightInput, setWeightInput] = useState(String(profile.weight));
+  const [ageInput, setAgeInput] = useState(() => toInput(profile.age));
+  const [heightInput, setHeightInput] = useState(() => toInput(profile.height));
+  const [weightInput, setWeightInput] = useState(() => toInput(profile.weight));
   const [activity, setActivity] = useState<ActivityLevel>(profile.activity);
   const [error, setError] = useState<string | null>(null);
   const [showResetConfirm, setShowResetConfirm] = useState(false);
+
+  const isFreshProfile = !isProfileComplete(profile);
 
   const age = Number(ageInput);
   const height = Number(heightInput);
@@ -87,9 +91,9 @@ export function SettingsPage({
 
   const restoreSaved = () => {
     setGender(profile.gender);
-    setAgeInput(String(profile.age));
-    setHeightInput(String(profile.height));
-    setWeightInput(String(profile.weight));
+    setAgeInput(toInput(profile.age));
+    setHeightInput(toInput(profile.height));
+    setWeightInput(toInput(profile.weight));
     setActivity(profile.activity);
     setError(null);
     onNotify('已還原為上次儲存的資料');
@@ -112,6 +116,11 @@ export function SettingsPage({
         />
 
         <div className="mt-4 space-y-3">
+          {isFreshProfile && (
+            <p className="rounded-xl border border-plum-200 bg-plum-50 px-3 py-2 text-xs leading-relaxed text-plum-800">
+              第一次使用：所有欄位都是空白的，填入你自己的數據並儲存後，App 裡的計算就會完全專屬於你。
+            </p>
+          )}
           <div>
             <p className="mb-1.5 text-xs font-bold text-slate-500">生理性別</p>
             <div className="grid grid-cols-2 gap-2" role="group" aria-label="生理性別">
@@ -149,6 +158,7 @@ export function SettingsPage({
                 inputMode="numeric"
                 min={1}
                 max={120}
+                placeholder="請輸入年齡"
                 value={ageInput}
                 onChange={(event) => setAgeInput(event.target.value)}
                 className="h-12 w-full min-w-0 bg-transparent px-2.5 text-lg font-bold text-slate-900 outline-none"
@@ -168,6 +178,7 @@ export function SettingsPage({
                   inputMode="decimal"
                   min={80}
                   max={250}
+                  placeholder="請輸入身高"
                   value={heightInput}
                   onChange={(event) => setHeightInput(event.target.value)}
                   className="h-12 w-full min-w-0 bg-transparent px-2 text-lg font-bold text-slate-900 outline-none"
@@ -187,6 +198,7 @@ export function SettingsPage({
                   min={20}
                   max={300}
                   step={0.1}
+                  placeholder="請輸入體重"
                   value={weightInput}
                   onChange={(event) => setWeightInput(event.target.value)}
                   className="h-12 w-full min-w-0 bg-transparent px-2 text-lg font-bold text-slate-900 outline-none"

@@ -98,7 +98,7 @@ export default function App() {
       />
 
       <div className="relative mx-auto flex h-[100dvh] w-full max-w-md flex-col overflow-hidden bg-[#fcfaff] text-slate-900 shadow-2xl shadow-plum-950/20 md:h-[calc(100dvh-3rem)] md:max-h-[920px] md:rounded-[2.75rem] md:ring-1 md:ring-plum-950/10">
-        <AppHeader dateLabel={dateLabel} onOpenSettings={() => setActiveTab('settings')} />
+        <AppHeader dateLabel={dateLabel} />
 
         <main
           ref={mainRef}
