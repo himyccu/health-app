@@ -97,10 +97,23 @@ export function saveProfile(profile: Profile): void {
   writeJson(KEYS.profile, profile);
 }
 
+function parseMinuteRecords(raw: unknown): Record<string, number> {
+  const minutes: Record<string, number> = {};
+  if (!isRecord(raw)) return minutes;
+  Object.entries(raw).forEach(([key, value]) => {
+    if (typeof value === 'number' && Number.isFinite(value) && value >= 0) {
+      minutes[key] = Math.round(value);
+    }
+  });
+  return minutes;
+}
+
 export function loadSteps(): StepsData {
   const raw = readJson(KEYS.steps);
-  // 首次使用：没有任何步數紀錄，全部歸零，由使用者逐日累積。
-  if (!isRecord(raw) || !isRecord(raw.days)) return { goal: 10000, days: {} };
+  // 首次使用：沒有任何步數紀錄，全部歸零，由使用者逐日累積。
+  if (!isRecord(raw) || !isRecord(raw.days)) {
+    return { goal: 10000, days: {}, activeMinutes: {} };
+  }
 
   const days: Record<string, number> = {};
   Object.entries(raw.days).forEach(([key, value]) => {
@@ -116,6 +129,7 @@ export function loadSteps(): StepsData {
         : 10000,
     ),
     days,
+    activeMinutes: parseMinuteRecords(raw.activeMinutes),
   };
 }
 

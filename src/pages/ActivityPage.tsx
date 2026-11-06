@@ -1,6 +1,7 @@
 import { useMemo, useState } from 'react';
 import {
   Activity,
+  CalendarRange,
   Flame,
   Footprints,
   MapPin,
@@ -8,16 +9,14 @@ import {
   Plus,
   RotateCcw,
   Save,
-  Target,
   Timer,
-  TrendingUp,
 } from 'lucide-react';
 import type { Profile, StepsData } from '../types';
-import { getStepMetrics } from '../lib/health';
+import { getStepMetrics, isProfileComplete } from '../lib/health';
 import { dateKey, loadSteps, saveSteps } from '../lib/storage';
 import { PageHeader } from '../components/PageHeader';
 import { SectionHeading } from '../components/SectionHeading';
-import dogPhoto from '../assets/dog.jpg';
+import dogPhoto from '../assets/dog.png';
 
 interface ActivityPageProps {
   profile: Profile;
@@ -26,15 +25,38 @@ interface ActivityPageProps {
 
 const WEEKDAY_LABELS = ['日', '一', '二', '三', '四', '五', '六'];
 
+type RangeId = 'week' | 'month' | 'halfYear';
+
+const RANGE_TABS: { id: RangeId; label: string }[] = [
+  { id: 'week', label: '近 7 天' },
+  { id: 'month', label: '近 30 天' },
+  { id: 'halfYear', label: '近 6 個月' },
+];
+
+function daysAgo(days: number): Date {
+  const date = new Date();
+  date.setDate(date.getDate() - days);
+  return date;
+}
+
+function shortDate(date: Date): string {
+  return `${date.getMonth() + 1}/${date.getDate()}`;
+}
+
 export function ActivityPage({ profile, onNotify }: ActivityPageProps) {
   const [data, setData] = useState<StepsData>(() => loadSteps());
   const [showGoalEditor, setShowGoalEditor] = useState(false);
   const [goalDraft, setGoalDraft] = useState(() => String(data.goal));
   const [stepInput, setStepInput] = useState('');
+  const [minuteInput, setMinuteInput] = useState('');
+  const [range, setRange] = useState<RangeId>('week');
 
   const today = dateKey();
   const steps = data.days[today] ?? 0;
+  const activeMinutes = data.activeMinutes[today] ?? 0;
   const metrics = getStepMetrics(steps, profile);
+  const profileReady = isProfileComplete(profile);
+
   const progress = data.goal > 0 ? Math.min(100, Math.round((steps / data.goal) * 100)) : 0;
   const ringProgress = data.goal > 0 ? Math.min(1, steps / data.goal) : 0;
   const remaining = Math.max(0, data.goal - steps);
@@ -43,25 +65,6 @@ export function ActivityPage({ profile, onNotify }: ActivityPageProps) {
   const radius = 68;
   const circumference = 2 * Math.PI * radius;
   const dashOffset = circumference * (1 - ringProgress);
-
-  const week = useMemo(() => {
-    return Array.from({ length: 7 }, (_, index) => {
-      const date = new Date();
-      date.setDate(date.getDate() - (6 - index));
-      const key = dateKey(date);
-      return {
-        key,
-        label: WEEKDAY_LABELS[date.getDay()],
-        value: key === today ? steps : (data.days[key] ?? 0),
-        isToday: key === today,
-      };
-    });
-  }, [data.days, steps, today]);
-
-  const maxChartValue = Math.max(...week.map((day) => day.value), data.goal, 1) * 1.12;
-  const goalLinePercent = (data.goal / maxChartValue) * 100;
-  const weekTotal = week.reduce((sum, day) => sum + day.value, 0);
-  const weekAverage = Math.round(weekTotal / week.length);
 
   const commit = (next: StepsData) => {
     setData(next);
@@ -88,6 +91,26 @@ export function ActivityPage({ profile, onNotify }: ActivityPageProps) {
     setStepInput('');
   };
 
+  const updateTodayMinutes = (value: number) => {
+    const safeValue = Math.max(0, Math.min(1440, Math.round(value)));
+    commit({ ...data, activeMinutes: { ...data.activeMinutes, [today]: safeValue } });
+  };
+
+  const addMinutes = (amount: number) => {
+    updateTodayMinutes(activeMinutes + amount);
+    onNotify(`已記錄 ${amount} 分鐘活動時間`);
+  };
+
+  const handleAddCustomMinutes = () => {
+    const amount = Number(minuteInput);
+    if (!Number.isFinite(amount) || amount <= 0) {
+      onNotify('請輸入大於 0 的分鐘數');
+      return;
+    }
+    addMinutes(Math.round(amount));
+    setMinuteInput('');
+  };
+
   const handleSaveGoal = () => {
     const goal = Number(goalDraft);
     if (!Number.isFinite(goal) || goal < 1000 || goal > 50000) {
@@ -105,6 +128,89 @@ export function ActivityPage({ profile, onNotify }: ActivityPageProps) {
     onNotify('今日步數已重設');
   };
 
+  const handleResetMinutes = () => {
+    updateTodayMinutes(0);
+    onNotify('今日活動時間已重設');
+  };
+
+  const rangeData = useMemo(() => {
+    if (range === 'halfYear') {
+      const items = Array.from({ length: 6 }, (_, index) => {
+        const date = new Date();
+        date.setDate(1);
+        date.setMonth(date.getMonth() - (5 - index));
+        const prefix = `${date.getFullYear()}-${String(date.getMonth() + 1).padStart(2, '0')}`;
+        let value = 0;
+        let minutes = 0;
+        Object.entries(data.days).forEach(([key, dayValue]) => {
+          if (key.startsWith(prefix)) {
+            value += dayValue;
+            minutes += data.activeMinutes[key] ?? 0;
+          }
+        });
+        return {
+          key: prefix,
+          label: `${date.getMonth() + 1}月`,
+          value,
+          minutes,
+          isToday: index === 5,
+        };
+      });
+      const totalSteps = items.reduce((sum, item) => sum + item.value, 0);
+      const totalMinutes = items.reduce((sum, item) => sum + item.minutes, 0);
+      return {
+        items,
+        totalSteps,
+        totalMinutes,
+        average: Math.round(totalSteps / items.length),
+        averageLabel: '月平均',
+      };
+    }
+
+    const length = range === 'week' ? 7 : 30;
+    const items = Array.from({ length }, (_, index) => {
+      const date = daysAgo(length - 1 - index);
+      const key = dateKey(date);
+      return {
+        key,
+        label: range === 'week' ? WEEKDAY_LABELS[date.getDay()] : shortDate(date),
+        value: key === today ? steps : (data.days[key] ?? 0),
+        minutes: key === today ? activeMinutes : (data.activeMinutes[key] ?? 0),
+        isToday: key === today,
+      };
+    });
+    const totalSteps = items.reduce((sum, item) => sum + item.value, 0);
+    const totalMinutes = items.reduce((sum, item) => sum + item.minutes, 0);
+    return {
+      items,
+      totalSteps,
+      totalMinutes,
+      average: Math.round(totalSteps / items.length),
+      averageLabel: '每日平均',
+    };
+  }, [range, data, steps, activeMinutes, today]);
+
+  const recentDays = useMemo(
+    () =>
+      Array.from({ length: 7 }, (_, index) => {
+        const date = daysAgo(6 - index);
+        const key = dateKey(date);
+        return {
+          key,
+          dateLabel: shortDate(date),
+          weekday: WEEKDAY_LABELS[date.getDay()],
+          steps: key === today ? steps : (data.days[key] ?? 0),
+          minutes: key === today ? activeMinutes : (data.activeMinutes[key] ?? 0),
+          isToday: key === today,
+        };
+      }),
+    [data, steps, activeMinutes, today],
+  );
+
+  const chartMax = Math.max(...rangeData.items.map((item) => item.value), range === 'week' ? data.goal : 1, 1);
+  const goalLinePercent = range === 'week' ? (data.goal / chartMax) * 100 : 0;
+  const showBarLabels = rangeData.items.length <= 7;
+
   return (
     <div>
       <PageHeader
@@ -116,10 +222,10 @@ export function ActivityPage({ profile, onNotify }: ActivityPageProps) {
 
       <section className="relative mb-4 overflow-hidden rounded-[30px] border border-plum-100 bg-gradient-to-br from-plum-50 via-white to-amber-50 shadow-sm shadow-plum-900/5">
         <div className="pointer-events-none absolute -left-8 -top-10 h-28 w-28 rounded-full bg-plum-200/40 blur-2xl" />
-        <div className="pointer-events-none absolute right-0 top-1/2 h-44 w-44 -translate-y-1/2 rounded-full bg-plum-100/60 blur-2xl" />
+        <div className="pointer-events-none absolute -bottom-12 right-10 h-32 w-32 rounded-full bg-amber-100/60 blur-2xl" />
 
-        <div className="relative flex items-center gap-1 p-4 pr-2">
-          <div className="min-w-0 flex-1 py-1">
+        <div className="relative flex items-center gap-4 p-5">
+          <div className="min-w-0 flex-1">
             <p className="text-[11px] font-black tracking-[0.18em] text-plum-600">
               A GENTLE START
             </p>
@@ -133,11 +239,13 @@ export function ActivityPage({ profile, onNotify }: ActivityPageProps) {
             </p>
           </div>
 
-          <div className="relative h-[168px] w-[42%] shrink-0">
+          <div className="relative h-28 w-28 shrink-0">
+            <span className="absolute -inset-[5px] rounded-full border border-plum-200/80" />
+            <span className="absolute -inset-[5px] rounded-full border-t-2 border-plum-300/90" />
             <img
               src={dogPhoto}
               alt="今天也要好好照顧自己"
-              className="h-full w-full rounded-[1.6rem] object-cover shadow-md shadow-plum-900/15 ring-1 ring-white/80"
+              className="relative h-full w-full rounded-full object-cover shadow-lg shadow-plum-900/20 ring-4 ring-white"
             />
           </div>
         </div>
@@ -170,14 +278,7 @@ export function ActivityPage({ profile, onNotify }: ActivityPageProps) {
         <div className="relative mt-2 flex justify-center">
           <div className="relative h-48 w-48">
             <svg viewBox="0 0 160 160" className="h-full w-full -rotate-90" aria-hidden="true">
-              <circle
-                cx="80"
-                cy="80"
-                r={radius}
-                fill="none"
-                stroke="#fef3c7"
-                strokeWidth="13"
-              />
+              <circle cx="80" cy="80" r={radius} fill="none" stroke="#fef3c7" strokeWidth="13" />
               <circle
                 cx="80"
                 cy="80"
@@ -210,9 +311,7 @@ export function ActivityPage({ profile, onNotify }: ActivityPageProps) {
             {progress}%
           </span>
           <span className="text-sm font-medium text-slate-500">
-            {reachedGoal
-              ? '太棒了，今天目標已完成！'
-              : `還差 ${remaining.toLocaleString()} 步`}
+            {reachedGoal ? '太棒了，今天目標已完成！' : `還差 ${remaining.toLocaleString()} 步`}
           </span>
         </div>
 
@@ -248,7 +347,7 @@ export function ActivityPage({ profile, onNotify }: ActivityPageProps) {
         <MetricCard
           icon={Flame}
           label="消耗熱量"
-          value={metrics.calories.toLocaleString()}
+          value={profileReady ? metrics.calories.toLocaleString() : '—'}
           unit="kcal"
           accent="text-orange-500"
           soft="bg-orange-50"
@@ -256,7 +355,7 @@ export function ActivityPage({ profile, onNotify }: ActivityPageProps) {
         <MetricCard
           icon={MapPin}
           label="行走距離"
-          value={metrics.distanceKm.toFixed(1)}
+          value={profileReady ? metrics.distanceKm.toFixed(1) : '—'}
           unit="km"
           accent="text-emerald-600"
           soft="bg-emerald-50"
@@ -264,7 +363,7 @@ export function ActivityPage({ profile, onNotify }: ActivityPageProps) {
         <MetricCard
           icon={Timer}
           label="活動時間"
-          value={metrics.activeMinutes.toLocaleString()}
+          value={activeMinutes.toLocaleString()}
           unit="分鐘"
           accent="text-plum-700"
           soft="bg-plum-50"
@@ -325,75 +424,186 @@ export function ActivityPage({ profile, onNotify }: ActivityPageProps) {
         </button>
       </section>
 
-      <section className="mt-4 rounded-[26px] border border-amber-100 bg-white p-4 shadow-sm shadow-amber-900/5">
-        <div className="flex items-start justify-between gap-2">
-          <SectionHeading icon={TrendingUp} title="近 7 天趨勢" subtitle="每日步數與目標線" />
-          <div className="flex shrink-0 items-center gap-1 rounded-full bg-amber-50 px-2.5 py-1 text-[11px] font-bold text-amber-800">
-            <Target className="h-3 w-3" />
-            {(data.goal / 1000).toFixed(1)}k
-          </div>
+      <section className="mt-4 rounded-[26px] border border-plum-100 bg-white p-4 shadow-sm shadow-amber-900/5">
+        <SectionHeading icon={Timer} title="活動時間" subtitle="獨立記錄，不與步數綁定" />
+
+        <p className="mt-2 rounded-xl bg-plum-50/70 px-3 py-2 text-[11px] leading-relaxed text-plum-800">
+          同樣走 2,000 步，有人花 20 分鐘、有人花 30 分鐘。活動時間無法從步數反推，所以這裡讓你自己記錄實際花費的時間。
+        </p>
+
+        <div className="mt-3 grid grid-cols-4 gap-2">
+          {[10, 20, 30, 60].map((amount) => (
+            <button
+              key={amount}
+              type="button"
+              onClick={() => addMinutes(amount)}
+              className="flex h-12 items-center justify-center gap-0.5 rounded-2xl border border-plum-100 bg-plum-50 text-sm font-black text-plum-900 transition hover:bg-plum-100 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-plum-900 active:scale-[0.97]"
+            >
+              <Plus className="h-3.5 w-3.5" strokeWidth={2.8} />
+              {amount} 分
+            </button>
+          ))}
         </div>
 
-        <div className="mt-3 grid grid-cols-2 gap-2">
-          <div className="rounded-2xl bg-plum-50 px-3 py-2">
-            <p className="text-[11px] font-bold text-plum-600">近 7 天累積</p>
-            <p className="mt-0.5 flex items-baseline gap-1">
-              <span className="text-lg font-black leading-none tabular-nums text-plum-900">
-                {weekTotal.toLocaleString()}
-              </span>
-              <span className="text-[10px] font-bold text-plum-500">步</span>
+        <div className="mt-2 flex gap-2">
+          <label className="sr-only" htmlFor="custom-minutes">
+            自訂活動時間
+          </label>
+          <input
+            id="custom-minutes"
+            type="number"
+            inputMode="numeric"
+            min={1}
+            step={5}
+            placeholder="輸入分鐘數，例如 25"
+            value={minuteInput}
+            onChange={(event) => setMinuteInput(event.target.value)}
+            onKeyDown={(event) => {
+              if (event.key === 'Enter') handleAddCustomMinutes();
+            }}
+            className="h-12 min-w-0 flex-1 rounded-2xl border border-slate-200 bg-slate-50 px-4 text-base font-semibold text-slate-800 placeholder:text-sm placeholder:font-medium placeholder:text-slate-400 focus:border-plum-900 focus:bg-white focus:outline-none"
+          />
+          <button
+            type="button"
+            onClick={handleAddCustomMinutes}
+            className="h-12 shrink-0 rounded-2xl bg-slate-900 px-5 text-sm font-black text-white transition hover:bg-slate-800 active:scale-[0.98]"
+          >
+            新增
+          </button>
+        </div>
+
+        <button
+          type="button"
+          onClick={handleResetMinutes}
+          className="mt-3 flex w-full items-center justify-center gap-1.5 rounded-xl py-2 text-xs font-bold text-slate-400 transition hover:bg-slate-50 hover:text-slate-600"
+        >
+          <RotateCcw className="h-3.5 w-3.5" />
+          重設今日活動時間
+        </button>
+      </section>
+
+      <section className="mt-4 rounded-[26px] border border-amber-100 bg-white p-4 shadow-sm shadow-amber-900/5">
+        <SectionHeading icon={CalendarRange} title="累積紀錄" subtitle="每天自動保存，可回看半年" />
+
+        <div className="mt-3 grid grid-cols-3 gap-1 rounded-2xl bg-slate-100 p-1">
+          {RANGE_TABS.map((tab) => {
+            const selected = range === tab.id;
+            return (
+              <button
+                key={tab.id}
+                type="button"
+                onClick={() => setRange(tab.id)}
+                aria-pressed={selected}
+                className={`h-9 rounded-xl text-xs font-black transition ${
+                  selected
+                    ? 'bg-white text-plum-900 shadow-sm'
+                    : 'text-slate-500 hover:text-slate-700'
+                }`}
+              >
+                {tab.label}
+              </button>
+            );
+          })}
+        </div>
+
+        <div className="mt-3 grid grid-cols-3 gap-2">
+          <div className="rounded-2xl bg-plum-50 px-2.5 py-2">
+            <p className="text-[10px] font-bold text-plum-600">累積步數</p>
+            <p className="mt-0.5 text-base font-black leading-none tabular-nums text-plum-900">
+              {rangeData.totalSteps.toLocaleString()}
             </p>
           </div>
-          <div className="rounded-2xl bg-amber-50 px-3 py-2">
-            <p className="text-[11px] font-bold text-amber-700">平均每日</p>
-            <p className="mt-0.5 flex items-baseline gap-1">
-              <span className="text-lg font-black leading-none tabular-nums text-amber-900">
-                {weekAverage.toLocaleString()}
-              </span>
-              <span className="text-[10px] font-bold text-amber-600">步 / 日</span>
+          <div className="rounded-2xl bg-amber-50 px-2.5 py-2">
+            <p className="text-[10px] font-bold text-amber-700">{rangeData.averageLabel}</p>
+            <p className="mt-0.5 text-base font-black leading-none tabular-nums text-amber-900">
+              {rangeData.average.toLocaleString()}
+            </p>
+          </div>
+          <div className="rounded-2xl bg-emerald-50 px-2.5 py-2">
+            <p className="text-[10px] font-bold text-emerald-700">活動時間</p>
+            <p className="mt-0.5 text-base font-black leading-none tabular-nums text-emerald-900">
+              {rangeData.totalMinutes.toLocaleString()}
+              <span className="ml-0.5 text-[10px] font-bold text-emerald-600">分</span>
             </p>
           </div>
         </div>
 
         <div className="relative mt-5 h-32">
-          <div
-            className="pointer-events-none absolute inset-x-0 z-0 border-t border-dashed border-amber-400/80"
-            style={{ bottom: `${goalLinePercent}%` }}
-          />
-          <div className="relative z-10 flex h-full items-end gap-1.5">
-            {week.map((day) => {
-              const height = Math.max(4, (day.value / maxChartValue) * 100);
+          {range === 'week' && (
+            <div
+              className="pointer-events-none absolute inset-x-0 z-0 border-t border-dashed border-amber-400/80"
+              style={{ bottom: `${goalLinePercent}%` }}
+            />
+          )}
+          <div className="relative z-10 flex h-full items-end gap-[3px]">
+            {rangeData.items.map((item) => {
+              const height = Math.max(4, (item.value / chartMax) * 100);
               return (
-                <div key={day.key} className="flex h-full flex-1 flex-col items-center justify-end">
-                  <span
-                    className={`mb-1 text-[10px] font-bold tabular-nums ${
-                      day.isToday ? 'text-plum-900' : 'text-slate-400'
-                    }`}
-                  >
-                    {day.value > 0 ? `${Math.round(day.value / 100) / 10}k` : '–'}
-                  </span>
+                <div key={item.key} className="flex h-full flex-1 flex-col items-center justify-end">
+                  {showBarLabels && (
+                    <span
+                      className={`mb-1 text-[10px] font-bold tabular-nums ${
+                        item.isToday ? 'text-plum-900' : 'text-slate-400'
+                      }`}
+                    >
+                      {item.value > 0 ? `${Math.round(item.value / 100) / 10}k` : '–'}
+                    </span>
+                  )}
                   <div
-                    className={`w-full max-w-8 rounded-t-lg transition-all duration-500 ${
-                      day.isToday ? 'bg-plum-900' : 'bg-plum-200'
+                    className={`w-full rounded-t-md transition-all duration-500 ${
+                      item.isToday ? 'bg-plum-900' : 'bg-plum-200'
                     }`}
                     style={{ height: `${height}%` }}
-                    title={`${day.label}：${day.value.toLocaleString()} 步`}
+                    title={`${item.label}：${item.value.toLocaleString()} 步 · ${item.minutes} 分鐘`}
                   />
-                  <span
-                    className={`mt-1.5 text-xs font-bold ${
-                      day.isToday ? 'text-plum-900' : 'text-slate-400'
-                    }`}
-                  >
-                    {day.isToday ? '今天' : day.label}
-                  </span>
                 </div>
               );
             })}
           </div>
         </div>
 
+        <div className="mt-1.5 flex justify-between text-[10px] font-bold text-slate-400">
+          {rangeData.items.length <= 7 ? (
+            rangeData.items.map((item) => (
+              <span key={item.key} className={item.isToday ? 'text-plum-900' : ''}>
+                {item.isToday ? '今天' : item.label}
+              </span>
+            ))
+          ) : (
+            <>
+              <span>{rangeData.items[0]?.label}</span>
+              <span>{rangeData.items[rangeData.items.length - 1]?.label}</span>
+            </>
+          )}
+        </div>
+
+        <div className="mt-4 border-t border-slate-100 pt-3">
+          <p className="text-[11px] font-black text-slate-500">最近 7 天紀錄</p>
+          <div className="mt-2 space-y-1.5">
+            {recentDays.map((day) => (
+              <div
+                key={day.key}
+                className={`flex items-center justify-between rounded-xl px-3 py-2 text-xs ${
+                  day.isToday ? 'bg-plum-50 font-black text-plum-900' : 'text-slate-600'
+                }`}
+              >
+                <span className="flex items-center gap-1.5">
+                  <span className="tabular-nums">{day.isToday ? '今天' : day.dateLabel}</span>
+                  <span className="text-[10px] font-bold text-slate-400">（{day.weekday}）</span>
+                </span>
+                <span className="flex items-center gap-2.5 tabular-nums">
+                  <span className="font-bold">{day.steps.toLocaleString()} 步</span>
+                  <span className="text-[11px] font-semibold text-slate-400">
+                    {day.minutes} 分鐘
+                  </span>
+                </span>
+              </div>
+            ))}
+          </div>
+        </div>
+
         <p className="mt-3 rounded-xl bg-slate-50 px-3 py-2 text-[11px] leading-relaxed text-slate-500">
-          步數由本機紀錄，每天都是全新的起點。今天填的步數只屬於今天，明天會重新歸零並逐日累積成自己的軌跡。
+          每天零點自動開始新的一天，過去的紀錄會保留在本機裝置，最遠可回看半年以上。
         </p>
       </section>
 

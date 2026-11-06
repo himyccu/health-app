@@ -80,12 +80,6 @@ export default function App() {
     window.location.reload();
   }, []);
 
-  const dateLabel = new Date().toLocaleDateString('zh-TW', {
-    month: 'long',
-    day: 'numeric',
-    weekday: 'short',
-  });
-
   return (
     <div className="relative min-h-[100dvh] overflow-hidden bg-gradient-to-br from-plum-100 via-[#fbf7ff] to-amber-50 md:flex md:items-center md:justify-center md:p-6">
       <div className="pointer-events-none absolute -left-32 top-0 h-96 w-96 rounded-full bg-plum-200/45 blur-3xl" />
@@ -98,7 +92,7 @@ export default function App() {
       />
 
       <div className="relative mx-auto flex h-[100dvh] w-full max-w-md flex-col overflow-hidden bg-[#fcfaff] text-slate-900 shadow-2xl shadow-plum-950/20 md:h-[calc(100dvh-3rem)] md:max-h-[920px] md:rounded-[2.75rem] md:ring-1 md:ring-plum-950/10">
-        <AppHeader dateLabel={dateLabel} />
+        <AppHeader />
 
         <main
           ref={mainRef}

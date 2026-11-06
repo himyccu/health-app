@@ -89,4 +89,6 @@ export interface MealEntry {
 export interface StepsData {
   goal: number;
   days: Record<string, number>;
+  /** 每日活動時間（分鐘）。與步數分開記錄，因為同樣步數每個人的實際時間不同。 */
+  activeMinutes: Record<string, number>;
 }

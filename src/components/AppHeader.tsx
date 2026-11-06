@@ -1,10 +1,6 @@
 import heroRunner from '../assets/hero-runner.jpg';
 
-interface AppHeaderProps {
-  dateLabel: string;
-}
-
-export function AppHeader({ dateLabel }: AppHeaderProps) {
+export function AppHeader() {
   return (
     <header className="relative shrink-0 overflow-hidden bg-plum-900 px-5 pb-5 pt-4 text-white">
       <div className="pointer-events-none absolute -right-10 -top-12 h-36 w-36 rounded-full bg-plum-800/80" />
@@ -24,7 +20,9 @@ export function AppHeader({ dateLabel }: AppHeaderProps) {
             HEALTH COMPANION
           </p>
           <h1 className="truncate text-2xl font-black tracking-tight">Hayley 的健康管家</h1>
-          <p className="mt-0.5 text-[11px] font-semibold text-plum-200">{dateLabel}</p>
+          <p className="mt-0.5 text-[11px] font-semibold text-plum-200">
+            今天的每一步，都算數。
+          </p>
         </div>
       </div>
     </header>
