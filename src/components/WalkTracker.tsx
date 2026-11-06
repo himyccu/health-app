@@ -1,21 +1,26 @@
 import { useCallback, useEffect, useRef, useState } from 'react';
-import { MapPin, Navigation, Square } from 'lucide-react';
+import { MapPin, Navigation, ShieldCheck, Square } from 'lucide-react';
 import { formatDuration, haversineMeters } from '../lib/geo';
 import { SectionHeading } from './SectionHeading';
 
 interface WalkTrackerProps {
   todayDistanceKm: number;
-  onSave: (distanceKm: number, minutes: number) => void;
+  weightKg: number;
+  onSave: (distanceKm: number, minutes: number, calories: number) => void;
 }
 
 type GpsStatus = 'idle' | 'locating' | 'tracking' | 'error';
 
-export function WalkTracker({ todayDistanceKm, onSave }: WalkTrackerProps) {
+const WALKING_MET = 3.5;
+
+export function WalkTracker({ todayDistanceKm, weightKg, onSave }: WalkTrackerProps) {
   const [tracking, setTracking] = useState(false);
   const [status, setStatus] = useState<GpsStatus>('idle');
   const [meters, setMeters] = useState(0);
   const [seconds, setSeconds] = useState(0);
   const [message, setMessage] = useState<string | null>(null);
+  const [consented, setConsented] = useState(false);
+  const [showPrivacy, setShowPrivacy] = useState(false);
 
   const watchRef = useRef<number | null>(null);
   const timerRef = useRef<number | null>(null);
@@ -79,7 +84,7 @@ export function WalkTracker({ todayDistanceKm, onSave }: WalkTrackerProps) {
     }
   }, []);
 
-  const start = () => {
+  const startTracking = () => {
     if (!('geolocation' in navigator)) {
       setStatus('error');
       setMessage('此瀏覽器不支援定位功能。');
@@ -115,6 +120,8 @@ export function WalkTracker({ todayDistanceKm, onSave }: WalkTrackerProps) {
     const finalSeconds = Math.floor((Date.now() - startedAtRef.current) / 1000);
     const distanceKm = Math.round(finalMeters / 10) / 100;
     const minutes = Math.max(1, Math.round(finalSeconds / 60));
+    const calories =
+      weightKg > 0 ? Math.round(WALKING_MET * weightKg * (finalSeconds / 3600)) : 0;
 
     setMeters(0);
     setSeconds(0);
@@ -124,9 +131,24 @@ export function WalkTracker({ todayDistanceKm, onSave }: WalkTrackerProps) {
       return;
     }
 
-    onSave(distanceKm, minutes);
-    setMessage(`已儲存 ${distanceKm.toFixed(2)} 公里、${minutes} 分鐘。`);
+    onSave(distanceKm, minutes, calories);
+    setMessage(
+      weightKg > 0
+        ? `已儲存 ${distanceKm.toFixed(2)} 公里、${minutes} 分鐘，約 ${calories} kcal。`
+        : `已儲存 ${distanceKm.toFixed(2)} 公里、${minutes} 分鐘。設定體重後即可估算熱量。`,
+    );
   };
+
+  const handleStartClick = () => {
+    if (!consented) {
+      setShowPrivacy(true);
+      return;
+    }
+    startTracking();
+  };
+
+  const liveCalories =
+    weightKg > 0 ? Math.round(WALKING_MET * weightKg * (seconds / 3600)) : 0;
 
   return (
     <section className="mt-4 rounded-[26px] border border-plum-100 bg-white p-4 shadow-sm shadow-amber-900/5">
@@ -145,6 +167,49 @@ export function WalkTracker({ todayDistanceKm, onSave }: WalkTrackerProps) {
         <MapPin className="h-5 w-5 text-plum-400" />
       </div>
 
+      {showPrivacy && !tracking && (
+        <div className="animate-fade-up mt-2 rounded-2xl border border-emerald-200 bg-emerald-50 p-3.5">
+          <p className="flex items-center gap-1.5 text-xs font-black text-emerald-800">
+            <ShieldCheck className="h-4 w-4" />
+            定位隱私說明
+          </p>
+          <ul className="mt-2 space-y-1.5 text-[11px] leading-relaxed text-emerald-900">
+            <li className="flex gap-1.5">
+              <span className="mt-1.5 h-1 w-1 shrink-0 rounded-full bg-emerald-600" />
+              定位只用來計算步行距離，座標不會上傳，也不會被 App 設計者看到。
+            </li>
+            <li className="flex gap-1.5">
+              <span className="mt-1.5 h-1 w-1 shrink-0 rounded-full bg-emerald-600" />
+              所有紀錄只存在這台手機，換裝置或分享網址都不會看到你的資料。
+            </li>
+            <li className="flex gap-1.5">
+              <span className="mt-1.5 h-1 w-1 shrink-0 rounded-full bg-emerald-600" />
+              可隨時在瀏覽器關閉定位權限，不影響其他功能。
+            </li>
+          </ul>
+          <div className="mt-3 grid grid-cols-2 gap-2">
+            <button
+              type="button"
+              onClick={() => setShowPrivacy(false)}
+              className="h-10 rounded-xl border border-emerald-200 bg-white text-xs font-bold text-emerald-800 transition hover:bg-emerald-100"
+            >
+              先不用
+            </button>
+            <button
+              type="button"
+              onClick={() => {
+                setConsented(true);
+                setShowPrivacy(false);
+                startTracking();
+              }}
+              className="h-10 rounded-xl bg-emerald-700 text-xs font-black text-white transition hover:bg-emerald-800"
+            >
+              我了解，開始記錄
+            </button>
+          </div>
+        </div>
+      )}
+
       {tracking && (
         <div className="mt-2 rounded-2xl bg-plum-900 p-4 text-white">
           <div className="flex items-end justify-between gap-3">
@@ -162,6 +227,9 @@ export function WalkTracker({ todayDistanceKm, onSave }: WalkTrackerProps) {
               <p className="mt-1 text-xl font-black leading-none tabular-nums">
                 {formatDuration(seconds)}
               </p>
+              <p className="mt-1 text-[11px] font-bold text-amber-200">
+                {weightKg > 0 ? `約 ${liveCalories} kcal` : '設定體重後估算熱量'}
+              </p>
             </div>
           </div>
           <p className="mt-3 flex items-center gap-1.5 text-[11px] font-semibold text-plum-100">
@@ -177,7 +245,7 @@ export function WalkTracker({ todayDistanceKm, onSave }: WalkTrackerProps) {
 
       <button
         type="button"
-        onClick={tracking ? stop : start}
+        onClick={tracking ? stop : handleStartClick}
         className={`mt-3 flex h-12 w-full items-center justify-center gap-2 rounded-2xl text-sm font-black transition active:scale-[0.99] ${
           tracking
             ? 'bg-rose-600 text-white shadow-lg shadow-rose-600/20 hover:bg-rose-700'

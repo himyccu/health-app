@@ -393,19 +393,23 @@ export function SettingsPage({
         <ul className="mt-3 space-y-2 text-xs leading-relaxed text-slate-500">
           <li className="flex gap-2">
             <span className="mt-1.5 h-1.5 w-1.5 shrink-0 rounded-full bg-emerald-500" />
-            生理數據、步數與飲食紀錄皆儲存在這台裝置的瀏覽器 localStorage。
+            這個 App 沒有帳號、沒有後端。把網址分享給別人，對方只會看到自己的空白資料，不會看到你的步數、體重或飲食紀錄。
+          </li>
+          <li className="flex gap-2">
+            <span className="mt-1.5 h-1.5 w-1.5 shrink-0 rounded-full bg-emerald-500" />
+            GPS 定位只用來計算步行距離。座標不會上傳、不會儲存，App 設計者也不會取得你的位置。
+          </li>
+          <li className="flex gap-2">
+            <span className="mt-1.5 h-1.5 w-1.5 shrink-0 rounded-full bg-emerald-500" />
+            生理數據、步數、運動與飲食紀錄皆儲存在這台裝置的瀏覽器 localStorage。
           </li>
           <li className="flex gap-2">
             <span className="mt-1.5 h-1.5 w-1.5 shrink-0 rounded-full bg-emerald-500" />
             食物搜尋與營養計算都在本機完成，不會上傳任何個人紀錄。
           </li>
           <li className="flex gap-2">
-            <span className="mt-1.5 h-1.5 w-1.5 shrink-0 rounded-full bg-emerald-500" />
-            新增或刪除紀錄後會立即更新，不需要連線或重新整理。
-          </li>
-          <li className="flex gap-2">
             <span className="mt-1.5 h-1.5 w-1.5 shrink-0 rounded-full bg-amber-500" />
-            清除瀏覽器資料或更換裝置後，紀錄將無法復原。
+            同一台裝置的不同瀏覽器、或不同裝置之間資料不會自動同步；清除瀏覽器資料後也無法復原。
           </li>
         </ul>
 

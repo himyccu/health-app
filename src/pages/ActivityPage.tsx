@@ -11,9 +11,9 @@ import {
   Save,
   Timer,
 } from 'lucide-react';
-import type { Profile, StepsData } from '../types';
+import type { Profile, StepsData, WorkoutEntry } from '../types';
 import { getStepMetrics, isProfileComplete } from '../lib/health';
-import { dateKey, loadSteps, saveSteps } from '../lib/storage';
+import { dateKey, loadSteps, loadWorkouts, saveSteps, saveWorkouts } from '../lib/storage';
 import { PageHeader } from '../components/PageHeader';
 import { SectionHeading } from '../components/SectionHeading';
 import { WalkTracker } from '../components/WalkTracker';
@@ -22,6 +22,7 @@ import dogPhoto from '../assets/dog.png';
 interface ActivityPageProps {
   profile: Profile;
   onNotify: (message: string) => void;
+  onOpenExercise: () => void;
 }
 
 const WEEKDAY_LABELS = ['日', '一', '二', '三', '四', '五', '六'];
@@ -44,7 +45,7 @@ function shortDate(date: Date): string {
   return `${date.getMonth() + 1}/${date.getDate()}`;
 }
 
-export function ActivityPage({ profile, onNotify }: ActivityPageProps) {
+export function ActivityPage({ profile, onNotify, onOpenExercise }: ActivityPageProps) {
   const [data, setData] = useState<StepsData>(() => loadSteps());
   const [showGoalEditor, setShowGoalEditor] = useState(false);
   const [goalDraft, setGoalDraft] = useState(() => String(data.goal));
@@ -135,7 +136,7 @@ export function ActivityPage({ profile, onNotify }: ActivityPageProps) {
     onNotify('今日活動時間已重設');
   };
 
-  const handleSaveWalk = (distanceKm: number, minutes: number) => {
+  const handleSaveWalk = (distanceKm: number, minutes: number, calories: number) => {
     const nextDistance =
       Math.round(((data.distanceKm[today] ?? 0) + distanceKm) * 100) / 100;
     commit({
@@ -143,6 +144,22 @@ export function ActivityPage({ profile, onNotify }: ActivityPageProps) {
       distanceKm: { ...data.distanceKm, [today]: nextDistance },
       activeMinutes: { ...data.activeMinutes, [today]: activeMinutes + minutes },
     });
+
+    // 同步寫入運動紀錄，讓「運動」頁也能看到這次步行的時間與熱量。
+    if (calories > 0) {
+      const entry: WorkoutEntry = {
+        id: `${Date.now()}-${Math.random().toString(36).slice(2, 9)}`,
+        date: today,
+        createdAt: new Date().toISOString(),
+        exerciseId: 'walk',
+        name: '步行（GPS）',
+        minutes,
+        met: 3.5,
+        calories,
+      };
+      saveWorkouts([...loadWorkouts(), entry]);
+    }
+
     onNotify(`已記錄步行 ${distanceKm.toFixed(2)} 公里、${minutes} 分鐘`);
   };
 
@@ -359,7 +376,7 @@ export function ActivityPage({ profile, onNotify }: ActivityPageProps) {
       <div className="mt-3 grid grid-cols-3 gap-2.5">
         <MetricCard
           icon={Flame}
-          label="消耗熱量"
+          label="步數熱量"
           value={profileReady ? metrics.calories.toLocaleString() : '—'}
           unit="kcal"
           accent="text-orange-500"
@@ -383,7 +400,11 @@ export function ActivityPage({ profile, onNotify }: ActivityPageProps) {
         />
       </div>
 
-      <WalkTracker todayDistanceKm={todayDistanceKm} onSave={handleSaveWalk} />
+      <WalkTracker
+        todayDistanceKm={todayDistanceKm}
+        weightKg={profile.weight}
+        onSave={handleSaveWalk}
+      />
 
       <section className="mt-4 rounded-[26px] border border-amber-100 bg-white p-4 shadow-sm shadow-amber-900/5">
         <SectionHeading icon={Plus} title="快速紀錄步數" subtitle="沒有連接計步器時，可手動補登" />
@@ -490,6 +511,15 @@ export function ActivityPage({ profile, onNotify }: ActivityPageProps) {
         >
           <RotateCcw className="h-3.5 w-3.5" />
           重設今日活動時間
+        </button>
+
+        <button
+          type="button"
+          onClick={onOpenExercise}
+          className="mt-1 flex w-full items-center justify-center gap-1.5 rounded-xl bg-plum-50 py-2.5 text-xs font-black text-plum-800 transition hover:bg-plum-100 active:scale-[0.99]"
+        >
+          <Flame className="h-3.5 w-3.5 text-orange-500" />
+          把活動時間換算成熱量
         </button>
       </section>
 

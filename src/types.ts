@@ -2,7 +2,52 @@ export type Gender = 'male' | 'female';
 
 export type ActivityLevel = 'sedentary' | 'light' | 'moderate' | 'active' | 'veryActive';
 
-export type TabId = 'activity' | 'health' | 'nutrition' | 'settings';
+export type TabId = 'activity' | 'exercise' | 'health' | 'nutrition' | 'settings';
+
+export type ExerciseCategory = 'cardio' | 'strength' | 'core' | 'mobility';
+
+export type MovementPattern = 'push' | 'pull' | 'squat' | 'hinge' | 'lunge' | 'core' | 'cardio' | 'mobility';
+
+export type MuscleGroup =
+  | 'chest'
+  | 'back'
+  | 'shoulders'
+  | 'arms'
+  | 'core'
+  | 'glutes'
+  | 'quads'
+  | 'hamstrings'
+  | 'calves'
+  | 'fullBody';
+
+export interface ExerciseDefinition {
+  id: string;
+  name: string;
+  englishName: string;
+  category: ExerciseCategory;
+  pattern: MovementPattern;
+  /** 代謝當量（MET），依 Compendium of Physical Activities 的運動分類取整。 */
+  met: number;
+  intensity: string;
+  primaryMuscles: MuscleGroup[];
+  secondaryMuscles: MuscleGroup[];
+  equipment: string;
+  cues: string[];
+  mistakes: string[];
+}
+
+export interface WorkoutEntry {
+  id: string;
+  date: string;
+  createdAt: string;
+  exerciseId: string;
+  name: string;
+  minutes: number;
+  sets?: number;
+  reps?: number;
+  met: number;
+  calories: number;
+}
 
 export interface Profile {
   gender: Gender;

@@ -15,6 +15,7 @@ import { BottomNav } from './components/BottomNav';
 import { DisclaimerModal } from './components/DisclaimerModal';
 import { Toast } from './components/Toast';
 import { ActivityPage } from './pages/ActivityPage';
+import { ExercisePage } from './pages/ExercisePage';
 import { HealthPage } from './pages/HealthPage';
 import { SettingsPage } from './pages/SettingsPage';
 
@@ -98,7 +99,14 @@ export default function App() {
           ref={mainRef}
           className="no-scrollbar flex-1 overflow-y-auto overscroll-contain px-4 pb-6 pt-5"
         >
-          {activeTab === 'activity' && <ActivityPage profile={profile} onNotify={notify} />}
+          {activeTab === 'activity' && (
+            <ActivityPage
+              profile={profile}
+              onNotify={notify}
+              onOpenExercise={() => setActiveTab('exercise')}
+            />
+          )}
+          {activeTab === 'exercise' && <ExercisePage profile={profile} onNotify={notify} />}
           {activeTab === 'health' && (
             <HealthPage profile={profile} onOpenSettings={() => setActiveTab('settings')} />
           )}

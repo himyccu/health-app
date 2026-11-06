@@ -5,12 +5,14 @@ import type {
   MealEntry,
   Profile,
   StepsData,
+  WorkoutEntry,
 } from '../types';
 
 const KEYS = {
   profile: 'health_app_profile_v1',
   steps: 'health_app_steps_v1',
   meals: 'health_app_meals_v1',
+  workouts: 'health_app_workouts_v1',
   disclaimer: 'health_app_disclaimer_v1',
 } as const;
 
@@ -194,6 +196,33 @@ export function loadMeals(): MealEntry[] {
 
 export function saveMeals(meals: MealEntry[]): void {
   writeJson(KEYS.meals, meals.slice(-200));
+}
+
+function isWorkoutEntry(value: unknown): value is WorkoutEntry {
+  if (!isRecord(value)) return false;
+  return (
+    typeof value.id === 'string' &&
+    typeof value.date === 'string' &&
+    typeof value.createdAt === 'string' &&
+    typeof value.exerciseId === 'string' &&
+    typeof value.name === 'string' &&
+    typeof value.minutes === 'number' &&
+    value.minutes > 0 &&
+    typeof value.met === 'number' &&
+    typeof value.calories === 'number' &&
+    (value.sets === undefined || typeof value.sets === 'number') &&
+    (value.reps === undefined || typeof value.reps === 'number')
+  );
+}
+
+export function loadWorkouts(): WorkoutEntry[] {
+  const raw = readJson(KEYS.workouts);
+  if (!Array.isArray(raw)) return [];
+  return raw.filter(isWorkoutEntry);
+}
+
+export function saveWorkouts(workouts: WorkoutEntry[]): void {
+  writeJson(KEYS.workouts, workouts.slice(-500));
 }
 
 export function hasAcceptedDisclaimer(): boolean {
