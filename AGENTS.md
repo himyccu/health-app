@@ -1,0 +1,34 @@
+# Hayley 健康管家 — 專案規則（每次修改都必須遵守）
+
+## 專案背景
+
+- 技術：React + TypeScript + Vite，部署在 **Vercel**
+- 線上網址：**https://ccu-health.vercel.app/**（對外公開的版本）
+- Vercel 已連動 GitHub：**push 到 `main` 分支後會自動重新建置並上線**，約 1–2 分鐘生效
+- 不使用 GitHub Pages，程式碼只存放在 GitHub：https://github.com/himyccu/health-app
+
+## 產品原則（使用者明確要求，不可回退）
+
+1. **首次使用一律歸零**：任何預設數字都不可出現（步數、熱量、距離、活動時間、年齡、身高、體重、卡路里目標）。
+   - 不可預填「30 歲 / 160cm / 55kg / 8452 步」這類示範資料
+   - 欄位留空，由使用者自己填寫，填完才顯示計算結果（BMI / BMR / TDEE）
+   - 原因：使用者不希望 App「看起來像被別人用過」
+2. **中間照片用 `dog.jpg`**（`src/assets/dog.jpg`）；左上角維持 `h.jpg`（`src/assets/hero-runner.jpg`），不可弄反。
+3. **右上角不放設定圖示**（曾在右下角導覽列存在，屬重複功能）；設定入口 = 底部導覽列「設定」。
+4. **「今天也要好好照顧自己」標語**：紫色（purple-700）、Noto Serif TC 襯線體、字級比「今日動能」標題小。
+
+## 每次修改的標準流程（AI 助手必須執行）
+
+1. 修改程式碼
+2. 執行 `npm run build`（含 tsc 型別檢查）與 `npm run lint`，兩者都通過才繼續
+3. **`git add` → `git commit`（繁體中文訊息）→ `git push origin main`** 一套做完，不可只改不推
+   （曾發生「改完只 commit 沒 push，使用者以為沒生效」的狀況，務必確認 push 成功）
+4. push 完成後提醒使用者：**等 1–2 分鐘讓 Vercel 自動上線，然後在瀏覽器按 Ctrl + F5 強制重新整理**
+5. 回報內容：改了什麼、建置是否通過、是否已推送、線上約何時更新
+
+## 使用者需要做的事（懶人包）
+
+- **發布 = 什麼都不用做**。Vercel 看到 GitHub 有新 commit 會自動上線。
+- 想確認線上版是否更新：開 https://ccu-health.vercel.app/ 按 Ctrl + F5。
+- 瀏覽器快取或舊資料造成「好像沒變」時：Ctrl + F5，或到「設定 → 清除所有本機資料」。
+- localStorage 裝置舊資料不會自動清，新規則只影響「第一次使用」的全新裝置；本機測試要重新體驗歸零就按一次「清除所有本機資料」。
