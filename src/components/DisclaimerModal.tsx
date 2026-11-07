@@ -102,7 +102,7 @@ export function DisclaimerModal({ open, required, onAccept, onClose }: Disclaime
         <button
           type="button"
           onClick={onAccept}
-          className="mt-5 flex h-13 w-full items-center justify-center gap-2 rounded-2xl bg-plum-900 px-5 py-3.5 text-base font-black text-white shadow-lg shadow-plum-900/20 transition hover:bg-plum-800 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-plum-900 active:scale-[0.99]"
+          className="mt-5 flex h-12 w-full items-center justify-center gap-2 rounded-2xl bg-plum-900 px-5 text-base font-black text-white shadow-lg shadow-plum-900/20 transition hover:bg-plum-800 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-plum-900 active:scale-[0.99]"
         >
           <Check className="h-5 w-5" strokeWidth={2.6} />
           {required ? '我已閱讀並了解' : '關閉'}

@@ -23,6 +23,7 @@ interface ActivityPageProps {
   profile: Profile;
   onNotify: (message: string) => void;
   onOpenExercise: () => void;
+  onGoHome: () => void;
 }
 
 const WEEKDAY_LABELS = ['日', '一', '二', '三', '四', '五', '六'];
@@ -45,7 +46,7 @@ function shortDate(date: Date): string {
   return `${date.getMonth() + 1}/${date.getDate()}`;
 }
 
-export function ActivityPage({ profile, onNotify, onOpenExercise }: ActivityPageProps) {
+export function ActivityPage({ profile, onNotify, onOpenExercise, onGoHome }: ActivityPageProps) {
   const [data, setData] = useState<StepsData>(() => loadSteps());
   const [showGoalEditor, setShowGoalEditor] = useState(false);
   const [goalDraft, setGoalDraft] = useState(() => String(data.goal));
@@ -247,7 +248,7 @@ export function ActivityPage({ profile, onNotify, onOpenExercise }: ActivityPage
         eyebrow="ACTIVITY"
         title="今日動能"
         description="走出自己的節奏，每一步都算數。"
-        icon={Activity}
+        onHome={onGoHome}
       />
 
       <section className="relative mb-4 overflow-hidden rounded-[30px] border border-plum-100 bg-gradient-to-br from-plum-50 via-white to-amber-50 shadow-sm shadow-plum-900/5">

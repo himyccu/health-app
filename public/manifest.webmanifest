@@ -1,0 +1,52 @@
+{
+  "id": "/",
+  "name": "HAYLEY 健康管家",
+  "short_name": "健康管家",
+  "description": "整合每日步數、GPS 步行距離、運動訓練與飲食營養的個人健康管理 App。所有資料只留在你的手機。",
+  "lang": "zh-Hant",
+  "dir": "ltr",
+  "start_url": "/?source=pwa",
+  "scope": "/",
+  "display": "standalone",
+  "display_override": ["standalone", "minimal-ui"],
+  "orientation": "portrait",
+  "background_color": "#f8f5fc",
+  "theme_color": "#472a5d",
+  "categories": ["health", "fitness", "lifestyle"],
+  "icons": [
+    {
+      "src": "/icons/icon-192.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "/icons/icon-512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "/icons/icon-maskable-512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "maskable"
+    }
+  ],
+  "shortcuts": [
+    {
+      "name": "開始步行記錄",
+      "short_name": "步行",
+      "description": "開啟 GPS 步行追蹤",
+      "url": "/?tab=activity",
+      "icons": [{ "src": "/icons/icon-192.png", "sizes": "192x192" }]
+    },
+    {
+      "name": "運動訓練",
+      "short_name": "運動",
+      "description": "記錄訓練或查看舉重專欄",
+      "url": "/?tab=exercise",
+      "icons": [{ "src": "/icons/icon-192.png", "sizes": "192x192" }]
+    }
+  ]
+}

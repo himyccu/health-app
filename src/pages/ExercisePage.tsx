@@ -27,10 +27,12 @@ import { dateKey, loadWorkouts, saveWorkouts } from '../lib/storage';
 import { PageHeader } from '../components/PageHeader';
 import { SectionHeading } from '../components/SectionHeading';
 import { MuscleMap } from '../components/MuscleMap';
+import { WeightliftingGuide } from '../components/WeightliftingGuide';
 
 interface ExercisePageProps {
   profile: Profile;
   onNotify: (message: string) => void;
+  onGoHome: () => void;
 }
 
 const CATEGORY_TABS: { id: 'all' | ExerciseCategory; label: string }[] = [
@@ -45,7 +47,8 @@ function newId(): string {
   return `${Date.now()}-${Math.random().toString(36).slice(2, 9)}`;
 }
 
-export function ExercisePage({ profile, onNotify }: ExercisePageProps) {
+export function ExercisePage({ profile, onNotify, onGoHome }: ExercisePageProps) {
+  const [view, setView] = useState<'training' | 'weightlifting'>('training');
   const [filter, setFilter] = useState<'all' | ExerciseCategory>('all');
   const [selectedId, setSelectedId] = useState<string | null>(null);
   const [minutesInput, setMinutesInput] = useState('20');
@@ -151,9 +154,70 @@ export function ExercisePage({ profile, onNotify }: ExercisePageProps) {
         eyebrow="TRAINING"
         title="運動訓練"
         description="用動作模式與肌群，記錄每一次認真的訓練。"
-        icon={Dumbbell}
+        onHome={onGoHome}
       />
 
+      <div className="mb-4 grid grid-cols-2 gap-2">
+        <button
+          type="button"
+          onClick={() => setView('training')}
+          aria-pressed={view === 'training'}
+          className={`flex items-center gap-2.5 rounded-2xl border p-3 text-left transition active:scale-[0.98] ${
+            view === 'training'
+              ? 'border-plum-900 bg-plum-900 text-white shadow-md shadow-plum-900/20'
+              : 'border-plum-100 bg-white text-slate-600 hover:bg-plum-50'
+          }`}
+        >
+          <span
+            className={`grid h-9 w-9 shrink-0 place-items-center rounded-xl ${
+              view === 'training' ? 'bg-white/15 text-amber-200' : 'bg-plum-50 text-plum-800'
+            }`}
+          >
+            <Timer className="h-4 w-4" />
+          </span>
+          <span>
+            <span className="block text-sm font-black">運動紀錄</span>
+            <span
+              className={`mt-0.5 block text-xs font-semibold ${
+                view === 'training' ? 'text-plum-200' : 'text-slate-400'
+              }`}
+            >
+              記錄每一次訓練
+            </span>
+          </span>
+        </button>
+
+        <button
+          type="button"
+          onClick={() => setView('weightlifting')}
+          aria-pressed={view === 'weightlifting'}
+          className={`relative flex items-center gap-2.5 overflow-hidden rounded-2xl border p-3 text-left transition active:scale-[0.98] ${
+            view === 'weightlifting'
+              ? 'border-amber-500 bg-gradient-to-br from-amber-300 to-amber-200 text-plum-950 shadow-md shadow-amber-900/20'
+              : 'border-amber-200 bg-gradient-to-br from-amber-50 to-white text-slate-700 hover:border-amber-300'
+          }`}
+        >
+          <span className="grid h-9 w-9 shrink-0 place-items-center rounded-xl bg-plum-900 text-amber-200">
+            <Dumbbell className="h-4 w-4" />
+          </span>
+          <span className="min-w-0">
+            <span className="flex items-center gap-1">
+              <span className="block text-sm font-black">舉重專欄</span>
+              <span className="rounded-full bg-rose-500 px-1.5 py-0.5 text-[9px] font-black text-white">
+                專業
+              </span>
+            </span>
+            <span className="mt-0.5 block truncate text-xs font-semibold text-slate-500">
+              硬拉解剖學與矯正
+            </span>
+          </span>
+        </button>
+      </div>
+
+      {view === 'weightlifting' ? (
+        <WeightliftingGuide onBack={() => setView('training')} />
+      ) : (
+        <>
       <section className="relative overflow-hidden rounded-[28px] bg-plum-900 p-5 text-white shadow-lg shadow-plum-900/20">
         <div className="pointer-events-none absolute -right-12 -top-12 h-40 w-40 rounded-full bg-plum-800/80" />
         <div className="pointer-events-none absolute -bottom-16 -left-10 h-32 w-32 rounded-full bg-plum-800/50" />
@@ -485,6 +549,8 @@ export function ExercisePage({ profile, onNotify }: ExercisePageProps) {
           </p>
         </div>
       </section>
+        </>
+      )}
     </div>
   );
 }

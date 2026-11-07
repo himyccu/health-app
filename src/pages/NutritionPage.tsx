@@ -9,7 +9,6 @@ import {
   Salad,
   ShieldCheck,
   Trash2,
-  Utensils,
   UtensilsCrossed,
   Wheat,
   type LucideIcon,
@@ -31,6 +30,7 @@ import { FoodSearchCard } from '../components/FoodSearchCard';
 interface NutritionPageProps {
   profile: Profile;
   onNotify: (message: string) => void;
+  onGoHome: () => void;
 }
 
 const GROUP_ICONS: Record<FoodGroupKey, LucideIcon> = {
@@ -53,7 +53,7 @@ function formatAmount(value: number, digits = 1): string {
   return String(Number(value.toFixed(digits)));
 }
 
-export function NutritionPage({ profile, onNotify }: NutritionPageProps) {
+export function NutritionPage({ profile, onNotify, onGoHome }: NutritionPageProps) {
   const [meals, setMeals] = useState<MealEntry[]>(() => loadMeals());
 
   const today = dateKey();
@@ -89,7 +89,7 @@ export function NutritionPage({ profile, onNotify }: NutritionPageProps) {
         eyebrow="NUTRITION"
         title="飲食分析"
         description="用真實的台灣在地食材，看看今天吃進了什麼。"
-        icon={Utensils}
+        onHome={onGoHome}
       />
 
       <section className="relative overflow-hidden rounded-[28px] bg-plum-900 p-5 text-white shadow-lg shadow-plum-900/20">

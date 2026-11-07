@@ -3,7 +3,6 @@ import {
   ArrowRight,
   Flame,
   Heart,
-  HeartPulse,
   Info,
   Pencil,
   Scale,
@@ -27,6 +26,7 @@ import { SectionHeading } from '../components/SectionHeading';
 interface HealthPageProps {
   profile: Profile;
   onOpenSettings: () => void;
+  onGoHome: () => void;
 }
 
 const GAUGE_SEGMENTS = [
@@ -40,7 +40,7 @@ function gaugePercent(value: number): number {
   return Math.min(100, Math.max(0, ((value - 15) / 20) * 100));
 }
 
-export function HealthPage({ profile, onOpenSettings }: HealthPageProps) {
+export function HealthPage({ profile, onOpenSettings, onGoHome }: HealthPageProps) {
   // 首次使用（尚未建立生理數據）時，不顯示任何預設的計算數字。
   if (!isProfileComplete(profile)) {
     return (
@@ -49,7 +49,7 @@ export function HealthPage({ profile, onOpenSettings }: HealthPageProps) {
           eyebrow="HEALTH"
           title="健康指數"
           description="用 BMI 與每日熱量基準，掌握身體的現在。"
-          icon={HeartPulse}
+          onHome={onGoHome}
         />
         <section className="rounded-[28px] border border-amber-100 bg-white p-6 text-center shadow-sm shadow-amber-900/5">
           <div className="mx-auto grid h-14 w-14 place-items-center rounded-2xl bg-plum-50 text-plum-700">
@@ -88,7 +88,7 @@ export function HealthPage({ profile, onOpenSettings }: HealthPageProps) {
         eyebrow="HEALTH"
         title="健康指數"
         description="用 BMI 與每日熱量基準，掌握身體的現在。"
-        icon={HeartPulse}
+        onHome={onGoHome}
       />
 
       <section className="relative overflow-hidden rounded-[28px] border border-amber-100 bg-white p-5 shadow-sm shadow-amber-900/5">

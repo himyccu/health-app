@@ -5,9 +5,7 @@ import {
   BookOpen,
   Calendar,
   Ruler,
-  RotateCcw,
   Save,
-  Settings,
   ShieldCheck,
   Trash2,
   User,
@@ -22,17 +20,17 @@ import { SectionHeading } from '../components/SectionHeading';
 interface SettingsPageProps {
   profile: Profile;
   onSave: (profile: Profile) => void;
-  onNotify: (message: string) => void;
   onShowDisclaimer: () => void;
   onReset: () => void;
+  onGoHome: () => void;
 }
 
 export function SettingsPage({
   profile,
   onSave,
-  onNotify,
   onShowDisclaimer,
   onReset,
+  onGoHome,
 }: SettingsPageProps) {
   // 首次使用時（數值為 0）輸入欄位保持空白，避免使用者誤以為是別人留下的資料。
   const toInput = (value: number) => (value > 0 ? String(value) : '');
@@ -89,35 +87,35 @@ export function SettingsPage({
     });
   };
 
-  const restoreSaved = () => {
-    setGender(profile.gender);
-    setAgeInput(toInput(profile.age));
-    setHeightInput(toInput(profile.height));
-    setWeightInput(toInput(profile.weight));
-    setActivity(profile.activity);
-    setError(null);
-    onNotify('已還原為上次儲存的資料');
-  };
-
   return (
     <div>
       <PageHeader
         eyebrow="SETTINGS"
         title="設定與生理數據"
         description="建立你的健康基準，所有計算都會跟著更新。"
-        icon={Settings}
+        onHome={onGoHome}
       />
+
+      {isFreshProfile && (
+        <section className="mb-4 rounded-[24px] border border-plum-200 bg-gradient-to-br from-plum-50 to-white p-4">
+          <p className="text-[11px] font-black tracking-[0.16em] text-plum-600">GET STARTED</p>
+          <p className="mt-1 text-base font-black text-plum-950">第 1 步：建立基本資料</p>
+          <p className="mt-1 text-[13px] leading-6 text-slate-500">
+            填寫下面的年齡、身高與體重，儲存後再到「動能」開始步行，最後回「首頁」查看累積紀錄。
+          </p>
+        </section>
+      )}
 
       <section className="rounded-[26px] border border-amber-100 bg-white p-4 shadow-sm shadow-amber-900/5">
         <SectionHeading
           icon={User}
-          title="生理數據"
+          title={isFreshProfile ? '步驟 1｜生理數據' : '生理數據'}
           subtitle="用於計算 BMI、BMR、TDEE 與營養目標"
         />
 
         <div className="mt-4 space-y-3">
           {isFreshProfile && (
-            <p className="rounded-xl border border-plum-200 bg-plum-50 px-3 py-2 text-xs leading-relaxed text-plum-800">
+            <p className="rounded-xl border border-plum-200 bg-plum-50 px-3 py-2 text-[13px] leading-relaxed text-plum-800">
               填寫以下資料，作為 BMI、代謝與熱量計算的基準。
             </p>
           )}
@@ -299,14 +297,6 @@ export function SettingsPage({
           儲存設定
         </button>
 
-        <button
-          type="button"
-          onClick={restoreSaved}
-          className="mt-1.5 flex w-full items-center justify-center gap-1.5 rounded-xl py-2 text-xs font-bold text-slate-400 transition hover:bg-slate-50 hover:text-slate-600"
-        >
-          <RotateCcw className="h-3.5 w-3.5" />
-          還原為上次儲存
-        </button>
       </section>
 
       <section className="mt-4 rounded-[26px] border border-plum-100 bg-white p-4 shadow-sm shadow-amber-900/5">
