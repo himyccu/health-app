@@ -416,7 +416,7 @@ export function WeightliftingGuide({ onBack }: WeightliftingGuideProps) {
         className="mt-4 flex h-12 w-full items-center justify-center gap-2 rounded-2xl border border-plum-200 bg-white text-sm font-black text-plum-900 shadow-sm transition hover:bg-plum-50 active:scale-[0.99]"
       >
         <ArrowLeft className="h-4 w-4" />
-        回到運動姿勢庫
+        回到運動知識庫
       </button>
     </div>
   );

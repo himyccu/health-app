@@ -30,7 +30,7 @@ export interface KnowledgeCard {
 }
 
 /**
- * 運動姿勢庫的固定插槽。
+ * 運動知識庫的固定插槽。
  * 之後新增姿勢時，只要補上 thumbnail、status 與文案即可沿用同一張卡片版型。
  */
 export const KNOWLEDGE_CARDS: KnowledgeCard[] = [

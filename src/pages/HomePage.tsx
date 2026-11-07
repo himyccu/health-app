@@ -178,9 +178,15 @@ export function HomePage({
             <span className="rounded-full bg-amber-300 px-3 py-1 text-[11px] font-black tracking-[0.12em] text-plum-950">
               新手入門
             </span>
-            <span className="rounded-full bg-white/10 px-3 py-1 text-[11px] font-bold text-plum-100 ring-1 ring-white/15">
-              運動醫學導引
-            </span>
+            <button
+              type="button"
+              onClick={onOpenKnowledge}
+              className="inline-flex items-center gap-1 rounded-full bg-white/10 px-3 py-1 text-[11px] font-bold text-plum-100 ring-1 ring-white/15 transition hover:bg-white/20 active:scale-[0.97]"
+            >
+              <BookOpen className="h-3.5 w-3.5" />
+              運動知識庫
+              <ChevronRight className="h-3.5 w-3.5 text-plum-200" />
+            </button>
           </div>
 
           <h1 className="mt-4 font-serif text-[32px] font-black leading-[1.25] tracking-[0.04em]">
@@ -192,22 +198,26 @@ export function HomePage({
             從呼吸、脊柱中立與基礎動作開始，建立一輩子可用的訓練底子。
           </p>
 
-          <div className="mt-5 flex flex-col gap-2 sm:flex-row">
+          <div className="mt-5 grid grid-cols-2 gap-2">
             <button
               type="button"
               onClick={profileReady ? () => onNavigate('activity') : onStartOnboarding}
-              className="flex h-12 flex-1 items-center justify-center gap-2 rounded-2xl bg-amber-300 text-sm font-black text-plum-950 shadow-lg shadow-plum-950/20 transition hover:bg-amber-200 active:scale-[0.98]"
+              className="flex min-h-[3.75rem] flex-col items-center justify-center gap-1 rounded-2xl bg-amber-300 px-2 text-sm font-black leading-tight text-plum-950 shadow-lg shadow-plum-950/20 transition hover:bg-amber-200 active:scale-[0.98]"
             >
-              {profileReady ? <Footprints className="h-4 w-4" /> : <HeartPulse className="h-4 w-4" />}
-              {profileReady ? '開始步行' : '開始設定'}
+              {profileReady ? (
+                <Footprints className="h-5 w-5" />
+              ) : (
+                <HeartPulse className="h-5 w-5" />
+              )}
+              <span>{profileReady ? '開始步行' : '開始設定'}</span>
             </button>
             <button
               type="button"
               onClick={onOpenKnowledge}
-              className="flex h-12 flex-1 items-center justify-center gap-2 rounded-2xl border border-white/20 bg-white/10 text-sm font-black text-white transition hover:bg-white/15 active:scale-[0.98]"
+              className="flex min-h-[3.75rem] flex-col items-center justify-center gap-1 rounded-2xl border border-white/20 bg-white/10 px-2 text-sm font-black leading-tight text-white transition hover:bg-white/15 active:scale-[0.98]"
             >
-              <BookOpen className="h-4 w-4" />
-              運動姿勢庫
+              <BookOpen className="h-5 w-5" />
+              <span>運動知識庫</span>
             </button>
           </div>
 
@@ -280,7 +290,7 @@ export function HomePage({
             onClick={onOpenKnowledge}
             className="mt-2.5 flex h-11 w-full items-center justify-center gap-1.5 rounded-2xl border border-plum-200 bg-plum-50 text-sm font-black text-plum-900 transition hover:bg-plum-100 active:scale-[0.99]"
           >
-            前往運動姿勢庫
+            前往運動知識庫
             <ArrowRight className="h-4 w-4" />
           </button>
         </div>

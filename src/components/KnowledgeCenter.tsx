@@ -14,7 +14,7 @@ export function KnowledgeCenter({ onOpenArticle }: KnowledgeCenterProps) {
         <div className="flex items-start justify-between gap-3">
           <SectionHeading
             icon={BookOpen}
-            title="運動姿勢庫"
+            title="運動知識庫"
             subtitle="動作圖文教學，持續新增"
           />
           <span className="shrink-0 rounded-full bg-plum-50 px-2.5 py-1 text-xs font-black text-plum-800">
@@ -113,7 +113,7 @@ export function KnowledgeCenter({ onOpenArticle }: KnowledgeCenterProps) {
 
         <p className="mt-3 flex items-start gap-1.5 text-xs leading-5 text-slate-400">
           <Sparkles className="mt-0.5 h-3.5 w-3.5 shrink-0" />
-          姿勢庫會依訓練需求持續新增，之後回來就能看到更多教學與圖片。
+          知識庫會依訓練需求持續新增，之後回來就能看到更多教學與圖片。
         </p>
       </section>
     </div>

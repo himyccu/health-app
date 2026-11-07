@@ -209,7 +209,7 @@ export function ExercisePage({
           </span>
           <span className="min-w-0">
             <span className="block text-[13px] font-black leading-tight sm:text-sm">
-              運動姿勢庫
+              運動知識庫
             </span>
             <span
               className={`mt-0.5 block truncate text-xs font-semibold ${
