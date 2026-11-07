@@ -208,18 +208,15 @@ export function ExercisePage({
             <Dumbbell className="h-4 w-4" />
           </span>
           <span className="min-w-0">
-            <span className="flex flex-wrap items-center gap-1">
-              <span className="block text-sm font-black">專業專欄</span>
-              <span className="rounded-full bg-plum-900 px-1.5 py-0.5 text-[9px] font-black text-amber-100">
-                知識庫
-              </span>
+            <span className="block text-[13px] font-black leading-tight sm:text-sm">
+              運動姿勢庫
             </span>
             <span
               className={`mt-0.5 block truncate text-xs font-semibold ${
                 view !== 'training' ? 'text-plum-800' : 'text-slate-500'
               }`}
             >
-              五大動作專欄
+              圖文教學
             </span>
           </span>
         </button>

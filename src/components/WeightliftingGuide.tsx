@@ -24,7 +24,7 @@ import {
 } from '../data/weightlifting';
 import { SectionHeading } from './SectionHeading';
 import correctImage from '../assets/weightlifting/deadlift-correct.jpg';
-import setupImage from '../assets/weightlifting/deadlift-setup.jpg';
+import startImage from '../assets/weightlifting/deadlift-start.jpg';
 import techniqueImage from '../assets/weightlifting/deadlift-technique.jpg';
 import musclesImage from '../assets/weightlifting/deadlift-muscles.jpg';
 
@@ -33,6 +33,12 @@ interface WeightliftingGuideProps {
 }
 
 type GuideTab = 'anatomy' | 'technique' | 'errors' | 'checklist';
+
+const START_CUES = [
+  '背部保持直線，肩膀略微超出槓鈴前側。',
+  '腋下向後收緊（夾緊背闊肌）。',
+  '大腿約與地面成傾斜夾角，而不是過低的深蹲位置。',
+];
 
 const GUIDE_TABS: { id: GuideTab; label: string }[] = [
   { id: 'anatomy', label: '解剖' },
@@ -47,11 +53,11 @@ export function WeightliftingGuide({ onBack }: WeightliftingGuideProps) {
   return (
     <div className="animate-fade-up">
       <section className="overflow-hidden rounded-[30px] border border-plum-100 bg-white shadow-[0_24px_50px_-30px_rgba(47,26,63,0.6)]">
-        <div className="h-48 w-full overflow-hidden bg-plum-100">
+        <div className="aspect-[11/10] w-full bg-plum-100">
           <img
             src={correctImage}
             alt="硬拉標準起始姿勢示範"
-            className="h-full w-full object-cover object-[center_30%]"
+            className="h-full w-full object-contain"
           />
         </div>
         <div className="bg-plum-950 px-5 pb-5 pt-4 text-white">
@@ -61,14 +67,14 @@ export function WeightliftingGuide({ onBack }: WeightliftingGuideProps) {
               WEIGHTLIFTING
             </span>
             <span className="rounded-full bg-white/10 px-3 py-1 text-[10px] font-bold text-plum-100 ring-1 ring-white/15">
-              專業知識專欄
+              動作教學
             </span>
           </div>
           <h2 className="mt-3 font-serif text-[28px] font-black leading-tight tracking-wide">
-            舉重專欄
+            硬拉教學
           </h2>
           <p className="mt-1 text-sm font-semibold text-plum-100">硬拉技術與解剖學全解析</p>
-          <p className="mt-3 text-[15px] leading-7 text-plum-100">{DEADLIFT_INTRO}</p>
+          <p className="mt-3 text-base leading-7 text-plum-100">{DEADLIFT_INTRO}</p>
         </div>
       </section>
 
@@ -147,13 +153,35 @@ export function WeightliftingGuide({ onBack }: WeightliftingGuideProps) {
       {tab === 'technique' && (
         <div className="animate-fade-up">
           <figure className="mt-3 overflow-hidden rounded-[26px] border border-plum-100 bg-white shadow-sm">
-            <img
-              src={setupImage}
-              alt="教練確認硬拉起始位置，足中對準槓鈴"
-              className="h-48 w-full object-cover object-[center_35%]"
-            />
-            <figcaption className="px-4 py-3 text-[13px] leading-6 text-slate-500">
-              起始位置：足中對準槓鈴正下方，臀部向後下方推，背部維持中立。
+            <div className="aspect-[11/10] w-full bg-slate-100">
+              <img
+                src={startImage}
+                alt="教練確認硬拉起始位置：足中對準槓鈴、背部保持直線、雙手位於雙腿外側"
+                className="h-full w-full object-contain"
+              />
+            </div>
+            <figcaption className="px-4 pb-4 pt-3.5">
+              <p className="text-[11px] font-black tracking-[0.16em] text-plum-600">
+                起始位置
+              </p>
+              <p className="mt-1 text-lg font-black leading-8 text-slate-900">
+                足中對準槓鈴正下方，臀部向後推，背部維持直立，雙手握在雙腿外側。
+              </p>
+
+              <ul className="mt-3 space-y-2">
+                {START_CUES.map((cue) => (
+                  <li
+                    key={cue}
+                    className="flex gap-2.5 rounded-2xl bg-slate-50 px-3 py-2.5 text-[16px] font-bold leading-7 text-slate-800"
+                  >
+                    <Check
+                      className="mt-1.5 h-4 w-4 shrink-0 text-emerald-600"
+                      strokeWidth={3}
+                    />
+                    <span className="min-w-0">{cue}</span>
+                  </li>
+                ))}
+              </ul>
             </figcaption>
           </figure>
 
@@ -168,20 +196,22 @@ export function WeightliftingGuide({ onBack }: WeightliftingGuideProps) {
                     {phase.step}
                   </span>
                   <div className="min-w-0">
-                    <h3 className="text-[17px] font-black leading-tight text-slate-900">
+                    <h3 className="text-lg font-black leading-tight text-slate-900">
                       {phase.title}
                     </h3>
-                    <p className="mt-0.5 text-xs font-bold text-plum-600">{phase.subtitle}</p>
+                    <p className="mt-0.5 text-[13px] font-bold text-plum-600">
+                      {phase.subtitle}
+                    </p>
                   </div>
                 </div>
                 <ul className="mt-3 space-y-2">
                   {phase.points.map((point) => (
                     <li
                       key={point}
-                      className="flex gap-2 text-[14px] leading-6 text-slate-600"
+                      className="flex gap-2 text-[15px] font-semibold leading-7 text-slate-700"
                     >
                       <Check
-                        className="mt-1 h-4 w-4 shrink-0 text-emerald-600"
+                        className="mt-1.5 h-4 w-4 shrink-0 text-emerald-600"
                         strokeWidth={3}
                       />
                       {point}
@@ -236,18 +266,18 @@ export function WeightliftingGuide({ onBack }: WeightliftingGuideProps) {
                   <Check className="h-3.5 w-3.5" strokeWidth={3} />
                   <span className="text-xs font-black">正確</span>
                 </div>
-                <div className="h-36 overflow-hidden">
+                <div className="aspect-[11/10] w-full overflow-hidden bg-white">
                   <img
                     src={techniqueImage}
                     alt="硬拉正確姿勢：脊柱中立、槓鈴貼近身體"
-                    className="h-full w-full object-cover object-[center_40%]"
+                    className="h-full w-full object-contain"
                   />
                 </div>
                 <div className="p-2.5">
-                  <p className="text-[13px] font-black leading-5 text-emerald-900">
+                  <p className="text-sm font-black leading-6 text-emerald-900">
                     脊柱中立・槓鈴貼腿・肩髖同步
                   </p>
-                  <p className="mt-1 text-[12px] leading-5 text-emerald-900/70">
+                  <p className="mt-1 text-[13px] leading-6 text-emerald-900/70">
                     力量平均分散，後側動力鏈有效參與。
                   </p>
                 </div>
@@ -258,14 +288,14 @@ export function WeightliftingGuide({ onBack }: WeightliftingGuideProps) {
                   <X className="h-3.5 w-3.5" strokeWidth={3} />
                   <span className="text-xs font-black">錯誤</span>
                 </div>
-                <div className="grid h-36 place-items-center bg-rose-100/70 px-2">
+                <div className="grid aspect-[11/10] w-full place-items-center bg-rose-100/70 px-2">
                   <SpineComparison />
                 </div>
                 <div className="p-2.5">
-                  <p className="text-[13px] font-black leading-5 text-rose-900">
+                  <p className="text-sm font-black leading-6 text-rose-900">
                     圓背・預先抬腰・仰頭
                   </p>
-                  <p className="mt-1 text-[12px] leading-5 text-rose-900/70">
+                  <p className="mt-1 text-[13px] leading-6 text-rose-900/70">
                     剪切力集中在下背，椎間盤風險升高。
                   </p>
                 </div>
@@ -386,7 +416,7 @@ export function WeightliftingGuide({ onBack }: WeightliftingGuideProps) {
         className="mt-4 flex h-12 w-full items-center justify-center gap-2 rounded-2xl border border-plum-200 bg-white text-sm font-black text-plum-900 shadow-sm transition hover:bg-plum-50 active:scale-[0.99]"
       >
         <ArrowLeft className="h-4 w-4" />
-        回到知識庫
+        回到運動姿勢庫
       </button>
     </div>
   );

@@ -30,8 +30,8 @@ export interface KnowledgeCard {
 }
 
 /**
- * 運動醫學知識庫的固定插槽。
- * 之後新增專欄時，只要補上 thumbnail、status 與文案即可沿用同一張卡片版型。
+ * 運動姿勢庫的固定插槽。
+ * 之後新增姿勢時，只要補上 thumbnail、status 與文案即可沿用同一張卡片版型。
  */
 export const KNOWLEDGE_CARDS: KnowledgeCard[] = [
   {
@@ -90,7 +90,7 @@ export const KNOWLEDGE_CARDS: KnowledgeCard[] = [
     icon: MoveDown,
     thumbnail: hingeThumbnail,
     thumbnailAlt: '硬拉標準起始姿勢示範',
-    readMoreLabel: '閱讀專欄',
+    readMoreLabel: '閱讀教學',
     accent: {
       icon: 'bg-plum-50 text-plum-700',
       badge: 'bg-plum-900 text-amber-100',

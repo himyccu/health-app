@@ -360,7 +360,7 @@ export function OnboardingWizard({
                 </p>
                 <p className="flex items-start gap-2 text-[13px] leading-6 text-emerald-900/80">
                   <Activity className="mt-0.5 h-4 w-4 shrink-0" />
-                  到「運動」頁記錄訓練，或閱讀舉重專欄。
+                  到「運動」頁記錄訓練，或閱讀硬拉教學。
                 </p>
               </div>
 

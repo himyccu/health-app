@@ -73,7 +73,7 @@ const BEGINNER_CONCEPTS = [
   },
   {
     icon: BookOpen,
-    title: '五大基礎動作',
+    title: '基礎動作模式',
     description: '推、拉、蹲、髖、移動，涵蓋日常與訓練的主要模式。',
     tone: 'bg-amber-50 text-amber-700',
   },
@@ -189,7 +189,7 @@ export function HomePage({
             再開始變強
           </h1>
           <p className="mt-3 max-w-[22rem] text-[15px] leading-7 text-plum-100">
-            從呼吸、脊柱中立與五大動作開始，建立一輩子可用的訓練底子。
+            從呼吸、脊柱中立與基礎動作開始，建立一輩子可用的訓練底子。
           </p>
 
           <div className="mt-5 flex flex-col gap-2 sm:flex-row">
@@ -207,7 +207,7 @@ export function HomePage({
               className="flex h-12 flex-1 items-center justify-center gap-2 rounded-2xl border border-white/20 bg-white/10 text-sm font-black text-white transition hover:bg-white/15 active:scale-[0.98]"
             >
               <BookOpen className="h-4 w-4" />
-              認識五大動作
+              運動姿勢庫
             </button>
           </div>
 
@@ -257,7 +257,7 @@ export function HomePage({
         </div>
 
         <div className="mt-4">
-          <p className="text-xs font-black tracking-[0.14em] text-plum-600">五大基礎動作</p>
+          <p className="text-xs font-black tracking-[0.14em] text-plum-600">常見動作模式</p>
           <div className="mt-2 grid grid-cols-5 gap-1.5">
             {KNOWLEDGE_CARDS.map((card) => {
               const Icon = card.icon;
@@ -266,7 +266,7 @@ export function HomePage({
                   key={card.id}
                   type="button"
                   onClick={onOpenKnowledge}
-                  aria-label={`前往${card.title}專欄`}
+                  aria-label={`前往${card.title}教學`}
                   className="flex min-w-0 flex-col items-center gap-1 rounded-xl border border-slate-100 bg-white px-1 py-2.5 text-center transition hover:border-plum-200 hover:bg-plum-50 active:scale-[0.97]"
                 >
                   <Icon className="h-5 w-5 text-plum-700" strokeWidth={2} />
@@ -280,7 +280,7 @@ export function HomePage({
             onClick={onOpenKnowledge}
             className="mt-2.5 flex h-11 w-full items-center justify-center gap-1.5 rounded-2xl border border-plum-200 bg-plum-50 text-sm font-black text-plum-900 transition hover:bg-plum-100 active:scale-[0.99]"
           >
-            前往運動醫學知識庫
+            前往運動姿勢庫
             <ArrowRight className="h-4 w-4" />
           </button>
         </div>

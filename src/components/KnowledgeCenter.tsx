@@ -14,11 +14,11 @@ export function KnowledgeCenter({ onOpenArticle }: KnowledgeCenterProps) {
         <div className="flex items-start justify-between gap-3">
           <SectionHeading
             icon={BookOpen}
-            title="運動醫學知識庫"
-            subtitle="五大動作模式，持續擴充中"
+            title="運動姿勢庫"
+            subtitle="動作圖文教學，持續新增"
           />
           <span className="shrink-0 rounded-full bg-plum-50 px-2.5 py-1 text-xs font-black text-plum-800">
-            5 個專欄
+            5 篇教學
           </span>
         </div>
 
@@ -71,7 +71,7 @@ export function KnowledgeCenter({ onOpenArticle }: KnowledgeCenterProps) {
                     <h3 className="mt-1 text-base font-black leading-snug text-slate-900">
                       {card.title}
                     </h3>
-                    <p className="mt-1 text-[13px] leading-5 text-slate-500">{card.subtitle}</p>
+                    <p className="mt-1 text-sm leading-6 text-slate-500">{card.subtitle}</p>
 
                     {card.tip && (
                       <div className="mt-2 flex items-center gap-2 rounded-xl bg-amber-50 px-2 py-1.5">
@@ -81,7 +81,7 @@ export function KnowledgeCenter({ onOpenArticle }: KnowledgeCenterProps) {
                           aria-hidden="true"
                           className="h-7 w-7 shrink-0 rounded-full object-cover ring-1 ring-white"
                         />
-                        <p className="min-w-0 text-xs font-semibold leading-5 text-amber-900">
+                        <p className="min-w-0 text-[13px] font-semibold leading-6 text-amber-900">
                           {card.tip}
                         </p>
                       </div>
@@ -113,7 +113,7 @@ export function KnowledgeCenter({ onOpenArticle }: KnowledgeCenterProps) {
 
         <p className="mt-3 flex items-start gap-1.5 text-xs leading-5 text-slate-400">
           <Sparkles className="mt-0.5 h-3.5 w-3.5 shrink-0" />
-          專欄會依訓練需求持續新增，之後回來就能看到更多教案與圖片。
+          姿勢庫會依訓練需求持續新增，之後回來就能看到更多教學與圖片。
         </p>
       </section>
     </div>
