@@ -30,10 +30,10 @@ interface HealthPageProps {
 }
 
 const GAUGE_SEGMENTS = [
-  { id: 'underweight', label: '過輕', width: 17.5, className: 'bg-sky-300' },
-  { id: 'normal', label: '正常', width: 27.5, className: 'bg-emerald-400' },
-  { id: 'overweight', label: '過重', width: 15, className: 'bg-amber-400' },
-  { id: 'obese', label: '肥胖', width: 40, className: 'bg-rose-400' },
+  { id: 'underweight', label: '過輕', range: '< 18.5', width: 17.5, className: 'bg-sky-300' },
+  { id: 'normal', label: '正常', range: '18.5–24', width: 27.5, className: 'bg-emerald-400' },
+  { id: 'overweight', label: '過重', range: '24–27', width: 15, className: 'bg-amber-400' },
+  { id: 'obese', label: '肥胖', range: '≥ 27', width: 40, className: 'bg-rose-400' },
 ];
 
 function gaugePercent(value: number): number {
@@ -91,16 +91,15 @@ export function HealthPage({ profile, onOpenSettings, onGoHome }: HealthPageProp
         onHome={onGoHome}
       />
 
-      <section className="relative overflow-hidden rounded-[28px] border border-amber-100 bg-white p-5 shadow-sm shadow-amber-900/5">
-        <div className="pointer-events-none absolute -right-10 -top-10 h-32 w-32 rounded-full bg-rose-50" />
+      <section className="overflow-hidden rounded-[28px] border border-amber-100 bg-gradient-to-br from-rose-50/60 via-white to-white p-5 shadow-sm shadow-amber-900/5">
         <SectionHeading
           icon={Heart}
           title="BMI 身體質量指數"
           subtitle="衛生福利部成人健康體位標準"
         />
 
-        <div className="relative mt-4 flex items-end justify-between gap-3">
-          <div>
+        <div className="mt-4 flex flex-wrap items-end justify-between gap-x-4 gap-y-3">
+          <div className="min-w-0">
             <p className="text-xs font-bold text-slate-400">你的 BMI</p>
             <p className="mt-0.5 text-5xl font-black leading-none tracking-tight text-plum-900 tabular-nums">
               {bmi.toFixed(1)}
@@ -109,49 +108,48 @@ export function HealthPage({ profile, onOpenSettings, onGoHome }: HealthPageProp
               {profile.height} cm · {profile.weight} kg
             </p>
           </div>
-          <div className="text-right">
-            <span className={`inline-block rounded-full px-4 py-2 text-sm font-black ${category.badgeClass}`}>
+          <div className="min-w-0 shrink-0 text-left sm:text-right">
+            <span
+              className={`inline-block rounded-full px-4 py-2 text-sm font-black ${category.badgeClass}`}
+            >
               {category.label}
             </span>
             <p className="mt-1.5 text-xs font-semibold text-slate-400">{category.rangeLabel}</p>
           </div>
         </div>
 
-        <div className="relative mt-7 pb-5">
-          <div className="flex h-3 overflow-hidden rounded-full">
-            {GAUGE_SEGMENTS.map((segment) => (
-              <div
-                key={segment.id}
-                className={segment.className}
-                style={{ width: `${segment.width}%` }}
-              />
-            ))}
+        <div className="mt-5">
+          <div className="relative h-3">
+            <div className="flex h-full overflow-hidden rounded-full">
+              {GAUGE_SEGMENTS.map((segment) => (
+                <div
+                  key={segment.id}
+                  className={segment.className}
+                  style={{ width: `${segment.width}%` }}
+                />
+              ))}
+            </div>
+            <div
+              className="absolute top-1/2 z-10 h-[18px] w-[18px] -translate-x-1/2 -translate-y-1/2 rounded-full border-[3px] border-white bg-plum-900 shadow-md shadow-plum-900/30"
+              style={{ left: `clamp(9px, ${markerPercent}%, calc(100% - 9px))` }}
+              title={`BMI ${bmi.toFixed(1)}`}
+            />
           </div>
 
-          <div
-            className="absolute top-1/2 z-10 h-[18px] w-[18px] -translate-x-1/2 -translate-y-1/2 rounded-full border-[3px] border-white bg-plum-900 shadow-md shadow-plum-900/30"
-            style={{ left: `clamp(9px, ${markerPercent}%, calc(100% - 9px))` }}
-            title={`BMI ${bmi.toFixed(1)}`}
-          />
-
-          {[
-            { value: 18.5, label: '18.5' },
-            { value: 24, label: '24' },
-            { value: 27, label: '27' },
-          ].map((tick) => (
-            <span
-              key={tick.value}
-              className="absolute top-4 -translate-x-1/2 text-[10px] font-bold text-slate-400"
-              style={{ left: `clamp(12px, ${gaugePercent(tick.value)}%, calc(100% - 12px))` }}
-            >
-              {tick.label}
-            </span>
-          ))}
-          <span className="absolute bottom-0 left-0 text-[10px] font-bold text-sky-500">過輕</span>
-          <span className="absolute bottom-0 right-0 text-[10px] font-bold text-rose-500">肥胖</span>
+          <div className="mt-3 grid grid-cols-2 gap-1.5 sm:grid-cols-4">
+            {GAUGE_SEGMENTS.map((segment) => (
+              <div key={segment.id} className="rounded-xl bg-slate-50 px-2 py-1.5">
+                <div className="flex items-center gap-1.5">
+                  <span className={`h-2 w-2 shrink-0 rounded-full ${segment.className}`} />
+                  <span className="text-xs font-bold text-slate-600">{segment.label}</span>
+                </div>
+                <p className="mt-0.5 text-xs font-semibold text-slate-400">{segment.range}</p>
+              </div>
+            ))}
+          </div>
         </div>
 
-        <div className={`rounded-2xl border p-3.5 ${category.softClass}`}>
+        <div className={`mt-4 rounded-2xl border p-3.5 ${category.softClass}`}>
           <p className={`text-sm font-bold leading-relaxed ${category.textClass}`}>
             {category.advice}
           </p>

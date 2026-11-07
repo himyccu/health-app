@@ -45,6 +45,7 @@ export default function App() {
     accepted: hasAcceptedDisclaimer(),
   }));
   const [activeTab, setActiveTab] = useState<TabId>(() => getInitialTab());
+  const [exerciseEntry, setExerciseEntry] = useState<'training' | 'knowledge'>('training');
   const [profile, setProfile] = useState<Profile>(() => bootstrap.profile);
   const [disclaimerAccepted, setDisclaimerAccepted] = useState(() => bootstrap.accepted);
   const [disclaimerOpen, setDisclaimerOpen] = useState(() => !bootstrap.accepted);
@@ -107,6 +108,16 @@ export default function App() {
     setActiveTab('activity');
   }, []);
 
+  const handleTabChange = useCallback((tab: TabId) => {
+    if (tab === 'exercise') setExerciseEntry('training');
+    setActiveTab(tab);
+  }, []);
+
+  const handleOpenKnowledge = useCallback(() => {
+    setExerciseEntry('knowledge');
+    setActiveTab('exercise');
+  }, []);
+
   return (
     <div className="relative min-h-[100dvh] overflow-hidden bg-gradient-to-br from-plum-100 via-[#fbf7ff] to-amber-50 md:flex md:items-center md:justify-center md:p-6">
       <div className="pointer-events-none absolute -left-32 top-0 h-96 w-96 rounded-full bg-plum-200/45 blur-3xl" />
@@ -128,7 +139,8 @@ export default function App() {
           {activeTab === 'home' && (
             <HomePage
               profile={profile}
-              onNavigate={setActiveTab}
+              onNavigate={handleTabChange}
+              onOpenKnowledge={handleOpenKnowledge}
               onShowAbout={() => setAboutOpen(true)}
               onStartOnboarding={() => setOnboardingOpen(true)}
             />
@@ -137,13 +149,15 @@ export default function App() {
             <ActivityPage
               profile={profile}
               onNotify={notify}
-              onOpenExercise={() => setActiveTab('exercise')}
+              onOpenExercise={() => handleTabChange('exercise')}
               onGoHome={() => setActiveTab('home')}
             />
           )}
           {activeTab === 'exercise' && (
             <ExercisePage
+              key={exerciseEntry}
               profile={profile}
+              initialView={exerciseEntry}
               onNotify={notify}
               onGoHome={() => setActiveTab('home')}
             />
@@ -175,7 +189,7 @@ export default function App() {
           )}
         </main>
 
-        <BottomNav activeTab={activeTab} onChange={setActiveTab} />
+        <BottomNav activeTab={activeTab} onChange={handleTabChange} />
       </div>
 
       <Toast message={toast} />

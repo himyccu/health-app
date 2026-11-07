@@ -17,7 +17,6 @@ import {
 } from 'lucide-react';
 import type { ActivityLevel, Gender, Profile } from '../types';
 import { ACTIVITY_OPTIONS, getActivityOption } from '../lib/health';
-import dogPhoto from '../assets/dog.png';
 
 interface OnboardingWizardProps {
   profile: Profile;
@@ -121,12 +120,9 @@ export function OnboardingWizard({
           {step === 0 && (
             <div className="animate-fade-up">
               <div className="flex flex-col items-center text-center">
-                <img
-                  src={dogPhoto}
-                  alt=""
-                  aria-hidden="true"
-                  className="h-28 w-28 rounded-full object-cover shadow-lg shadow-plum-900/20 ring-4 ring-white"
-                />
+                <div className="grid h-20 w-20 place-items-center rounded-full bg-plum-50 text-plum-800 shadow-lg shadow-plum-900/10 ring-4 ring-white">
+                  <Heart className="h-9 w-9" strokeWidth={1.8} />
+                </div>
                 <p className="mt-4 text-[11px] font-black tracking-[0.2em] text-plum-600">
                   WELCOME
                 </p>

@@ -28,9 +28,11 @@ import { PageHeader } from '../components/PageHeader';
 import { SectionHeading } from '../components/SectionHeading';
 import { MuscleMap } from '../components/MuscleMap';
 import { WeightliftingGuide } from '../components/WeightliftingGuide';
+import { KnowledgeCenter } from '../components/KnowledgeCenter';
 
 interface ExercisePageProps {
   profile: Profile;
+  initialView?: 'training' | 'knowledge';
   onNotify: (message: string) => void;
   onGoHome: () => void;
 }
@@ -47,8 +49,13 @@ function newId(): string {
   return `${Date.now()}-${Math.random().toString(36).slice(2, 9)}`;
 }
 
-export function ExercisePage({ profile, onNotify, onGoHome }: ExercisePageProps) {
-  const [view, setView] = useState<'training' | 'weightlifting'>('training');
+export function ExercisePage({
+  profile,
+  initialView = 'training',
+  onNotify,
+  onGoHome,
+}: ExercisePageProps) {
+  const [view, setView] = useState<'training' | 'knowledge' | 'article'>(initialView);
   const [filter, setFilter] = useState<'all' | ExerciseCategory>('all');
   const [selectedId, setSelectedId] = useState<string | null>(null);
   const [minutesInput, setMinutesInput] = useState('20');
@@ -189,10 +196,10 @@ export function ExercisePage({ profile, onNotify, onGoHome }: ExercisePageProps)
 
         <button
           type="button"
-          onClick={() => setView('weightlifting')}
-          aria-pressed={view === 'weightlifting'}
-          className={`relative flex items-center gap-2.5 overflow-hidden rounded-2xl border p-3 text-left transition active:scale-[0.98] ${
-            view === 'weightlifting'
+          onClick={() => setView('knowledge')}
+          aria-pressed={view !== 'training'}
+          className={`flex items-center gap-2.5 rounded-2xl border p-3 text-left transition active:scale-[0.98] ${
+            view !== 'training'
               ? 'border-amber-500 bg-gradient-to-br from-amber-300 to-amber-200 text-plum-950 shadow-md shadow-amber-900/20'
               : 'border-amber-200 bg-gradient-to-br from-amber-50 to-white text-slate-700 hover:border-amber-300'
           }`}
@@ -201,28 +208,31 @@ export function ExercisePage({ profile, onNotify, onGoHome }: ExercisePageProps)
             <Dumbbell className="h-4 w-4" />
           </span>
           <span className="min-w-0">
-            <span className="flex items-center gap-1">
-              <span className="block text-sm font-black">舉重專欄</span>
-              <span className="rounded-full bg-rose-500 px-1.5 py-0.5 text-[9px] font-black text-white">
-                專業
+            <span className="flex flex-wrap items-center gap-1">
+              <span className="block text-sm font-black">專業專欄</span>
+              <span className="rounded-full bg-plum-900 px-1.5 py-0.5 text-[9px] font-black text-amber-100">
+                知識庫
               </span>
             </span>
-            <span className="mt-0.5 block truncate text-xs font-semibold text-slate-500">
-              硬拉解剖學與矯正
+            <span
+              className={`mt-0.5 block truncate text-xs font-semibold ${
+                view !== 'training' ? 'text-plum-800' : 'text-slate-500'
+              }`}
+            >
+              五大動作專欄
             </span>
           </span>
         </button>
       </div>
 
-      {view === 'weightlifting' ? (
-        <WeightliftingGuide onBack={() => setView('training')} />
+      {view === 'article' ? (
+        <WeightliftingGuide onBack={() => setView('knowledge')} />
+      ) : view === 'knowledge' ? (
+        <KnowledgeCenter onOpenArticle={() => setView('article')} />
       ) : (
         <>
-      <section className="relative overflow-hidden rounded-[28px] bg-plum-900 p-5 text-white shadow-lg shadow-plum-900/20">
-        <div className="pointer-events-none absolute -right-12 -top-12 h-40 w-40 rounded-full bg-plum-800/80" />
-        <div className="pointer-events-none absolute -bottom-16 -left-10 h-32 w-32 rounded-full bg-plum-800/50" />
-
-        <p className="relative text-sm font-bold text-plum-200">今日運動</p>
+      <section className="overflow-hidden rounded-[28px] bg-plum-900 p-5 text-white shadow-lg shadow-plum-900/20">
+        <p className="text-sm font-bold text-plum-200">今日運動</p>
         <div className="relative mt-2 grid grid-cols-2 gap-3">
           <div>
             <p className="flex items-baseline gap-1">

@@ -61,3 +61,13 @@ export function isIOSDevice(): boolean {
     (navigator.platform === 'MacIntel' && navigator.maxTouchPoints > 1)
   );
 }
+
+export type InstallPlatform = 'ios' | 'android' | 'desktop';
+
+/** 依瀏覽器資訊判斷安裝引導要顯示哪一種版本。 */
+export function detectInstallPlatform(): InstallPlatform {
+  if (typeof navigator === 'undefined') return 'desktop';
+  if (isIOSDevice()) return 'ios';
+  if (/android/i.test(navigator.userAgent)) return 'android';
+  return 'desktop';
+}

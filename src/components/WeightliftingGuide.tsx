@@ -46,28 +46,29 @@ export function WeightliftingGuide({ onBack }: WeightliftingGuideProps) {
 
   return (
     <div className="animate-fade-up">
-      <section className="relative overflow-hidden rounded-[30px] bg-plum-950 text-white shadow-[0_24px_50px_-30px_rgba(47,26,63,0.9)]">
-        <div className="relative h-52 w-full overflow-hidden">
+      <section className="overflow-hidden rounded-[30px] border border-plum-100 bg-white shadow-[0_24px_50px_-30px_rgba(47,26,63,0.6)]">
+        <div className="h-48 w-full overflow-hidden bg-plum-100">
           <img
             src={correctImage}
             alt="硬拉標準起始姿勢示範"
             className="h-full w-full object-cover object-[center_30%]"
           />
-          <div className="absolute inset-0 bg-gradient-to-t from-plum-950 via-plum-950/55 to-plum-950/5" />
-          <div className="absolute left-4 top-4 flex items-center gap-1.5 rounded-full bg-amber-300 px-3 py-1 text-[10px] font-black tracking-[0.14em] text-plum-950 shadow-sm">
-            <Dumbbell className="h-3.5 w-3.5" />
-            WEIGHTLIFTING
-          </div>
-          <div className="absolute bottom-4 left-4 right-4">
-            <p className="text-[11px] font-bold tracking-[0.18em] text-amber-200">專業知識專欄</p>
-            <h2 className="mt-1 font-serif text-[28px] font-black leading-tight tracking-wide">
-              舉重專欄
-            </h2>
-            <p className="mt-1 text-sm font-semibold text-plum-100">硬拉技術與解剖學全解析</p>
-          </div>
         </div>
-        <div className="px-4 pb-4 pt-3">
-          <p className="text-[15px] leading-7 text-plum-100">{DEADLIFT_INTRO}</p>
+        <div className="bg-plum-950 px-5 pb-5 pt-4 text-white">
+          <div className="flex flex-wrap items-center gap-2">
+            <span className="inline-flex items-center gap-1.5 rounded-full bg-amber-300 px-3 py-1 text-[10px] font-black tracking-[0.14em] text-plum-950">
+              <Dumbbell className="h-3.5 w-3.5" />
+              WEIGHTLIFTING
+            </span>
+            <span className="rounded-full bg-white/10 px-3 py-1 text-[10px] font-bold text-plum-100 ring-1 ring-white/15">
+              專業知識專欄
+            </span>
+          </div>
+          <h2 className="mt-3 font-serif text-[28px] font-black leading-tight tracking-wide">
+            舉重專欄
+          </h2>
+          <p className="mt-1 text-sm font-semibold text-plum-100">硬拉技術與解剖學全解析</p>
+          <p className="mt-3 text-[15px] leading-7 text-plum-100">{DEADLIFT_INTRO}</p>
         </div>
       </section>
 
@@ -231,16 +232,16 @@ export function WeightliftingGuide({ onBack }: WeightliftingGuideProps) {
 
             <div className="mt-3 grid grid-cols-2 gap-2">
               <div className="overflow-hidden rounded-2xl border border-emerald-200 bg-emerald-50/60">
-                <div className="relative h-36 overflow-hidden">
+                <div className="flex items-center gap-1.5 bg-emerald-600 px-2.5 py-1.5 text-white">
+                  <Check className="h-3.5 w-3.5" strokeWidth={3} />
+                  <span className="text-xs font-black">正確</span>
+                </div>
+                <div className="h-36 overflow-hidden">
                   <img
                     src={techniqueImage}
                     alt="硬拉正確姿勢：脊柱中立、槓鈴貼近身體"
                     className="h-full w-full object-cover object-[center_40%]"
                   />
-                  <span className="absolute left-2 top-2 flex items-center gap-1 rounded-full bg-emerald-600 px-2 py-0.5 text-[10px] font-black text-white shadow-sm">
-                    <Check className="h-3 w-3" strokeWidth={3} />
-                    正確
-                  </span>
                 </div>
                 <div className="p-2.5">
                   <p className="text-[13px] font-black leading-5 text-emerald-900">
@@ -253,6 +254,10 @@ export function WeightliftingGuide({ onBack }: WeightliftingGuideProps) {
               </div>
 
               <div className="overflow-hidden rounded-2xl border border-rose-200 bg-rose-50/60">
+                <div className="flex items-center gap-1.5 bg-rose-600 px-2.5 py-1.5 text-white">
+                  <X className="h-3.5 w-3.5" strokeWidth={3} />
+                  <span className="text-xs font-black">錯誤</span>
+                </div>
                 <div className="grid h-36 place-items-center bg-rose-100/70 px-2">
                   <SpineComparison />
                 </div>
@@ -381,7 +386,7 @@ export function WeightliftingGuide({ onBack }: WeightliftingGuideProps) {
         className="mt-4 flex h-12 w-full items-center justify-center gap-2 rounded-2xl border border-plum-200 bg-white text-sm font-black text-plum-900 shadow-sm transition hover:bg-plum-50 active:scale-[0.99]"
       >
         <ArrowLeft className="h-4 w-4" />
-        回到運動紀錄
+        回到知識庫
       </button>
     </div>
   );

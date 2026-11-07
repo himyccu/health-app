@@ -17,7 +17,6 @@ import { dateKey, loadSteps, loadWorkouts, saveSteps, saveWorkouts } from '../li
 import { PageHeader } from '../components/PageHeader';
 import { SectionHeading } from '../components/SectionHeading';
 import { WalkTracker } from '../components/WalkTracker';
-import dogPhoto from '../assets/dog.png';
 
 interface ActivityPageProps {
   profile: Profile;
@@ -270,14 +269,8 @@ export function ActivityPage({ profile, onNotify, onOpenExercise, onGoHome }: Ac
             </p>
           </div>
 
-          <div className="relative h-28 w-28 shrink-0">
-            <span className="absolute -inset-[5px] rounded-full border border-plum-200/80" />
-            <span className="absolute -inset-[5px] rounded-full border-t-2 border-plum-300/90" />
-            <img
-              src={dogPhoto}
-              alt="今天也要好好照顧自己"
-              className="relative h-full w-full rounded-full object-cover shadow-lg shadow-plum-900/20 ring-4 ring-white"
-            />
+          <div className="grid h-24 w-24 shrink-0 place-items-center rounded-full bg-white text-plum-800 shadow-lg shadow-plum-900/10 ring-4 ring-white">
+            <Footprints className="h-10 w-10" strokeWidth={1.8} />
           </div>
         </div>
       </section>
