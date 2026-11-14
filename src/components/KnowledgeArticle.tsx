@@ -138,7 +138,7 @@ export function KnowledgeArticle({ article, onBack }: KnowledgeArticleProps) {
           <section className="mt-3 rounded-[24px] border border-sky-100 bg-sky-50/70 p-4">
             <SectionHeading
               icon={Activity}
-              title="白話原理"
+              title="原理"
               subtitle="身體哪裡在動、怎麼做、感覺像什麼"
             />
             <ul className="mt-3 space-y-2.5">

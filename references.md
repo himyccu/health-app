@@ -70,6 +70,19 @@
 
 ---
 
+## 八、伸展與瑜伽（stretching / yoga）
+
+| 用途 | 文獻 |
+|---|---|
+| 劑量：每週 2–3 次、每動作 10–30 秒 × 2–4 組、單一肌群累計 60 秒 | Garber CE, Blissmer B, Deschenes MR, Franklin BA, Lamonte MJ, Lee IM, Nieman DC, Swain DP; American College of Sports Medicine. American College of Sports Medicine position stand. Quantity and quality of exercise for developing and maintaining cardiorespiratory, musculoskeletal, and neuromotor fitness in apparently healthy adults: guidance for prescribing exercise. *Medicine and Science in Sports and Exercise*. 2011;43(7):1334-1359. doi:10.1249/MSS.0b013e318213fefb. PMID 21694556. (US) |
+| 效果：慢性靜態伸展對下肢柔軟度有中等效果，年齡與性別無顯著調節 | Oba K, Matsuo S, Nakamura M, Nakao G, Fukaya T, Mizuno T, Takeuchi K. Moderating Effects of Individual Characteristics and the Target Lower Limb Muscle Group on Flexibility Adaptations to Chronic Static Stretching in Healthy Individuals: A Systematic Review and Meta-Analysis of Randomized Controlled Trials. *Sports Medicine - Open*. 2026;12(1):95. doi:10.1186/s40798-026-01066-1. PMID 42435098. (JP) |
+| 時機：運動前超過 60 秒的靜態伸展會短暫降低力量與爆發力 | Behm DG, Chaouachi A. A review of the acute effects of static and dynamic stretching on performance. *European Journal of Applied Physiology*. 2011;111(11):2633-2651. doi:10.1007/s00421-011-1879-2. PMID 21373870. (CA) |
+| 瑜伽對腿後腱柔軟度的效果 | LaSala TT, Run-Kowzun T, Figueroa M. The effect of a Hatha Yoga practice on hamstring flexibility. *Journal of Bodywork and Movement Therapies*. 2021;28:439-449. doi:10.1016/j.jbmt.2021.06.012. PMID 34776176. (US) |
+| 瑜伽不良事件：肌肉骨骼 40%、頭倒立最常被指出 | Sharma S, Bhandari SS, Malhotra V, Kuppusamy M, Kumar S, Dhakal M. Yoga and its risks: A systematic review of adverse events reported in case reports and case series. *Journal of Integrative Medicine*. 2026;24(5):667-682. doi:10.1016/j.joim.2026.07.001. PMID 42471295. (IN) |
+| 瑜伽與一般運動在慢性下背痛的比較 | Li T, Wen Q, Zhang L. Is yoga more beneficial than exercise-based interventions for patients with chronic low back pain? A systematic review and meta-analysis. *Frontiers in Medicine*. 2026;13:1792208. doi:10.3389/fmed.2026.1792208. PMID 42058410. (CN) |
+
+---
+
 ## 撰寫規則
 
 1. 沒有 DOI 或 PMID 的文獻不收，指引與書籍除外。

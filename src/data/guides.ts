@@ -8,7 +8,7 @@
  * 3. 每個步驟都要能直接照著做。
  */
 
-export type GuideId = 'warmup' | 'safety' | 'foamRolling';
+export type GuideId = 'warmup' | 'safety' | 'foamRolling' | 'stretching' | 'yoga';
 
 export interface GuidePoint {
   /** 粗體標題，例如「1. 原地踏步 2 分鐘」 */
@@ -161,6 +161,24 @@ export const GUIDES: Record<GuideId, Guide> = {
     sections: [],
     sources: [],
   },
+  stretching: {
+    id: 'stretching',
+    title: '靜態伸展',
+    summary: '八個部位，每個 30 秒 × 2–4 次，運動後或獨立時段做。',
+    minutes: 10,
+    // 內容資料在 data/sports/stretching.ts，畫面由 components/MobilityGuide.tsx 負責。
+    sections: [],
+    sources: [],
+  },
+  yoga: {
+    id: 'yoga',
+    title: '瑜伽',
+    summary: '十六個基本體位，每個停留 5 個呼吸，含替代動作與禁忌。',
+    minutes: 20,
+    // 內容資料在 data/sports/yoga.ts，畫面由 components/MobilityGuide.tsx 負責。
+    sections: [],
+    sources: [],
+  },
 };
 
 /** 首頁與運動頁顯示的固定順序 */
@@ -168,3 +186,6 @@ export const GUIDE_ORDER: GuideId[] = ['warmup', 'safety'];
 
 /** 運動頁「開始之前」的順序，比首頁多一篇滾筒放鬆 */
 export const EXERCISE_GUIDE_ORDER: GuideId[] = ['warmup', 'safety', 'foamRolling'];
+
+/** 運動頁「伸展」區塊的順序 */
+export const MOBILITY_GUIDE_ORDER: GuideId[] = ['stretching', 'yoga'];

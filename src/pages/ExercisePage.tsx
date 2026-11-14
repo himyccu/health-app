@@ -1,5 +1,6 @@
 import { useEffect, useMemo, useRef, useState } from 'react';
 import {
+  Activity,
   ArrowRight,
   BookOpen,
   Check,
@@ -32,8 +33,14 @@ import { SectionHeading } from '../components/SectionHeading';
 import { AnatomyFigure } from '../components/AnatomyFigure';
 import { KnowledgeArticle } from '../components/KnowledgeArticle';
 import { GuideArticle } from '../components/GuideArticle';
+import { MobilityGuide } from '../components/MobilityGuide';
 import { MovementCards } from '../components/MovementCards';
-import { EXERCISE_GUIDE_ORDER, GUIDES, type GuideId } from '../data/guides';
+import {
+  EXERCISE_GUIDE_ORDER,
+  GUIDES,
+  MOBILITY_GUIDE_ORDER,
+  type GuideId,
+} from '../data/guides';
 import { FoamRollingGuide } from '../components/FoamRollingGuide';
 import {
   ARTICLE_ID_BY_PATTERN,
@@ -181,7 +188,7 @@ export function ExercisePage({
     <div>
       <PageHeader
         title="運動"
-        description="暖身、運動安全、基礎動作與訓練紀錄。"
+        description="暖身、運動安全、基礎動作、伸展與訓練紀錄。"
         onHome={onGoHome}
       />
 
@@ -198,6 +205,8 @@ export function ExercisePage({
           minutes={GUIDES.foamRolling.minutes}
           onBack={() => setView('main')}
         />
+      ) : view === 'guide' && (guideId === 'stretching' || guideId === 'yoga') ? (
+        <MobilityGuide key={guideId} kind={guideId} onBack={() => setView('main')} />
       ) : view === 'guide' && guideId ? (
         <GuideArticle key={guideId} guide={GUIDES[guideId]} onBack={() => setView('main')} />
       ) : (
@@ -251,14 +260,51 @@ export function ExercisePage({
               />
             </div>
             <p className="mt-3 text-[13px] leading-6 text-slate-500">
-              點字卡可看肌肉圖、白話原理、步驟、劑量與常見錯誤。
+              點字卡可看肌肉圖、原理、步驟、劑量與常見錯誤。
+            </p>
+          </section>
+
+          <section className="mt-4 rounded-[28px] border border-plum-100 bg-white p-5 shadow-sm shadow-plum-900/5">
+            <SectionHeading
+              icon={Activity}
+              title="③ 伸展"
+              subtitle="靜態伸展 8 個部位、瑜伽 16 式"
+            />
+            <div className="mt-4 space-y-2.5">
+              {MOBILITY_GUIDE_ORDER.map((id) => {
+                const guide = GUIDES[id];
+                return (
+                  <button
+                    key={id}
+                    type="button"
+                    onClick={() => {
+                      setGuideId(id);
+                      setView('guide');
+                    }}
+                    className="flex w-full items-center gap-3 rounded-2xl border border-slate-100 bg-white p-3.5 text-left transition hover:border-plum-200 hover:bg-plum-50/60 active:scale-[0.99]"
+                  >
+                    <span className="min-w-0 flex-1">
+                      <span className="block text-base font-black text-slate-900">
+                        {guide.title}
+                      </span>
+                      <span className="mt-1 block text-[13px] leading-6 text-slate-500">
+                        {guide.summary}
+                      </span>
+                    </span>
+                    <ChevronRight className="h-4 w-4 shrink-0 text-plum-600" />
+                  </button>
+                );
+              })}
+            </div>
+            <p className="mt-3 text-[13px] leading-6 text-slate-500">
+              靜態伸展針對單一肌群、有秒數；瑜伽是全身序列，含平衡與呼吸。
             </p>
           </section>
 
           <div className="mt-5">
             <SectionHeading
               icon={Timer}
-              title="③ 運動紀錄"
+              title="④ 運動紀錄"
               subtitle="今日訓練與熱量估算"
             />
           </div>
@@ -293,7 +339,7 @@ export function ExercisePage({
             ))
           ) : (
             <span className="text-[15px] font-semibold text-plum-200">
-              今天還沒有訓練紀錄，選一個動作開始吧。
+              今天還沒有訓練紀錄，選一個動作開始。
             </span>
           )}
         </div>

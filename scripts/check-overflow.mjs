@@ -59,6 +59,19 @@ const ROUTES = [
   { name: '運動-蹲', url: `${BASE_URL}/?tab=exercise`, clickAria: '蹲：' },
   { name: '運動-髖', url: `${BASE_URL}/?tab=exercise`, clickAria: '髖：' },
   { name: '運動-移動', url: `${BASE_URL}/?tab=exercise`, clickAria: '移動：' },
+  { name: '運動-伸展', url: `${BASE_URL}/?tab=exercise`, click: '靜態伸展' },
+  {
+    name: '運動-伸展-展開',
+    url: `${BASE_URL}/?tab=exercise`,
+    click: ['靜態伸展', '小腿後側伸展'],
+  },
+  {
+    name: '運動-伸展-來源',
+    url: `${BASE_URL}/?tab=exercise`,
+    click: ['靜態伸展', '資料來源'],
+  },
+  { name: '運動-瑜伽', url: `${BASE_URL}/?tab=exercise`, click: '瑜伽' },
+  { name: '運動-瑜伽-展開', url: `${BASE_URL}/?tab=exercise`, click: ['瑜伽', '下犬式'] },
   { name: '健康', url: `${BASE_URL}/?tab=health` },
   { name: '身體組成', url: `${BASE_URL}/?tab=health`, click: '查看身體組成判讀' },
   {
