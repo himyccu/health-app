@@ -108,6 +108,26 @@ const ROUTES = [
     url: `${BASE_URL}/?tab=exercise`,
     click: ['高爾夫', '收桿：煞車，不是擺姿勢'],
   },
+  {
+    name: '運動-高爾夫-短切推桿',
+    url: `${BASE_URL}/?tab=exercise`,
+    click: ['高爾夫', '短切與推桿：分數在這裡'],
+  },
+  {
+    name: '運動-高爾夫-練習計畫',
+    url: `${BASE_URL}/?tab=exercise`,
+    click: ['高爾夫', '練習計畫：一次只練一件事'],
+  },
+  {
+    name: '運動-高爾夫-附錄A',
+    url: `${BASE_URL}/?tab=exercise`,
+    click: ['高爾夫', '附錄 A · 球桿怎麼選'],
+  },
+  {
+    name: '運動-高爾夫-附錄B',
+    url: `${BASE_URL}/?tab=exercise`,
+    click: ['高爾夫', '附錄 B · 球場與規則'],
+  },
   { name: '健康', url: `${BASE_URL}/?tab=health` },
   { name: '身體組成', url: `${BASE_URL}/?tab=health`, click: '查看身體組成判讀' },
   {

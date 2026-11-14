@@ -11,7 +11,14 @@ import {
 function sourceShortLabel(id: SourceId): string {
   const source = SOURCES[id];
   if (!source) return id;
-  const firstAuthor = source.authors.split(',')[0].trim();
+  const firstAuthor = source.authors.split(',')[0].trim().replace(/^The\s+/i, '');
+  // 機構作者用縮寫，避免顯示成 "American 2011" 這種看不懂的標籤
+  const ORGANISATIONS: Record<string, string> = {
+    'American College of Sports Medicine.': 'ACSM',
+    'U.S. Department of Health and Human Services.': 'HHS',
+  };
+  const organisation = ORGANISATIONS[firstAuthor];
+  if (organisation) return `${organisation} ${source.year}`;
   const surname = firstAuthor.split(' ')[0];
   return `${surname} ${source.year}`;
 }

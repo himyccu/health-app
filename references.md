@@ -97,6 +97,10 @@
 | 低差點由左肘與左肩帶動，高差點較早用手腕 | Xiao Y, Zhang T, Huang R, Ma Y, Zheng W. Statistical parametric mapping analysis of upper limb joint coordination and variability differences during the downswing phase of the golf swing. *Frontiers in Sports and Active Living*. 2026;8:1820927. doi:10.3389/fspor.2026.1820927. PMID 42293998. (CN) |
 | 7 號鐵的起飛角與後旋高於木桿與 5 號鐵 | Zhang Y, Liu H, Liu C. The effect of joint angles on shot performance during the swing with different clubs among female professional golfers. *Frontiers in Sports and Active Living*. 2026;8:1867187. doi:10.3389/fspor.2026.1867187. PMID 42440704. (CN) |
 | 沒有確切證據顯示特定揮桿動作造成下背痛 | Watson M, Coughlan D, Clement ND, Murray IR, Murray AD, Miller SC. Biomechanical parameters of the golf swing associated with lower back pain: A systematic review. *Journal of Sports Sciences*. 2023;41(24):2236-2250. doi:10.1080/02640414.2024.2319443. PMID 38446499. (GB) |
+| 正常腰椎每一節的旋轉約 2 度 | Pearcy MJ, Tibrewal SB. Axial rotation and lateral bending in the normal lumbar spine measured by three-dimensional radiography. *Spine*. 1984;9(6):582-587. doi:10.1097/00007632-198409000-00008. PMID 6495028. (AU) |
+| 胸椎旋轉的測量值差異大，沒有單一標準 | Esteban-González P, Sánchez-Romero EA, Villafañe JH. Analysis of the Active Measurement Systems of the Thoracic Range of Movements of the Spine: A Systematic Review and a Meta-Analysis. *Sensors*. 2022;22(8):3042. doi:10.3390/s22083042. PMID 35459026. (ES) |
+| 主動髖內外轉的正常角度 | Simoneau GG, Hoenig KJ, Lepley JE, Papanek PE. Influence of hip position and gender on active hip internal and external rotation. *Journal of Orthopaedic & Sports Physical Therapy*. 1998;28(3):158-164. doi:10.2519/jospt.1998.28.3.158. PMID 9742472. (US) |
+| 推桿採距離相依的控制策略 | Hasegawa Y, Fujii K, Miura A, Yokoyama K, Yamamoto Y. Motor control of practice and actual strokes by professional and amateur golfers differ but feature a distance-dependent control strategy. *European Journal of Sport Science*. 2019;19(9):1204-1213. doi:10.1080/17461391.2019.1595159. PMID 30922210. (JP) |
 
 ---
 

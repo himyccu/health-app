@@ -800,6 +800,23 @@ export const SOURCES: Record<string, Source> = {
     checked: SOURCE_CHECKED,
     zh: '健康年輕成人主動髖外轉約 36–45 度、內轉約 33–36 度，實際數值取決於測量姿勢與性別。',
   },
+  hasegawa2019: {
+    id: 'hasegawa2019',
+    country: 'JP',
+    kind: 'study',
+    authors: 'Hasegawa Y, Fujii K, Miura A, Yokoyama K, Yamamoto Y.',
+    title:
+      'Motor control of practice and actual strokes by professional and amateur golfers differ but feature a distance-dependent control strategy.',
+    journal: 'European Journal of Sport Science',
+    year: 2019,
+    volume: '19',
+    issue: '9',
+    pages: '1204-1213',
+    doi: '10.1080/17461391.2019.1595159',
+    pmid: '30922210',
+    checked: SOURCE_CHECKED,
+    zh: '高程度選手的推桿採用「距離相依」的控制策略：距離不同，擺動幅度與撞擊速度也跟著改變；練習揮與實際揮並不完全相同。',
+  },
 };
 
 export type SourceId = keyof typeof SOURCES;

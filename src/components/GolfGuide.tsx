@@ -13,10 +13,12 @@ import {
 } from 'lucide-react';
 import type { SourceId } from '../data/sources';
 import {
+  GOLF_APPENDICES,
   GOLF_CHAPTERS,
   GOLF_DOSE,
   GOLF_INTRO,
   GOLF_SAFETY,
+  type GolfAppendix,
   type GolfChapter,
 } from '../data/sports/golf';
 import { ClubChart } from './golf/ClubChart';
@@ -246,11 +248,71 @@ function ChapterCard({ chapter, defaultOpen }: { chapter: GolfChapter; defaultOp
   );
 }
 
+function AppendixCard({ appendix }: { appendix: GolfAppendix }) {
+  const [open, setOpen] = useState(false);
+
+  return (
+    <article className="min-w-0 rounded-[24px] border border-slate-200 bg-white shadow-sm shadow-plum-900/5">
+      <button
+        type="button"
+        onClick={() => setOpen((value) => !value)}
+        aria-expanded={open}
+        className="flex w-full items-start gap-3 rounded-[24px] p-4 text-left transition hover:bg-slate-50 active:scale-[0.995]"
+      >
+        <span className="min-w-0 flex-1">
+          <span className="block text-base font-black leading-snug text-slate-900">
+            {appendix.title}
+          </span>
+          <span className="mt-0.5 block break-anywhere text-[13px] font-bold text-slate-500">
+            {appendix.englishTitle}
+          </span>
+          <span className="mt-2 block text-[15px] leading-6 text-slate-600">{appendix.intro}</span>
+        </span>
+        <ChevronDown
+          className={`mt-1 h-4 w-4 shrink-0 text-plum-500 transition ${open ? 'rotate-180' : ''}`}
+        />
+      </button>
+
+      {open && (
+        <div className="animate-fade-up border-t border-slate-100 px-4 pb-4 pt-3.5">
+          <ol className="space-y-1.5">
+            {appendix.points.map((point, index) => (
+              <li key={point.label} className="flex gap-2 text-[15px] leading-6 text-slate-700">
+                <span className="mt-0.5 grid h-5 w-5 shrink-0 place-items-center rounded-full bg-slate-700 text-[13px] font-black text-white">
+                  {index + 1}
+                </span>
+                <span className="min-w-0">
+                  <span className="font-bold">{point.label}</span>
+                  {point.detail && <span className="mt-0.5 block text-slate-600">{point.detail}</span>}
+                </span>
+              </li>
+            ))}
+          </ol>
+
+          {appendix.note && (
+            <p className="mt-2.5 rounded-2xl bg-slate-50 px-3 py-2.5 text-[13px] leading-6 text-slate-600">
+              {appendix.note}
+            </p>
+          )}
+
+          <SourceChips ids={appendix.sources} />
+        </div>
+      )}
+    </article>
+  );
+}
+
 export function GolfGuide({ minutes, onBack }: GolfGuideProps) {
-  const usedIds = [...new Set<SourceId>(GOLF_CHAPTERS.flatMap((chapter) => chapter.sources))];
+  const usedIds = [
+    ...new Set<SourceId>([
+      ...GOLF_CHAPTERS.flatMap((chapter) => chapter.sources),
+      ...GOLF_APPENDICES.flatMap((appendix) => appendix.sources),
+    ]),
+  ];
   const [intro, ...rest] = GOLF_CHAPTERS;
   const basics = rest.filter((chapter) => ['1', '2', '3'].includes(chapter.number));
   const swing = rest.filter((chapter) => ['4', '5', '6'].includes(chapter.number));
+  const scoring = rest.filter((chapter) => ['7', '8'].includes(chapter.number));
 
   return (
     <div className="animate-fade-up">
@@ -340,6 +402,30 @@ export function GolfGuide({ minutes, onBack }: GolfGuideProps) {
       <div className="mt-2 space-y-2">
         {swing.map((chapter) => (
           <ChapterCard key={chapter.id} chapter={chapter} defaultOpen={false} />
+        ))}
+      </div>
+
+      <div className="mt-4 flex items-center justify-between gap-2">
+        <h3 className="text-[16px] font-black text-slate-900">第 7–8 章 · 得分與練習</h3>
+        <span className="shrink-0 text-[13px] font-bold text-slate-400">{scoring.length} 章</span>
+      </div>
+
+      <div className="mt-2 space-y-2">
+        {scoring.map((chapter) => (
+          <ChapterCard key={chapter.id} chapter={chapter} defaultOpen={false} />
+        ))}
+      </div>
+
+      <div className="mt-4 flex items-center justify-between gap-2">
+        <h3 className="text-[16px] font-black text-slate-900">附錄</h3>
+        <span className="shrink-0 text-[13px] font-bold text-slate-400">
+          {GOLF_APPENDICES.length} 篇
+        </span>
+      </div>
+
+      <div className="mt-2 space-y-2">
+        {GOLF_APPENDICES.map((appendix) => (
+          <AppendixCard key={appendix.id} appendix={appendix} />
         ))}
       </div>
 
