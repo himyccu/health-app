@@ -267,7 +267,7 @@ export const EXERCISES: ExerciseDefinition[] = [
     secondaryMuscles: ['shoulders', 'core'],
     equipment: '啞鈴',
     cues: ['背部打平、髖部穩定', '手肘貼近身體向後拉', '頂點擠壓肩胛'],
-    mistakes: ['身體旋轉借力', '手肘外張過多', '拉起時耸肩'],
+    mistakes: ['身體旋轉借力', '手肘外張過多', '拉起時聳肩'],
   },
   {
     id: 'plank',

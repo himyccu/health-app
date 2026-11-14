@@ -22,6 +22,7 @@ import { ExercisePage } from './pages/ExercisePage';
 import { HealthPage } from './pages/HealthPage';
 import { HomePage } from './pages/HomePage';
 import { SettingsPage } from './pages/SettingsPage';
+import type { KnowledgePatternId } from './data/knowledgeCenter';
 
 const NutritionPage = lazy(() =>
   import('./pages/NutritionPage').then((module) => ({ default: module.NutritionPage })),
@@ -45,7 +46,10 @@ export default function App() {
     accepted: hasAcceptedDisclaimer(),
   }));
   const [activeTab, setActiveTab] = useState<TabId>(() => getInitialTab());
-  const [exerciseEntry, setExerciseEntry] = useState<'training' | 'knowledge'>('training');
+  const [exerciseEntry, setExerciseEntry] = useState<{
+    view: 'training' | 'knowledge' | 'article';
+    articleId: KnowledgePatternId | null;
+  }>({ view: 'training', articleId: null });
   const [profile, setProfile] = useState<Profile>(() => bootstrap.profile);
   const [disclaimerAccepted, setDisclaimerAccepted] = useState(() => bootstrap.accepted);
   const [disclaimerOpen, setDisclaimerOpen] = useState(() => !bootstrap.accepted);
@@ -109,12 +113,17 @@ export default function App() {
   }, []);
 
   const handleTabChange = useCallback((tab: TabId) => {
-    if (tab === 'exercise') setExerciseEntry('training');
+    if (tab === 'exercise') setExerciseEntry({ view: 'training', articleId: null });
     setActiveTab(tab);
   }, []);
 
-  const handleOpenKnowledge = useCallback(() => {
-    setExerciseEntry('knowledge');
+  const handleOpenKnowledge = useCallback((articleId?: KnowledgePatternId) => {
+    setExerciseEntry({ view: 'knowledge', articleId: articleId ?? null });
+    setActiveTab('exercise');
+  }, []);
+
+  const handleOpenArticle = useCallback((articleId: KnowledgePatternId) => {
+    setExerciseEntry({ view: 'knowledge', articleId });
     setActiveTab('exercise');
   }, []);
 
@@ -155,11 +164,13 @@ export default function App() {
           )}
           {activeTab === 'exercise' && (
             <ExercisePage
-              key={exerciseEntry}
+              key={`${exerciseEntry.view}-${exerciseEntry.articleId ?? 'none'}`}
               profile={profile}
-              initialView={exerciseEntry}
+              initialView={exerciseEntry.view}
+              initialArticleId={exerciseEntry.articleId}
               onNotify={notify}
               onGoHome={() => setActiveTab('home')}
+              onOpenArticle={handleOpenArticle}
             />
           )}
           {activeTab === 'health' && (

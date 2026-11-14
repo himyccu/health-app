@@ -140,7 +140,7 @@ export const DEADLIFT_ERRORS: DeadliftError[] = [
 
 export const DEADLIFT_DO = [
   '槓鈴全程貼緊下肢移動。',
-  '拉起前建立全腹腔高氣壓。',
+  '起槓前先建立腹腔高壓（腹壓）。',
   '雙眼維持前下方約 2 公尺視線。',
   '肩膀與髖部同步上升。',
   '頂峰站直夾臀，不後仰。',

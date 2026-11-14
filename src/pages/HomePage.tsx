@@ -25,7 +25,7 @@ import {
   isProfileComplete,
 } from '../lib/health';
 import { dateKey, loadSteps, loadWorkouts } from '../lib/storage';
-import { KNOWLEDGE_CARDS } from '../data/knowledgeCenter';
+import { KNOWLEDGE_CARDS, type KnowledgePatternId } from '../data/knowledgeCenter';
 import { SectionHeading } from '../components/SectionHeading';
 import { InstallPrompt } from '../components/InstallPrompt';
 import dogPhoto from '../assets/dog.png';
@@ -33,7 +33,7 @@ import dogPhoto from '../assets/dog.png';
 interface HomePageProps {
   profile: Profile;
   onNavigate: (tab: TabId) => void;
-  onOpenKnowledge: () => void;
+  onOpenKnowledge: (articleId?: KnowledgePatternId) => void;
   onShowAbout: () => void;
   onStartOnboarding: () => void;
 }
@@ -180,7 +180,7 @@ export function HomePage({
             </span>
             <button
               type="button"
-              onClick={onOpenKnowledge}
+              onClick={() => onOpenKnowledge()}
               className="inline-flex items-center gap-1 rounded-full bg-white/10 px-3 py-1 text-[11px] font-bold text-plum-100 ring-1 ring-white/15 transition hover:bg-white/20 active:scale-[0.97]"
             >
               <BookOpen className="h-3.5 w-3.5" />
@@ -213,7 +213,7 @@ export function HomePage({
             </button>
             <button
               type="button"
-              onClick={onOpenKnowledge}
+              onClick={() => onOpenKnowledge()}
               className="flex min-h-[3.75rem] flex-col items-center justify-center gap-1 rounded-2xl border border-white/20 bg-white/10 px-2 text-sm font-black leading-tight text-white transition hover:bg-white/15 active:scale-[0.98]"
             >
               <BookOpen className="h-5 w-5" />
@@ -275,7 +275,7 @@ export function HomePage({
                 <button
                   key={card.id}
                   type="button"
-                  onClick={onOpenKnowledge}
+                  onClick={() => onOpenKnowledge(card.id)}
                   aria-label={`前往${card.title}教學`}
                   className="flex min-w-0 flex-col items-center gap-1 rounded-xl border border-slate-100 bg-white px-1 py-2.5 text-center transition hover:border-plum-200 hover:bg-plum-50 active:scale-[0.97]"
                 >
@@ -287,7 +287,7 @@ export function HomePage({
           </div>
           <button
             type="button"
-            onClick={onOpenKnowledge}
+            onClick={() => onOpenKnowledge()}
             className="mt-2.5 flex h-11 w-full items-center justify-center gap-1.5 rounded-2xl border border-plum-200 bg-plum-50 text-sm font-black text-plum-900 transition hover:bg-plum-100 active:scale-[0.99]"
           >
             前往運動知識庫

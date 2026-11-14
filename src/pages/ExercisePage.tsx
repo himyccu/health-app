@@ -1,5 +1,6 @@
 import { useEffect, useMemo, useRef, useState } from 'react';
 import {
+  ArrowRight,
   Check,
   ChevronRight,
   Dumbbell,
@@ -26,15 +27,23 @@ import {
 import { dateKey, loadWorkouts, saveWorkouts } from '../lib/storage';
 import { PageHeader } from '../components/PageHeader';
 import { SectionHeading } from '../components/SectionHeading';
-import { MuscleMap } from '../components/MuscleMap';
-import { WeightliftingGuide } from '../components/WeightliftingGuide';
+import { AnatomyFigure } from '../components/AnatomyFigure';
+import { KnowledgeArticle } from '../components/KnowledgeArticle';
 import { KnowledgeCenter } from '../components/KnowledgeCenter';
+import {
+  ARTICLE_ID_BY_PATTERN,
+  PATTERN_ARTICLES,
+  type KnowledgePatternId,
+} from '../data/knowledgeCenter';
+import { getExerciseAnatomy } from '../data/anatomy';
 
 interface ExercisePageProps {
   profile: Profile;
-  initialView?: 'training' | 'knowledge';
+  initialView?: 'training' | 'knowledge' | 'article';
+  initialArticleId?: KnowledgePatternId | null;
   onNotify: (message: string) => void;
   onGoHome: () => void;
+  onOpenArticle: (articleId: KnowledgePatternId) => void;
 }
 
 const CATEGORY_TABS: { id: 'all' | ExerciseCategory; label: string }[] = [
@@ -52,10 +61,13 @@ function newId(): string {
 export function ExercisePage({
   profile,
   initialView = 'training',
+  initialArticleId = null,
   onNotify,
   onGoHome,
+  onOpenArticle,
 }: ExercisePageProps) {
   const [view, setView] = useState<'training' | 'knowledge' | 'article'>(initialView);
+  const [articleId, setArticleId] = useState<KnowledgePatternId | null>(initialArticleId);
   const [filter, setFilter] = useState<'all' | ExerciseCategory>('all');
   const [selectedId, setSelectedId] = useState<string | null>(null);
   const [minutesInput, setMinutesInput] = useState('20');
@@ -97,6 +109,8 @@ export function ExercisePage({
   );
 
   const selected = selectedId ? (EXERCISE_MAP.get(selectedId) ?? null) : null;
+  const selectedAnatomy = selected ? getExerciseAnatomy(selected.id) : null;
+  const relatedArticleId = selected ? ARTICLE_ID_BY_PATTERN[selected.pattern] : undefined;
   const minutes = Number(minutesInput);
   const validMinutes = Number.isFinite(minutes) && minutes > 0;
   const weightReady = profile.weight > 0;
@@ -222,10 +236,19 @@ export function ExercisePage({
         </button>
       </div>
 
-      {view === 'article' ? (
-        <WeightliftingGuide onBack={() => setView('knowledge')} />
+      {view === 'article' && articleId ? (
+        <KnowledgeArticle
+          key={articleId}
+          article={PATTERN_ARTICLES[articleId]}
+          onBack={() => setView('knowledge')}
+        />
       ) : view === 'knowledge' ? (
-        <KnowledgeCenter onOpenArticle={() => setView('article')} />
+        <KnowledgeCenter
+          onOpenArticle={(nextArticleId) => {
+            setArticleId(nextArticleId);
+            setView('article');
+          }}
+        />
       ) : (
         <>
       <section className="overflow-hidden rounded-[28px] bg-plum-900 p-5 text-white shadow-lg shadow-plum-900/20">
@@ -322,10 +345,92 @@ export function ExercisePage({
             </div>
           </div>
 
-          <MuscleMap
-            primaryMuscles={selected.primaryMuscles}
-            secondaryMuscles={selected.secondaryMuscles}
-          />
+          {selectedAnatomy && (
+            <>
+              <AnatomyFigure
+                muscles={selectedAnatomy.muscles}
+                title="動作解剖圖"
+                note="顏色越深代表參與越多。點圖上肌肉或下方名稱，可以看到它在這個動作裡負責什麼。"
+              />
+
+              <div className="mt-2 flex flex-wrap gap-1.5">
+                <span className="rounded-lg bg-slate-50 px-2 py-1 text-[11px] font-bold text-slate-600">
+                  層級：{selectedAnatomy.classification.utility}
+                </span>
+                <span className="rounded-lg bg-slate-50 px-2 py-1 text-[11px] font-bold text-slate-600">
+                  關節：{selectedAnatomy.classification.mechanics}
+                </span>
+                <span className="rounded-lg bg-slate-50 px-2 py-1 text-[11px] font-bold text-slate-600">
+                  方向：{selectedAnatomy.classification.force}
+                </span>
+              </div>
+
+              <div className="mt-2 rounded-2xl border border-sky-100 bg-sky-50/60 p-3">
+                <p className="text-xs font-black text-sky-900">關節動作</p>
+                <ul className="mt-1.5 space-y-1">
+                  {selectedAnatomy.jointActions.map((item) => (
+                    <li
+                      key={`${item.joint}-${item.action}`}
+                      className="flex gap-1.5 text-[13px] leading-6 text-sky-900/85"
+                    >
+                      <span className="mt-2 h-1.5 w-1.5 shrink-0 rounded-full bg-sky-600" />
+                      <span className="min-w-0">
+                        <span className="font-black">{item.joint}</span>：{item.action}
+                      </span>
+                    </li>
+                  ))}
+                </ul>
+              </div>
+
+              {selectedAnatomy.extraMuscles && (
+                <p className="mt-2 flex items-start gap-1.5 rounded-xl bg-slate-50 px-3 py-2.5 text-[12px] leading-5 text-slate-500">
+                  <Info className="mt-0.5 h-3.5 w-3.5 shrink-0" />
+                  {selectedAnatomy.extraMuscles}
+                </p>
+              )}
+
+              <div className="mt-2 grid gap-2">
+                <div className="rounded-2xl bg-slate-50 p-3">
+                  <p className="text-xs font-black text-slate-600">先退階：動作還不穩時</p>
+                  <ul className="mt-1.5 space-y-1">
+                    {selectedAnatomy.regressions.map((item) => (
+                      <li key={item} className="flex gap-1.5 text-[13px] leading-6 text-slate-600">
+                        <span className="mt-2 h-1.5 w-1.5 shrink-0 rounded-full bg-slate-400" />
+                        {item}
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+                <div className="rounded-2xl bg-plum-50 p-3">
+                  <p className="text-xs font-black text-plum-800">再進階：動作穩定之後</p>
+                  <ul className="mt-1.5 space-y-1">
+                    {selectedAnatomy.progressions.map((item) => (
+                      <li key={item} className="flex gap-1.5 text-[13px] leading-6 text-plum-900/85">
+                        <span className="mt-2 h-1.5 w-1.5 shrink-0 rounded-full bg-plum-500" />
+                        {item}
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+              </div>
+
+              <p className="mt-2 rounded-2xl border border-amber-200 bg-amber-50/70 px-3 py-2.5 text-[13px] leading-6 text-amber-900">
+                <span className="font-black">教練提醒：</span>
+                {selectedAnatomy.coachNote}
+              </p>
+
+              {relatedArticleId && (
+                <button
+                  type="button"
+                  onClick={() => onOpenArticle(relatedArticleId)}
+                  className="mt-2 flex h-11 w-full items-center justify-center gap-1.5 rounded-xl bg-plum-900 text-sm font-black text-white transition hover:bg-plum-800 active:scale-[0.99]"
+                >
+                  看完整的「{PATTERN_ARTICLES[relatedArticleId].title.split('：')[0]}」教學
+                  <ArrowRight className="h-4 w-4" />
+                </button>
+              )}
+            </>
+          )}
 
           <div className="mt-3 grid gap-2">
             <div className="rounded-2xl bg-emerald-50/70 p-3">

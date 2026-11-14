@@ -1,3 +1,5 @@
+import type { Muscle } from 'react-body-highlighter';
+
 export type Gender = 'male' | 'female';
 
 export type ActivityLevel = 'sedentary' | 'light' | 'moderate' | 'active' | 'veryActive';
@@ -34,6 +36,42 @@ export interface ExerciseDefinition {
   equipment: string;
   cues: string[];
   mistakes: string[];
+}
+
+/** 肌肉在動作中的角色，對應 ExRx 的 Target / Synergist / Stabilizer 分類。 */
+export type MuscleRole = 'target' | 'synergist' | 'stabilizer';
+
+export interface MuscleInvolvement {
+  /** 人體圖上要高亮的部位。 */
+  id: Muscle;
+  /** 繁體中文肌名。 */
+  name: string;
+  /** 英文或拉丁原名，方便對照解剖資料。 */
+  latin: string;
+  role: MuscleRole;
+  /** 這個肌肉在這個動作裡實際做什麼。 */
+  note: string;
+}
+
+export interface JointAction {
+  joint: string;
+  action: string;
+}
+
+/** 單一動作的解剖資料卡：分類、關節動作、肌肉分工與進退階。 */
+export interface ExerciseAnatomy {
+  classification: {
+    utility: string;
+    mechanics: string;
+    force: string;
+  };
+  jointActions: JointAction[];
+  muscles: MuscleInvolvement[];
+  /** 圖層沒有的肌肉（例如前鋸肌、旋轉肌袖），用文字補足。 */
+  extraMuscles?: string;
+  regressions: string[];
+  progressions: string[];
+  coachNote: string;
 }
 
 export interface WorkoutEntry {
