@@ -17,12 +17,12 @@ export function KnowledgeCenter({ onOpenArticle }: KnowledgeCenterProps) {
             title="運動知識庫"
             subtitle="圖解肌肉、關節動作與分級訓練"
           />
-          <span className="shrink-0 rounded-full bg-plum-50 px-2.5 py-1 text-xs font-black text-plum-800">
+          <span className="shrink-0 rounded-full bg-plum-50 px-2.5 py-1 text-[13px] font-black text-plum-800">
             {KNOWLEDGE_CARDS.length} 篇教學
           </span>
         </div>
 
-        <p className="mt-3 rounded-2xl bg-plum-50/70 px-3.5 py-3 text-sm leading-6 text-plum-900">
+        <p className="mt-3 rounded-2xl bg-plum-50/70 px-3.5 py-3 text-[15px] leading-6 text-plum-900">
           從推、拉、蹲、髖到移動，先理解身體怎麼動，再選擇適合自己的訓練。
         </p>
 
@@ -54,11 +54,11 @@ export function KnowledgeCenter({ onOpenArticle }: KnowledgeCenterProps) {
 
                   <div className="min-w-0 flex-1">
                     <div className="flex flex-wrap items-center gap-1.5">
-                      <span className="text-[11px] font-black tracking-[0.14em] text-slate-400">
+                      <span className="text-[13px] font-black tracking-[0.14em] text-slate-400">
                         {card.eyebrow}
                       </span>
                       <span
-                        className={`rounded-full px-2 py-0.5 text-[10px] font-black ${card.accent.badge}`}
+                        className={`rounded-full px-2 py-0.5 text-[13px] font-black ${card.accent.badge}`}
                       >
                         {card.badge}
                       </span>
@@ -67,7 +67,7 @@ export function KnowledgeCenter({ onOpenArticle }: KnowledgeCenterProps) {
                     <h3 className="mt-1 text-base font-black leading-snug text-slate-900">
                       {card.title}
                     </h3>
-                    <p className="mt-1 text-sm leading-6 text-slate-500">{card.subtitle}</p>
+                    <p className="mt-1 text-[15px] leading-6 text-slate-500">{card.subtitle}</p>
 
                     {card.tip && (
                       <div className="mt-2 flex items-center gap-2 rounded-xl bg-amber-50 px-2 py-1.5">
@@ -87,7 +87,7 @@ export function KnowledgeCenter({ onOpenArticle }: KnowledgeCenterProps) {
                       <button
                         type="button"
                         onClick={() => onOpenArticle(card.id)}
-                        className="inline-flex h-9 items-center gap-1 rounded-xl bg-plum-900 px-3 text-sm font-black text-white transition hover:bg-plum-800 active:scale-[0.98]"
+                        className="inline-flex h-9 items-center gap-1 rounded-xl bg-plum-900 px-3 text-[15px] font-black text-white transition hover:bg-plum-800 active:scale-[0.98]"
                       >
                         {card.readMoreLabel}
                         <ArrowRight className="h-4 w-4" />
@@ -100,7 +100,7 @@ export function KnowledgeCenter({ onOpenArticle }: KnowledgeCenterProps) {
           })}
         </div>
 
-        <p className="mt-3 flex items-start gap-1.5 text-xs leading-5 text-slate-400">
+        <p className="mt-3 flex items-start gap-1.5 text-[13px] leading-5 text-slate-400">
           <Sparkles className="mt-0.5 h-3.5 w-3.5 shrink-0" />
           每篇教學都包含解剖圖、動作分解、五級進階訓練、常見錯誤與檢核清單。
         </p>

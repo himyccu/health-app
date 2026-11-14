@@ -90,15 +90,14 @@ export function SettingsPage({
   return (
     <div>
       <PageHeader
-        eyebrow="SETTINGS"
         title="設定與生理數據"
-        description="建立你的健康基準，所有計算都會跟著更新。"
+        description="基本資料、資料管理與隱私說明。"
         onHome={onGoHome}
       />
 
       {isFreshProfile && (
         <section className="mb-4 rounded-[24px] border border-plum-200 bg-gradient-to-br from-plum-50 to-white p-4">
-          <p className="text-[11px] font-black tracking-[0.16em] text-plum-600">GET STARTED</p>
+          <p className="text-[13px] font-black tracking-[0.16em] text-plum-600">GET STARTED</p>
           <p className="mt-1 text-base font-black text-plum-950">第 1 步：建立基本資料</p>
           <p className="mt-1 text-[13px] leading-6 text-slate-500">
             填寫下面的年齡、身高與體重，儲存後再到「動能」開始步行，最後回「首頁」查看累積紀錄。
@@ -106,7 +105,7 @@ export function SettingsPage({
         </section>
       )}
 
-      <section className="rounded-[26px] border border-amber-100 bg-white p-4 shadow-sm shadow-amber-900/5">
+      <section className="rounded-[24px] border border-amber-100 bg-white p-4 shadow-sm shadow-amber-900/5">
         <SectionHeading
           icon={User}
           title={isFreshProfile ? '步驟 1｜生理數據' : '生理數據'}
@@ -120,7 +119,7 @@ export function SettingsPage({
             </p>
           )}
           <div>
-            <p className="mb-1.5 text-xs font-bold text-slate-500">生理性別</p>
+            <p className="mb-1.5 text-[13px] font-bold text-slate-500">生理性別</p>
             <div className="grid grid-cols-2 gap-2" role="group" aria-label="生理性別">
               {[
                 { value: 'female' as const, label: '女性' },
@@ -147,7 +146,7 @@ export function SettingsPage({
           </div>
 
           <label className="block" htmlFor="profile-age">
-            <span className="mb-1.5 block text-xs font-bold text-slate-500">生理年齡</span>
+            <span className="mb-1.5 block text-[13px] font-bold text-slate-500">生理年齡</span>
             <div className="flex items-center rounded-2xl border border-slate-200 bg-slate-50 transition focus-within:border-plum-900 focus-within:bg-white">
               <Calendar className="ml-3.5 h-4 w-4 shrink-0 text-slate-400" />
               <input
@@ -161,13 +160,13 @@ export function SettingsPage({
                 onChange={(event) => setAgeInput(event.target.value)}
                 className="h-12 w-full min-w-0 bg-transparent px-2.5 text-lg font-bold text-slate-900 outline-none"
               />
-              <span className="pr-3.5 text-xs font-bold text-slate-400">歲</span>
+              <span className="pr-3.5 text-[13px] font-bold text-slate-400">歲</span>
             </div>
           </label>
 
           <div className="grid grid-cols-2 gap-2.5">
             <label className="block" htmlFor="profile-height">
-              <span className="mb-1.5 block text-xs font-bold text-slate-500">身高</span>
+              <span className="mb-1.5 block text-[13px] font-bold text-slate-500">身高</span>
               <div className="flex items-center rounded-2xl border border-slate-200 bg-slate-50 transition focus-within:border-plum-900 focus-within:bg-white">
                 <Ruler className="ml-3 h-4 w-4 shrink-0 text-slate-400" />
                 <input
@@ -181,12 +180,12 @@ export function SettingsPage({
                   onChange={(event) => setHeightInput(event.target.value)}
                   className="h-12 w-full min-w-0 bg-transparent px-2 text-lg font-bold text-slate-900 outline-none"
                 />
-                <span className="pr-3 text-xs font-bold text-slate-400">cm</span>
+                <span className="pr-3 text-[13px] font-bold text-slate-400">cm</span>
               </div>
             </label>
 
             <label className="block" htmlFor="profile-weight">
-              <span className="mb-1.5 block text-xs font-bold text-slate-500">體重</span>
+              <span className="mb-1.5 block text-[13px] font-bold text-slate-500">體重</span>
               <div className="flex items-center rounded-2xl border border-slate-200 bg-slate-50 transition focus-within:border-plum-900 focus-within:bg-white">
                 <Weight className="ml-3 h-4 w-4 shrink-0 text-slate-400" />
                 <input
@@ -201,7 +200,7 @@ export function SettingsPage({
                   onChange={(event) => setWeightInput(event.target.value)}
                   className="h-12 w-full min-w-0 bg-transparent px-2 text-lg font-bold text-slate-900 outline-none"
                 />
-                <span className="pr-3 text-xs font-bold text-slate-400">kg</span>
+                <span className="pr-3 text-[13px] font-bold text-slate-400">kg</span>
               </div>
             </label>
           </div>
@@ -209,7 +208,7 @@ export function SettingsPage({
           <div>
             <div className="mb-1.5 flex items-center gap-1.5">
               <Activity className="h-3.5 w-3.5 text-slate-400" />
-              <p className="text-xs font-bold text-slate-500">日常活動強度</p>
+              <p className="text-[13px] font-bold text-slate-500">日常活動強度</p>
             </div>
             <div className="space-y-2" role="radiogroup" aria-label="日常活動強度">
               {ACTIVITY_OPTIONS.map((option) => {
@@ -237,25 +236,25 @@ export function SettingsPage({
                       </span>
                       <span className="min-w-0">
                         <span
-                          className={`block text-sm font-black ${
+                          className={`block text-[15px] font-black ${
                             selected ? 'text-plum-900' : 'text-slate-800'
                           }`}
                         >
                           {option.label}
                         </span>
-                        <span className="mt-0.5 block text-xs leading-snug text-slate-400">
+                        <span className="mt-0.5 block text-[13px] leading-snug text-slate-400">
                           {option.hint}
                         </span>
                       </span>
                     </span>
-                    <span className="shrink-0 rounded-full bg-white px-2 py-1 text-[10px] font-bold text-slate-400 shadow-sm">
+                    <span className="shrink-0 rounded-full bg-white px-2 py-1 text-[13px] font-bold text-slate-400 shadow-sm">
                       ×{option.factor}
                     </span>
                   </button>
                 );
               })}
             </div>
-            <p className="mt-2 text-xs leading-relaxed text-slate-400">
+            <p className="mt-2 text-[13px] leading-relaxed text-slate-400">
               目前選擇：{getActivityOption(activity).label}（活動係數{' '}
               {getActivityOption(activity).factor}）
             </p>
@@ -265,7 +264,7 @@ export function SettingsPage({
         {error && (
           <p
             role="alert"
-            className="mt-3 rounded-xl border border-rose-200 bg-rose-50 px-3 py-2 text-xs font-bold text-rose-700"
+            className="mt-3 rounded-xl border border-rose-200 bg-rose-50 px-3 py-2 text-[13px] font-bold text-rose-700"
           >
             {error}
           </p>
@@ -273,17 +272,17 @@ export function SettingsPage({
 
         <div className="mt-4 grid grid-cols-2 gap-2 rounded-2xl bg-plum-50 p-3">
           <div>
-            <p className="text-[11px] font-bold text-plum-600">預估 BMR</p>
+            <p className="text-[13px] font-bold text-plum-600">預估 BMR</p>
             <p className="mt-0.5 text-lg font-black leading-none text-plum-900 tabular-nums">
               {previewBmr !== null ? previewBmr.toLocaleString() : '—'}
-              <span className="ml-1 text-[10px] font-bold text-plum-500">kcal</span>
+              <span className="ml-1 text-[13px] font-bold text-plum-500">kcal</span>
             </p>
           </div>
           <div>
-            <p className="text-[11px] font-bold text-plum-600">預估 TDEE</p>
+            <p className="text-[13px] font-bold text-plum-600">預估 TDEE</p>
             <p className="mt-0.5 text-lg font-black leading-none text-plum-900 tabular-nums">
               {previewTdee !== null ? previewTdee.toLocaleString() : '—'}
-              <span className="ml-1 text-[10px] font-bold text-plum-500">kcal</span>
+              <span className="ml-1 text-[13px] font-bold text-plum-500">kcal</span>
             </p>
           </div>
         </div>
@@ -299,21 +298,21 @@ export function SettingsPage({
 
       </section>
 
-      <section className="mt-4 rounded-[26px] border border-plum-100 bg-white p-4 shadow-sm shadow-amber-900/5">
+      <section className="mt-4 rounded-[24px] border border-plum-100 bg-white p-4 shadow-sm shadow-amber-900/5">
         <div className="flex items-start justify-between gap-2">
           <SectionHeading
             icon={BookOpen}
             title="衛福部資料來源"
             subtitle="飲食指南、健康體位與食品營養資料"
           />
-          <span className="flex shrink-0 items-center gap-1 rounded-full bg-emerald-50 px-2 py-1 text-[10px] font-black text-emerald-700">
+          <span className="flex shrink-0 items-center gap-1 rounded-full bg-emerald-50 px-2 py-1 text-[13px] font-black text-emerald-700">
             <ShieldCheck className="h-3 w-3" />
             已同意
           </span>
         </div>
 
         <div className="mt-3 rounded-2xl bg-plum-50/70 p-3.5">
-          <ul className="space-y-2 text-xs leading-relaxed text-slate-600">
+          <ul className="space-y-2 text-[13px] leading-relaxed text-slate-600">
             <li className="flex gap-1.5">
               <span className="mt-1.5 h-1.5 w-1.5 shrink-0 rounded-full bg-plum-800" />
               <span>
@@ -355,11 +354,11 @@ export function SettingsPage({
         </div>
 
         <div className="mt-3 rounded-2xl border border-amber-200 bg-amber-50 p-3.5">
-          <p className="flex items-center gap-1.5 text-xs font-black text-amber-800">
+          <p className="flex items-center gap-1.5 text-[13px] font-black text-amber-800">
             <ShieldCheck className="h-4 w-4" />
             完整免責聲明
           </p>
-          <p className="mt-2 text-xs font-medium leading-6 text-slate-700">
+          <p className="mt-2 text-[13px] font-medium leading-6 text-slate-700">
             本應用程式所提供之健康資訊、營養建議及身體組成標準僅供參考，不能取代專業醫療診斷、建議或治療。在做出任何醫療決定前，務必要諮詢合格的醫療專業人員。
           </p>
         </div>
@@ -367,20 +366,20 @@ export function SettingsPage({
         <button
           type="button"
           onClick={onShowDisclaimer}
-          className="mt-3 flex h-11 w-full items-center justify-center gap-1.5 rounded-xl border border-plum-200 bg-white text-sm font-bold text-plum-900 transition hover:bg-plum-50 active:scale-[0.99]"
+          className="mt-3 flex h-11 w-full items-center justify-center gap-1.5 rounded-xl border border-plum-200 bg-white text-[15px] font-bold text-plum-900 transition hover:bg-plum-50 active:scale-[0.99]"
         >
           查看完整聲明與資料來源
         </button>
       </section>
 
-      <section className="mt-4 rounded-[26px] border border-amber-100 bg-white p-4 shadow-sm shadow-amber-900/5">
+      <section className="mt-4 rounded-[24px] border border-amber-100 bg-white p-4 shadow-sm shadow-amber-900/5">
         <SectionHeading
           icon={ShieldCheck}
           title="資料與隱私"
           subtitle="無帳號、無後端，資料只留在這台裝置"
         />
 
-        <ul className="mt-3 space-y-2 text-xs leading-relaxed text-slate-500">
+        <ul className="mt-3 space-y-2 text-[13px] leading-relaxed text-slate-500">
           <li className="flex gap-2">
             <span className="mt-1.5 h-1.5 w-1.5 shrink-0 rounded-full bg-emerald-500" />
             這個 App 沒有帳號、沒有後端。把網址分享給別人，對方只會看到自己的空白資料，不會看到你的步數、體重或飲食紀錄。
@@ -406,14 +405,14 @@ export function SettingsPage({
         <button
           type="button"
           onClick={() => setShowResetConfirm(true)}
-          className="mt-3 flex h-11 w-full items-center justify-center gap-1.5 rounded-xl border border-rose-200 bg-rose-50 text-sm font-bold text-rose-700 transition hover:bg-rose-100 active:scale-[0.99]"
+          className="mt-3 flex h-11 w-full items-center justify-center gap-1.5 rounded-xl border border-rose-200 bg-rose-50 text-[15px] font-bold text-rose-700 transition hover:bg-rose-100 active:scale-[0.99]"
         >
           <Trash2 className="h-4 w-4" />
           清除所有本機資料
         </button>
       </section>
 
-      <p className="mt-5 text-center text-[11px] font-medium leading-relaxed text-slate-400">
+      <p className="mt-5 text-center text-[13px] font-medium leading-relaxed text-slate-400">
         Hayley 的健康管家 · v1.0
         <br />
         健康數據僅供參考，不能取代專業醫療建議
@@ -428,7 +427,7 @@ export function SettingsPage({
             role="dialog"
             aria-modal="true"
             aria-labelledby="reset-title"
-            className="animate-fade-up w-full max-w-sm rounded-[26px] bg-white p-5 shadow-2xl"
+            className="animate-fade-up w-full max-w-sm rounded-[24px] bg-white p-5 shadow-2xl"
             onClick={(event) => event.stopPropagation()}
           >
             <div className="grid h-12 w-12 place-items-center rounded-2xl bg-rose-50 text-rose-600">
@@ -437,21 +436,21 @@ export function SettingsPage({
             <h3 id="reset-title" className="mt-3 text-lg font-black text-slate-900">
               清除所有本機資料？
             </h3>
-            <p className="mt-1.5 text-sm leading-relaxed text-slate-500">
+            <p className="mt-1.5 text-[15px] leading-relaxed text-slate-500">
               這會刪除生理數據、步數紀錄、餐點紀錄與免責聲明同意狀態，且無法復原。
             </p>
             <div className="mt-4 grid grid-cols-2 gap-2">
               <button
                 type="button"
                 onClick={() => setShowResetConfirm(false)}
-                className="h-11 rounded-xl border border-slate-200 bg-white text-sm font-bold text-slate-600 transition hover:bg-slate-50"
+                className="h-11 rounded-xl border border-slate-200 bg-white text-[15px] font-bold text-slate-600 transition hover:bg-slate-50"
               >
                 取消
               </button>
               <button
                 type="button"
                 onClick={onReset}
-                className="h-11 rounded-xl bg-rose-600 text-sm font-black text-white transition hover:bg-rose-700 active:scale-[0.98]"
+                className="h-11 rounded-xl bg-rose-600 text-[15px] font-black text-white transition hover:bg-rose-700 active:scale-[0.98]"
               >
                 確認清除
               </button>

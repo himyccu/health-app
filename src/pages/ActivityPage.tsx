@@ -244,45 +244,23 @@ export function ActivityPage({ profile, onNotify, onOpenExercise, onGoHome }: Ac
   return (
     <div>
       <PageHeader
-        eyebrow="ACTIVITY"
         title="今日動能"
-        description="走出自己的節奏，每一步都算數。"
+        description="今日步數、GPS 距離與活動時間。"
         onHome={onGoHome}
       />
 
-      <section className="relative mb-4 overflow-hidden rounded-[30px] border border-plum-100 bg-gradient-to-br from-plum-50 via-white to-amber-50 shadow-sm shadow-plum-900/5">
-        <div className="pointer-events-none absolute -left-8 -top-10 h-28 w-28 rounded-full bg-plum-200/40 blur-2xl" />
-        <div className="pointer-events-none absolute -bottom-12 right-10 h-32 w-32 rounded-full bg-amber-100/60 blur-2xl" />
-
-        <div className="relative flex items-center gap-4 p-5">
-          <div className="min-w-0 flex-1">
-            <p className="text-[11px] font-black tracking-[0.18em] text-plum-600">
-              A GENTLE START
-            </p>
-            <p className="mt-2 font-serif text-[20px] font-black leading-[1.45] tracking-wide text-purple-700">
-              今天也要
-              <br />
-              好好照顧自己
-            </p>
-            <p className="mt-2 text-xs leading-relaxed text-slate-500">
-              每一次紀錄，都是對自己的溫柔。
-            </p>
-          </div>
-
-          <div className="grid h-24 w-24 shrink-0 place-items-center rounded-full bg-white text-plum-800 shadow-lg shadow-plum-900/10 ring-4 ring-white">
-            <Footprints className="h-10 w-10" strokeWidth={1.8} />
-          </div>
-        </div>
-      </section>
+      <p className="mb-4 font-serif text-[18px] font-bold tracking-wide text-plum-800">
+        今天的每一步都算數
+      </p>
 
       <section className="relative overflow-hidden rounded-[28px] border border-amber-100 bg-white p-5 shadow-sm shadow-amber-900/5">
         <div className="pointer-events-none absolute -right-12 -top-12 h-36 w-36 rounded-full bg-amber-100/70" />
         <div className="relative flex items-center justify-between">
           <div className="flex items-center gap-2">
-            <span className="rounded-full bg-plum-50 px-3 py-1 text-xs font-black text-plum-900">
+            <span className="rounded-full bg-plum-50 px-3 py-1 text-[13px] font-black text-plum-900">
               今日步數
             </span>
-            <span className="text-[11px] font-semibold text-slate-400">
+            <span className="text-[13px] font-semibold text-slate-400">
               {reachedGoal ? '目標達成' : `目標 ${data.goal.toLocaleString()} 步`}
             </span>
           </div>
@@ -292,7 +270,7 @@ export function ActivityPage({ profile, onNotify, onOpenExercise, onGoHome }: Ac
               setGoalDraft(String(data.goal));
               setShowGoalEditor((open) => !open);
             }}
-            className="flex items-center gap-1 rounded-full px-2.5 py-1.5 text-xs font-bold text-slate-500 transition hover:bg-slate-100 hover:text-slate-800"
+            className="flex items-center gap-1 rounded-full px-2.5 py-1.5 text-[13px] font-bold text-slate-500 transition hover:bg-slate-100 hover:text-slate-800"
           >
             <Pencil className="h-3.5 w-3.5" />
             目標
@@ -321,21 +299,21 @@ export function ActivityPage({ profile, onNotify, onOpenExercise, onGoHome }: Ac
               <p className="text-[34px] font-black leading-none tracking-tight text-plum-900 tabular-nums">
                 {steps.toLocaleString()}
               </p>
-              <p className="mt-1 text-xs font-bold text-slate-400">步</p>
+              <p className="mt-1 text-[13px] font-bold text-slate-400">步</p>
             </div>
           </div>
         </div>
 
         <div className="relative -mt-2 flex items-center justify-center gap-2">
           <span
-            className={`rounded-full px-3 py-1.5 text-sm font-black ${
+            className={`rounded-full px-3 py-1.5 text-[15px] font-black ${
               reachedGoal ? 'bg-emerald-100 text-emerald-700' : 'bg-amber-100 text-amber-800'
             }`}
           >
             {progress}%
           </span>
-          <span className="text-sm font-medium text-slate-500">
-            {reachedGoal ? '太棒了，今天目標已完成！' : `還差 ${remaining.toLocaleString()} 步`}
+          <span className="text-[15px] font-medium text-slate-500">
+            {reachedGoal ? '今天目標已完成' : `還差 ${remaining.toLocaleString()} 步`}
           </span>
         </div>
 
@@ -358,7 +336,7 @@ export function ActivityPage({ profile, onNotify, onOpenExercise, onGoHome }: Ac
             <button
               type="button"
               onClick={handleSaveGoal}
-              className="flex h-11 items-center gap-1 rounded-xl bg-plum-900 px-4 text-sm font-black text-white transition hover:bg-plum-800 active:scale-[0.98]"
+              className="flex h-11 items-center gap-1 rounded-xl bg-plum-900 px-4 text-[15px] font-black text-white transition hover:bg-plum-800 active:scale-[0.98]"
             >
               <Save className="h-4 w-4" />
               儲存
@@ -400,7 +378,7 @@ export function ActivityPage({ profile, onNotify, onOpenExercise, onGoHome }: Ac
         onSave={handleSaveWalk}
       />
 
-      <section className="mt-4 rounded-[26px] border border-amber-100 bg-white p-4 shadow-sm shadow-amber-900/5">
+      <section className="mt-4 rounded-[24px] border border-amber-100 bg-white p-4 shadow-sm shadow-amber-900/5">
         <SectionHeading icon={Plus} title="快速紀錄步數" subtitle="查看手機內建的健康 App 後，輸入今天的步數" />
 
         <div className="mt-3 grid grid-cols-3 gap-2">
@@ -409,7 +387,7 @@ export function ActivityPage({ profile, onNotify, onOpenExercise, onGoHome }: Ac
               key={amount}
               type="button"
               onClick={() => addSteps(amount)}
-              className="flex h-12 items-center justify-center gap-1 rounded-2xl border border-plum-100 bg-plum-50 text-sm font-black text-plum-900 transition hover:bg-plum-100 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-plum-900 active:scale-[0.97]"
+              className="flex h-12 items-center justify-center gap-1 rounded-2xl border border-plum-100 bg-plum-50 text-[15px] font-black text-plum-900 transition hover:bg-plum-100 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-plum-900 active:scale-[0.97]"
             >
               <Plus className="h-4 w-4" strokeWidth={2.8} />
               {amount.toLocaleString()}
@@ -433,12 +411,12 @@ export function ActivityPage({ profile, onNotify, onOpenExercise, onGoHome }: Ac
             onKeyDown={(event) => {
               if (event.key === 'Enter') handleAddCustom();
             }}
-            className="h-12 min-w-0 flex-1 rounded-2xl border border-slate-200 bg-slate-50 px-4 text-base font-semibold text-slate-800 placeholder:text-sm placeholder:font-medium placeholder:text-slate-400 focus:border-plum-900 focus:bg-white focus:outline-none"
+            className="h-12 min-w-0 flex-1 rounded-2xl border border-slate-200 bg-slate-50 px-4 text-base font-semibold text-slate-800 placeholder:text-[15px] placeholder:font-medium placeholder:text-slate-400 focus:border-plum-900 focus:bg-white focus:outline-none"
           />
           <button
             type="button"
             onClick={handleAddCustom}
-            className="h-12 shrink-0 rounded-2xl bg-slate-900 px-5 text-sm font-black text-white transition hover:bg-slate-800 active:scale-[0.98]"
+            className="h-12 shrink-0 rounded-2xl bg-slate-900 px-5 text-[15px] font-black text-white transition hover:bg-slate-800 active:scale-[0.98]"
           >
             新增
           </button>
@@ -447,14 +425,14 @@ export function ActivityPage({ profile, onNotify, onOpenExercise, onGoHome }: Ac
         <button
           type="button"
           onClick={handleReset}
-          className="mt-3 flex w-full items-center justify-center gap-1.5 rounded-xl py-2 text-xs font-bold text-slate-400 transition hover:bg-slate-50 hover:text-slate-600"
+          className="mt-3 flex w-full items-center justify-center gap-1.5 rounded-xl py-2 text-[13px] font-bold text-slate-400 transition hover:bg-slate-50 hover:text-slate-600"
         >
           <RotateCcw className="h-3.5 w-3.5" />
           重設今日步數
         </button>
       </section>
 
-      <section className="mt-4 rounded-[26px] border border-plum-100 bg-white p-4 shadow-sm shadow-amber-900/5">
+      <section className="mt-4 rounded-[24px] border border-plum-100 bg-white p-4 shadow-sm shadow-amber-900/5">
         <SectionHeading icon={Timer} title="活動時間" subtitle="室內或無法定位時，可手動補登" />
 
         <div className="mt-3 grid grid-cols-4 gap-2">
@@ -463,7 +441,7 @@ export function ActivityPage({ profile, onNotify, onOpenExercise, onGoHome }: Ac
               key={amount}
               type="button"
               onClick={() => addMinutes(amount)}
-              className="flex h-12 items-center justify-center gap-0.5 rounded-2xl border border-plum-100 bg-plum-50 text-sm font-black text-plum-900 transition hover:bg-plum-100 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-plum-900 active:scale-[0.97]"
+              className="flex h-12 items-center justify-center gap-0.5 rounded-2xl border border-plum-100 bg-plum-50 text-[15px] font-black text-plum-900 transition hover:bg-plum-100 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-plum-900 active:scale-[0.97]"
             >
               <Plus className="h-3.5 w-3.5" strokeWidth={2.8} />
               {amount} 分
@@ -487,12 +465,12 @@ export function ActivityPage({ profile, onNotify, onOpenExercise, onGoHome }: Ac
             onKeyDown={(event) => {
               if (event.key === 'Enter') handleAddCustomMinutes();
             }}
-            className="h-12 min-w-0 flex-1 rounded-2xl border border-slate-200 bg-slate-50 px-4 text-base font-semibold text-slate-800 placeholder:text-sm placeholder:font-medium placeholder:text-slate-400 focus:border-plum-900 focus:bg-white focus:outline-none"
+            className="h-12 min-w-0 flex-1 rounded-2xl border border-slate-200 bg-slate-50 px-4 text-base font-semibold text-slate-800 placeholder:text-[15px] placeholder:font-medium placeholder:text-slate-400 focus:border-plum-900 focus:bg-white focus:outline-none"
           />
           <button
             type="button"
             onClick={handleAddCustomMinutes}
-            className="h-12 shrink-0 rounded-2xl bg-slate-900 px-5 text-sm font-black text-white transition hover:bg-slate-800 active:scale-[0.98]"
+            className="h-12 shrink-0 rounded-2xl bg-slate-900 px-5 text-[15px] font-black text-white transition hover:bg-slate-800 active:scale-[0.98]"
           >
             新增
           </button>
@@ -501,7 +479,7 @@ export function ActivityPage({ profile, onNotify, onOpenExercise, onGoHome }: Ac
         <button
           type="button"
           onClick={handleResetMinutes}
-          className="mt-3 flex w-full items-center justify-center gap-1.5 rounded-xl py-2 text-xs font-bold text-slate-400 transition hover:bg-slate-50 hover:text-slate-600"
+          className="mt-3 flex w-full items-center justify-center gap-1.5 rounded-xl py-2 text-[13px] font-bold text-slate-400 transition hover:bg-slate-50 hover:text-slate-600"
         >
           <RotateCcw className="h-3.5 w-3.5" />
           重設今日活動時間
@@ -510,14 +488,14 @@ export function ActivityPage({ profile, onNotify, onOpenExercise, onGoHome }: Ac
         <button
           type="button"
           onClick={onOpenExercise}
-          className="mt-1 flex w-full items-center justify-center gap-1.5 rounded-xl bg-plum-50 py-2.5 text-xs font-black text-plum-800 transition hover:bg-plum-100 active:scale-[0.99]"
+          className="mt-1 flex w-full items-center justify-center gap-1.5 rounded-xl bg-plum-50 py-2.5 text-[13px] font-black text-plum-800 transition hover:bg-plum-100 active:scale-[0.99]"
         >
           <Flame className="h-3.5 w-3.5 text-orange-500" />
           把活動時間換算成熱量
         </button>
       </section>
 
-      <section className="mt-4 rounded-[26px] border border-amber-100 bg-white p-4 shadow-sm shadow-amber-900/5">
+      <section className="mt-4 rounded-[24px] border border-amber-100 bg-white p-4 shadow-sm shadow-amber-900/5">
         <SectionHeading icon={CalendarRange} title="累積紀錄" subtitle="每天自動保存，可回看半年" />
 
         <div className="mt-3 grid grid-cols-3 gap-1 rounded-2xl bg-slate-100 p-1">
@@ -529,7 +507,7 @@ export function ActivityPage({ profile, onNotify, onOpenExercise, onGoHome }: Ac
                 type="button"
                 onClick={() => setRange(tab.id)}
                 aria-pressed={selected}
-                className={`h-9 rounded-xl text-xs font-black transition ${
+                className={`h-9 rounded-xl text-[13px] font-black transition ${
                   selected
                     ? 'bg-white text-plum-900 shadow-sm'
                     : 'text-slate-500 hover:text-slate-700'
@@ -543,22 +521,22 @@ export function ActivityPage({ profile, onNotify, onOpenExercise, onGoHome }: Ac
 
         <div className="mt-3 grid grid-cols-3 gap-2">
           <div className="rounded-2xl bg-plum-50 px-2.5 py-2">
-            <p className="text-[10px] font-bold text-plum-600">累積步數</p>
+            <p className="text-[13px] font-bold text-plum-600">累積步數</p>
             <p className="mt-0.5 text-base font-black leading-none tabular-nums text-plum-900">
               {rangeData.totalSteps.toLocaleString()}
             </p>
           </div>
           <div className="rounded-2xl bg-amber-50 px-2.5 py-2">
-            <p className="text-[10px] font-bold text-amber-700">{rangeData.averageLabel}</p>
+            <p className="text-[13px] font-bold text-amber-700">{rangeData.averageLabel}</p>
             <p className="mt-0.5 text-base font-black leading-none tabular-nums text-amber-900">
               {rangeData.average.toLocaleString()}
             </p>
           </div>
           <div className="rounded-2xl bg-emerald-50 px-2.5 py-2">
-            <p className="text-[10px] font-bold text-emerald-700">活動時間</p>
+            <p className="text-[13px] font-bold text-emerald-700">活動時間</p>
             <p className="mt-0.5 text-base font-black leading-none tabular-nums text-emerald-900">
               {rangeData.totalMinutes.toLocaleString()}
-              <span className="ml-0.5 text-[10px] font-bold text-emerald-600">分</span>
+              <span className="ml-0.5 text-[13px] font-bold text-emerald-600">分</span>
             </p>
           </div>
         </div>
@@ -577,7 +555,7 @@ export function ActivityPage({ profile, onNotify, onOpenExercise, onGoHome }: Ac
                 <div key={item.key} className="flex h-full flex-1 flex-col items-center justify-end">
                   {showBarLabels && (
                     <span
-                      className={`mb-1 text-[10px] font-bold tabular-nums ${
+                      className={`mb-1 text-[13px] font-bold tabular-nums ${
                         item.isToday ? 'text-plum-900' : 'text-slate-400'
                       }`}
                     >
@@ -597,7 +575,7 @@ export function ActivityPage({ profile, onNotify, onOpenExercise, onGoHome }: Ac
           </div>
         </div>
 
-        <div className="mt-1.5 flex justify-between text-[10px] font-bold text-slate-400">
+        <div className="mt-1.5 flex justify-between text-[13px] font-bold text-slate-400">
           {rangeData.items.length <= 7 ? (
             rangeData.items.map((item) => (
               <span key={item.key} className={item.isToday ? 'text-plum-900' : ''}>
@@ -613,22 +591,22 @@ export function ActivityPage({ profile, onNotify, onOpenExercise, onGoHome }: Ac
         </div>
 
         <div className="mt-4 border-t border-slate-100 pt-3">
-          <p className="text-[11px] font-black text-slate-500">最近 7 天紀錄</p>
+          <p className="text-[13px] font-black text-slate-500">最近 7 天紀錄</p>
           <div className="mt-2 space-y-1.5">
             {recentDays.map((day) => (
               <div
                 key={day.key}
-                className={`flex items-center justify-between rounded-xl px-3 py-2 text-xs ${
+                className={`flex items-center justify-between rounded-xl px-3 py-2 text-[13px] ${
                   day.isToday ? 'bg-plum-50 font-black text-plum-900' : 'text-slate-600'
                 }`}
               >
                 <span className="flex items-center gap-1.5">
                   <span className="tabular-nums">{day.isToday ? '今天' : day.dateLabel}</span>
-                  <span className="text-[10px] font-bold text-slate-400">（{day.weekday}）</span>
+                  <span className="text-[13px] font-bold text-slate-400">（{day.weekday}）</span>
                 </span>
                 <span className="flex items-center gap-2.5 tabular-nums">
                   <span className="font-bold">{day.steps.toLocaleString()} 步</span>
-                  <span className="text-[11px] font-semibold text-slate-400">
+                  <span className="text-[13px] font-semibold text-slate-400">
                     {day.minutes} 分鐘
                   </span>
                 </span>
@@ -637,12 +615,12 @@ export function ActivityPage({ profile, onNotify, onOpenExercise, onGoHome }: Ac
           </div>
         </div>
 
-        <p className="mt-3 rounded-xl bg-slate-50 px-3 py-2 text-[11px] leading-relaxed text-slate-500">
+        <p className="mt-3 rounded-xl bg-slate-50 px-3 py-2 text-[13px] leading-relaxed text-slate-500">
           每天零點自動開始新的一天，過去的紀錄會保留在本機裝置，最遠可回看半年以上。
         </p>
       </section>
 
-      <div className="mt-4 flex items-center justify-center gap-1.5 pb-2 text-[11px] font-medium text-slate-400">
+      <div className="mt-4 flex items-center justify-center gap-1.5 pb-2 text-[13px] font-medium text-slate-400">
         <Footprints className="h-3.5 w-3.5" />
         建議每日累積 10,000 步，分段完成也很有效
       </div>
@@ -665,10 +643,10 @@ function MetricCard({ icon: Icon, label, value, unit, accent, soft }: MetricCard
       <div className={`grid h-8 w-8 place-items-center rounded-xl ${soft} ${accent}`}>
         <Icon className="h-4 w-4" strokeWidth={2.4} />
       </div>
-      <p className="mt-2 text-xs font-bold text-slate-400">{label}</p>
+      <p className="mt-2 text-[13px] font-bold text-slate-400">{label}</p>
       <p className="mt-0.5 flex items-baseline gap-0.5">
         <span className="text-xl font-black leading-none text-slate-900 tabular-nums">{value}</span>
-        <span className="text-[11px] font-bold text-slate-400">{unit}</span>
+        <span className="text-[13px] font-bold text-slate-400">{unit}</span>
       </p>
     </div>
   );

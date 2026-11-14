@@ -21,21 +21,18 @@ export function AppHeader({ onShowAbout }: AppHeaderProps) {
           />
         </div>
         <div className="min-w-0">
-          <p className="text-[10px] font-bold tracking-[0.22em] text-amber-200">
-            HEALTH COMPANION
-          </p>
-          <h1 className="text-[17px] font-black leading-tight tracking-tight sm:text-2xl">
+          <h1 className="text-[18px] font-black leading-tight tracking-tight sm:text-[22px]">
             HAYLEY 健康管家
           </h1>
-          <p className="mt-0.5 text-xs font-semibold leading-snug text-plum-200">
-            今天的每一步，都算數。
+          <p className="mt-1 text-[13px] font-semibold leading-snug text-plum-200">
+            健康紀錄與運動教學
           </p>
         </div>
         <button
           type="button"
           onClick={onShowAbout}
-          aria-label="開啟溫馨說明與隱私"
-          className="grid h-9 w-9 shrink-0 place-items-center rounded-full bg-white/10 text-amber-100 ring-1 ring-white/20 transition hover:bg-white/20 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-amber-200 active:scale-[0.96] sm:h-10 sm:w-10"
+          aria-label="開啟說明與隱私"
+          className="grid h-11 w-11 shrink-0 place-items-center rounded-full bg-white/10 text-amber-100 ring-1 ring-white/20 transition hover:bg-white/20 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-amber-200 active:scale-[0.96] sm:h-12 sm:w-12"
         >
           <Info className="h-5 w-5" strokeWidth={2.2} />
         </button>

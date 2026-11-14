@@ -172,16 +172,16 @@ export function HomePage({
   return (
     <div>
       {/* 第一階段：先建立觀念，再進入個人化設定。 */}
-      <section className="overflow-hidden rounded-[32px] border border-plum-100 bg-white shadow-[0_20px_50px_-32px_rgba(71,42,93,0.55)]">
+      <section className="overflow-hidden rounded-[28px] border border-plum-100 bg-white shadow-[0_20px_50px_-32px_rgba(71,42,93,0.55)]">
         <div className="bg-gradient-to-br from-plum-950 via-plum-900 to-plum-800 px-5 pb-6 pt-6 text-white">
           <div className="flex flex-wrap items-center gap-2">
-            <span className="rounded-full bg-amber-300 px-3 py-1 text-[11px] font-black tracking-[0.12em] text-plum-950">
+            <span className="rounded-full bg-amber-300 px-3 py-1 text-[13px] font-black tracking-[0.12em] text-plum-950">
               新手入門
             </span>
             <button
               type="button"
               onClick={() => onOpenKnowledge()}
-              className="inline-flex items-center gap-1 rounded-full bg-white/10 px-3 py-1 text-[11px] font-bold text-plum-100 ring-1 ring-white/15 transition hover:bg-white/20 active:scale-[0.97]"
+              className="inline-flex items-center gap-1 rounded-full bg-white/10 px-3 py-1 text-[13px] font-bold text-plum-100 ring-1 ring-white/15 transition hover:bg-white/20 active:scale-[0.97]"
             >
               <BookOpen className="h-3.5 w-3.5" />
               運動知識庫
@@ -202,7 +202,7 @@ export function HomePage({
             <button
               type="button"
               onClick={profileReady ? () => onNavigate('activity') : onStartOnboarding}
-              className="flex min-h-[3.75rem] flex-col items-center justify-center gap-1 rounded-2xl bg-amber-300 px-2 text-sm font-black leading-tight text-plum-950 shadow-lg shadow-plum-950/20 transition hover:bg-amber-200 active:scale-[0.98]"
+              className="flex min-h-[3.75rem] flex-col items-center justify-center gap-1 rounded-2xl bg-amber-300 px-2 text-[15px] font-black leading-tight text-plum-950 shadow-lg shadow-plum-950/20 transition hover:bg-amber-200 active:scale-[0.98]"
             >
               {profileReady ? (
                 <Footprints className="h-5 w-5" />
@@ -214,7 +214,7 @@ export function HomePage({
             <button
               type="button"
               onClick={() => onOpenKnowledge()}
-              className="flex min-h-[3.75rem] flex-col items-center justify-center gap-1 rounded-2xl border border-white/20 bg-white/10 px-2 text-sm font-black leading-tight text-white transition hover:bg-white/15 active:scale-[0.98]"
+              className="flex min-h-[3.75rem] flex-col items-center justify-center gap-1 rounded-2xl border border-white/20 bg-white/10 px-2 text-[15px] font-black leading-tight text-white transition hover:bg-white/15 active:scale-[0.98]"
             >
               <BookOpen className="h-5 w-5" />
               <span>運動知識庫</span>
@@ -256,7 +256,7 @@ export function HomePage({
                   <Icon className="h-4 w-4" strokeWidth={2.2} />
                 </span>
                 <div className="min-w-0">
-                  <p className="text-sm font-black text-slate-900">{item.title}</p>
+                  <p className="text-[15px] font-black text-slate-900">{item.title}</p>
                   <p className="mt-0.5 text-[13px] leading-6 text-slate-500">
                     {item.description}
                   </p>
@@ -267,7 +267,7 @@ export function HomePage({
         </div>
 
         <div className="mt-4">
-          <p className="text-xs font-black tracking-[0.14em] text-plum-600">常見動作模式</p>
+          <p className="text-[13px] font-black tracking-[0.14em] text-plum-600">常見動作模式</p>
           <div className="mt-2 grid grid-cols-5 gap-1.5">
             {KNOWLEDGE_CARDS.map((card) => {
               const Icon = card.icon;
@@ -280,7 +280,7 @@ export function HomePage({
                   className="flex min-w-0 flex-col items-center gap-1 rounded-xl border border-slate-100 bg-white px-1 py-2.5 text-center transition hover:border-plum-200 hover:bg-plum-50 active:scale-[0.97]"
                 >
                   <Icon className="h-5 w-5 text-plum-700" strokeWidth={2} />
-                  <span className="text-xs font-black text-slate-700">{card.shortLabel}</span>
+                  <span className="text-[13px] font-black text-slate-700">{card.shortLabel}</span>
                 </button>
               );
             })}
@@ -288,7 +288,7 @@ export function HomePage({
           <button
             type="button"
             onClick={() => onOpenKnowledge()}
-            className="mt-2.5 flex h-11 w-full items-center justify-center gap-1.5 rounded-2xl border border-plum-200 bg-plum-50 text-sm font-black text-plum-900 transition hover:bg-plum-100 active:scale-[0.99]"
+            className="mt-2.5 flex h-11 w-full items-center justify-center gap-1.5 rounded-2xl border border-plum-200 bg-plum-50 text-[15px] font-black text-plum-900 transition hover:bg-plum-100 active:scale-[0.99]"
           >
             前往運動知識庫
             <ArrowRight className="h-4 w-4" />
@@ -308,7 +308,7 @@ export function HomePage({
             <button
               type="button"
               onClick={() => onNavigate('health')}
-              className="flex shrink-0 items-center gap-0.5 rounded-full bg-plum-50 px-3 py-2 text-sm font-black text-plum-900 transition hover:bg-plum-100"
+              className="flex shrink-0 items-center gap-0.5 rounded-full bg-plum-50 px-3 py-2 text-[15px] font-black text-plum-900 transition hover:bg-plum-100"
             >
               健康指數
               <ChevronRight className="h-4 w-4" />
@@ -317,34 +317,34 @@ export function HomePage({
 
           <div className="mt-4 grid grid-cols-3 gap-2">
             <div className="min-w-0 rounded-2xl bg-plum-50 p-3">
-              <p className="text-xs font-bold text-plum-600">BMI</p>
+              <p className="text-[13px] font-bold text-plum-600">BMI</p>
               <p className="mt-1 text-2xl font-black leading-none tabular-nums text-plum-900">
                 {bmi.toFixed(1)}
               </p>
-              <p className="mt-1 text-xs font-semibold text-plum-700">{bmiCategory.label}</p>
+              <p className="mt-1 text-[13px] font-semibold text-plum-700">{bmiCategory.label}</p>
             </div>
             <div className="min-w-0 rounded-2xl bg-amber-50 p-3">
-              <p className="text-xs font-bold text-amber-700">TDEE</p>
+              <p className="text-[13px] font-bold text-amber-700">TDEE</p>
               <p className="mt-1 text-2xl font-black leading-none tabular-nums text-amber-900">
                 {tdee.toLocaleString()}
               </p>
-              <p className="mt-1 text-xs font-semibold text-amber-700">kcal / 日</p>
+              <p className="mt-1 text-[13px] font-semibold text-amber-700">kcal / 日</p>
             </div>
             <div className="min-w-0 rounded-2xl bg-emerald-50 p-3">
-              <p className="text-xs font-bold text-emerald-700">理想體重</p>
+              <p className="text-[13px] font-bold text-emerald-700">理想體重</p>
               <p className="mt-1 whitespace-nowrap text-lg font-black leading-none tabular-nums text-emerald-900">
                 {ideal ? `${ideal.min}–${ideal.max}` : '—'}
               </p>
-              <p className="mt-1 text-xs font-semibold text-emerald-700">kg</p>
+              <p className="mt-1 text-[13px] font-semibold text-emerald-700">kg</p>
             </div>
           </div>
 
           <div className="mt-2 flex flex-wrap items-center justify-between gap-2 rounded-2xl bg-slate-50 px-3.5 py-3">
-            <span className="flex items-center gap-2 text-sm font-bold text-slate-700">
+            <span className="flex items-center gap-2 text-[15px] font-bold text-slate-700">
               <Target className="h-4 w-4 text-plum-600" />
               每日步數目標
             </span>
-            <span className="text-sm font-black tabular-nums text-plum-900">
+            <span className="text-[15px] font-black tabular-nums text-plum-900">
               {snapshot.steps.goal.toLocaleString()} 步
             </span>
           </div>
@@ -353,15 +353,15 @@ export function HomePage({
         <section className={`mt-4 ${CARD_CLASS}`}>
           <div className="flex items-start justify-between gap-3">
             <div>
-              <p className="text-[11px] font-black tracking-[0.18em] text-plum-600">PERSONALIZE</p>
+              <p className="text-[13px] font-black tracking-[0.18em] text-plum-600">PERSONALIZE</p>
               <h2 className="mt-1 text-xl font-black tracking-tight text-slate-900">
                 建立你的健康基準
               </h2>
-              <p className="mt-1.5 text-sm leading-6 text-slate-500">
+              <p className="mt-1.5 text-[15px] leading-6 text-slate-500">
                 填寫年齡、身高與體重，才能看到 BMI、TDEE 與步數目標。
               </p>
             </div>
-            <span className="shrink-0 rounded-full bg-amber-50 px-2.5 py-1 text-[11px] font-black text-amber-800">
+            <span className="shrink-0 rounded-full bg-amber-50 px-2.5 py-1 text-[13px] font-black text-amber-800">
               1 分鐘
             </span>
           </div>
@@ -369,11 +369,11 @@ export function HomePage({
           <ol className="mt-4 space-y-2.5">
             {SETUP_STEPS.map((item, index) => (
               <li key={item.title} className="flex items-start gap-3 rounded-2xl bg-slate-50/80 p-3.5">
-                <span className="grid h-8 w-8 shrink-0 place-items-center rounded-full bg-plum-900 text-xs font-black text-amber-100">
+                <span className="grid h-8 w-8 shrink-0 place-items-center rounded-full bg-plum-900 text-[13px] font-black text-amber-100">
                   {index + 1}
                 </span>
                 <span className="min-w-0">
-                  <span className="block text-sm font-black text-slate-900">{item.title}</span>
+                  <span className="block text-[15px] font-black text-slate-900">{item.title}</span>
                   <span className="mt-0.5 block text-[13px] leading-6 text-slate-500">
                     {item.description}
                   </span>
@@ -398,19 +398,19 @@ export function HomePage({
           <section className="mt-4 overflow-hidden rounded-[28px] bg-gradient-to-br from-plum-950 via-plum-900 to-plum-800 p-5 text-white shadow-[0_24px_50px_-30px_rgba(47,26,63,0.9)]">
             <div className="flex flex-wrap items-start justify-between gap-3">
               <div className="min-w-0">
-                <p className="text-sm font-bold tracking-[0.06em] text-plum-200">今天的身體</p>
+                <p className="text-[15px] font-bold tracking-[0.06em] text-plum-200">今天的身體</p>
                 <div className="mt-1.5 flex flex-wrap items-baseline gap-1.5">
                   <span className="text-[42px] font-black leading-none tracking-tight tabular-nums">
                     {steps.toLocaleString()}
                   </span>
-                  <span className="text-sm font-bold text-plum-200">步</span>
+                  <span className="text-[15px] font-bold text-plum-200">步</span>
                 </div>
                 <p className="mt-2 text-[13px] font-semibold text-plum-300">
                   今日活動消耗 {totalCalories.toLocaleString()} kcal
                 </p>
               </div>
               <div className="shrink-0 rounded-2xl bg-white/10 px-3.5 py-2.5 text-center">
-                <p className="text-[10px] font-bold text-plum-200">步數目標</p>
+                <p className="text-[13px] font-bold text-plum-200">步數目標</p>
                 <p className="mt-0.5 text-xl font-black leading-none tabular-nums text-amber-200">
                   {progress}%
                 </p>
@@ -426,7 +426,7 @@ export function HomePage({
 
             <div className="mt-4 grid grid-cols-3 gap-2 border-t border-white/10 pt-4">
               <div className="min-w-0">
-                <p className="flex items-center gap-1.5 text-[11px] font-semibold text-plum-200">
+                <p className="flex items-center gap-1.5 text-[13px] font-semibold text-plum-200">
                   <Footprints className="h-3.5 w-3.5" /> 步數
                 </p>
                 <p className="mt-1 text-xl font-black leading-none tabular-nums">
@@ -434,21 +434,21 @@ export function HomePage({
                 </p>
               </div>
               <div className="min-w-0">
-                <p className="flex items-center gap-1.5 text-[11px] font-semibold text-plum-200">
+                <p className="flex items-center gap-1.5 text-[13px] font-semibold text-plum-200">
                   <MapPin className="h-3.5 w-3.5" /> 距離
                 </p>
                 <p className="mt-1 flex flex-wrap items-baseline gap-1 text-xl font-black leading-none tabular-nums">
                   {distanceKm.toFixed(2)}
-                  <span className="text-[11px] font-semibold text-plum-200">km</span>
+                  <span className="text-[13px] font-semibold text-plum-200">km</span>
                 </p>
               </div>
               <div className="min-w-0">
-                <p className="flex items-center gap-1.5 text-[11px] font-semibold text-plum-200">
+                <p className="flex items-center gap-1.5 text-[13px] font-semibold text-plum-200">
                   <Timer className="h-3.5 w-3.5" /> 活動
                 </p>
                 <p className="mt-1 flex flex-wrap items-baseline gap-1 text-xl font-black leading-none tabular-nums">
                   {totalMinutes}
-                  <span className="text-[11px] font-semibold text-plum-200">分</span>
+                  <span className="text-[13px] font-semibold text-plum-200">分</span>
                 </p>
               </div>
             </div>
@@ -469,7 +469,7 @@ export function HomePage({
               <button
                 type="button"
                 onClick={() => onNavigate('exercise')}
-                className="flex shrink-0 items-center gap-0.5 rounded-full bg-plum-50 px-3 py-2 text-sm font-black text-plum-900 transition hover:bg-plum-100"
+                className="flex shrink-0 items-center gap-0.5 rounded-full bg-plum-50 px-3 py-2 text-[15px] font-black text-plum-900 transition hover:bg-plum-100"
               >
                 記錄
                 <ChevronRight className="h-4 w-4" />
@@ -479,13 +479,13 @@ export function HomePage({
             {todayWorkouts.length > 0 ? (
               <>
                 <div className="mt-4 flex flex-wrap items-center gap-2">
-                  <span className="rounded-full bg-plum-900 px-3 py-1.5 text-xs font-bold text-white">
+                  <span className="rounded-full bg-plum-900 px-3 py-1.5 text-[13px] font-bold text-white">
                     {todayWorkouts.length} 筆紀錄
                   </span>
-                  <span className="rounded-full bg-amber-100 px-3 py-1.5 text-xs font-bold text-amber-800">
+                  <span className="rounded-full bg-amber-100 px-3 py-1.5 text-[13px] font-bold text-amber-800">
                     {todayLoggedCalories} kcal
                   </span>
-                  <span className="rounded-full bg-slate-100 px-3 py-1.5 text-xs font-bold text-slate-600">
+                  <span className="rounded-full bg-slate-100 px-3 py-1.5 text-[13px] font-bold text-slate-600">
                     {todayLoggedMinutes} 分鐘
                   </span>
                 </div>
@@ -495,8 +495,8 @@ export function HomePage({
                       key={workout.id}
                       className="flex flex-wrap items-center justify-between gap-2 rounded-2xl bg-slate-50 px-4 py-3"
                     >
-                      <span className="min-w-0 text-sm font-bold text-slate-800">{workout.name}</span>
-                      <span className="shrink-0 text-xs font-semibold text-slate-500">
+                      <span className="min-w-0 text-[15px] font-bold text-slate-800">{workout.name}</span>
+                      <span className="shrink-0 text-[13px] font-semibold text-slate-500">
                         {workout.minutes} 分鐘 · {workout.calories} kcal
                       </span>
                     </div>
@@ -504,7 +504,7 @@ export function HomePage({
                 </div>
               </>
             ) : (
-              <p className="mt-4 rounded-2xl bg-slate-50 px-4 py-3.5 text-sm leading-relaxed text-slate-500">
+              <p className="mt-4 rounded-2xl bg-slate-50 px-4 py-3.5 text-[15px] leading-relaxed text-slate-500">
                 今天還沒有運動紀錄。完成訓練後記下來，熱量會自動加進今日活動消耗。
               </p>
             )}
@@ -541,7 +541,7 @@ export function HomePage({
               key={action.tab}
               type="button"
               onClick={() => onNavigate(action.tab)}
-              className={`flex min-w-0 flex-col items-center gap-2 rounded-2xl px-2 py-4 text-sm font-bold transition active:scale-[0.97] ${action.tone}`}
+              className={`flex min-w-0 flex-col items-center gap-2 rounded-2xl px-2 py-4 text-[15px] font-bold transition active:scale-[0.97] ${action.tone}`}
             >
               <Icon className="h-5 w-5" />
               {action.label}
@@ -558,8 +558,8 @@ export function HomePage({
           className="h-11 w-11 shrink-0 rounded-full object-cover shadow-sm ring-2 ring-white"
         />
         <div className="min-w-0">
-          <p className="text-[11px] font-black tracking-[0.14em] text-amber-800">TRAINING TIP</p>
-          <p className="mt-0.5 text-sm font-black text-amber-950">訓練小錦囊</p>
+          <p className="text-[13px] font-black tracking-[0.14em] text-amber-800">TRAINING TIP</p>
+          <p className="mt-0.5 text-[15px] font-black text-amber-950">訓練小錦囊</p>
           <p className="mt-1 text-[13px] leading-6 text-amber-900/80">
             先求動作正確，再求重量進步。今天只要比昨天多走一點，就是進步。
           </p>
@@ -572,23 +572,23 @@ export function HomePage({
 
           <div className="mt-4 grid grid-cols-3 gap-2">
             <div className="min-w-0 rounded-2xl bg-plum-50 px-3 py-3">
-              <p className="text-xs font-semibold text-plum-600">步數</p>
+              <p className="text-[13px] font-semibold text-plum-600">步數</p>
               <p className="mt-1 text-lg font-black leading-none tabular-nums text-plum-900">
                 {weekSteps.toLocaleString()}
               </p>
             </div>
             <div className="min-w-0 rounded-2xl bg-emerald-50 px-3 py-3">
-              <p className="text-xs font-semibold text-emerald-700">活動時間</p>
+              <p className="text-[13px] font-semibold text-emerald-700">活動時間</p>
               <p className="mt-1 flex flex-wrap items-baseline gap-0.5 text-lg font-black leading-none tabular-nums text-emerald-900">
                 {weekMinutes.toLocaleString()}
-                <span className="text-xs font-semibold text-emerald-600">分</span>
+                <span className="text-[13px] font-semibold text-emerald-600">分</span>
               </p>
             </div>
             <div className="min-w-0 rounded-2xl bg-amber-50 px-3 py-3">
-              <p className="text-xs font-semibold text-amber-700">消耗</p>
+              <p className="text-[13px] font-semibold text-amber-700">消耗</p>
               <p className="mt-1 flex flex-wrap items-baseline gap-0.5 text-lg font-black leading-none tabular-nums text-amber-900">
                 {weekCalories.toLocaleString()}
-                <span className="text-xs font-semibold text-amber-600">kcal</span>
+                <span className="text-[13px] font-semibold text-amber-600">kcal</span>
               </p>
             </div>
           </div>
@@ -606,7 +606,7 @@ export function HomePage({
                     title={`${day.steps.toLocaleString()} 步`}
                   />
                   <span
-                    className={`mt-2 text-xs font-semibold ${
+                    className={`mt-2 text-[13px] font-semibold ${
                       day.isToday ? 'text-plum-900' : 'text-slate-400'
                     }`}
                   >
@@ -619,7 +619,7 @@ export function HomePage({
         </section>
       )}
 
-      <div className="mt-5 flex items-center justify-center gap-1.5 pb-2 text-xs font-medium text-slate-400">
+      <div className="mt-5 flex items-center justify-center gap-1.5 pb-2 text-[13px] font-medium text-slate-400">
         <Flame className="h-3.5 w-3.5" />
         活動消耗為步行與訓練的估算加總，不含基礎代謝
       </div>

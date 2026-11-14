@@ -69,8 +69,19 @@
     background-color: #f8f5fc;
     color: #0f172a;
     font-family: var(--font-sans);
+    font-size: 15px;
+    line-height: 1.75;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
+  }
+
+  /* iOS Safari 會在字級小於 16px 的輸入框聚焦時自動放大整個畫面，
+     看起來就像版面跑掉。表單一律維持 16px。 */
+  input,
+  select,
+  textarea {
+    font-size: 16px;
+    line-height: 1.5;
   }
 
   button {
@@ -109,5 +120,15 @@
 
   .no-scrollbar::-webkit-scrollbar {
     display: none;
+  }
+
+  /* 長英文字、網址、連續數字不撐破容器 */
+  .break-anywhere {
+    overflow-wrap: anywhere;
+    word-break: break-word;
+  }
+
+  .text-balance {
+    text-wrap: balance;
   }
 }

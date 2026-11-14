@@ -49,7 +49,7 @@ export function BottomNav({ activeTab, onChange }: BottomNavProps) {
                 <Icon className="h-5 w-5" strokeWidth={isActive ? 2.5 : 2} />
               </span>
               <span
-                className={`mt-0.5 text-xs font-bold tracking-wide ${
+                className={`mt-0.5 text-[13px] font-bold tracking-wide ${
                   isActive ? 'text-plum-900' : 'text-slate-400'
                 }`}
               >

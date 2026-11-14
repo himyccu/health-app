@@ -230,7 +230,7 @@ function PageLoading({ label }: { label: string }) {
   return (
     <div className="flex flex-col items-center justify-center py-20 text-plum-600">
       <LoaderCircle className="h-7 w-7 animate-spin" />
-      <p className="mt-3 text-xs font-bold text-slate-400">{label}</p>
+      <p className="mt-3 text-[13px] font-bold text-slate-400">{label}</p>
     </div>
   );
 }

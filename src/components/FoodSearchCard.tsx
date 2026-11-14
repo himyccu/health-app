@@ -90,14 +90,14 @@ export function FoodSearchCard({ onAdd }: FoodSearchCardProps) {
         : `${category}食材`;
 
   return (
-    <section className="mt-4 rounded-[26px] border border-plum-100 bg-white p-4 shadow-sm shadow-plum-900/5">
+    <section className="mt-4 rounded-[24px] border border-plum-100 bg-white p-4 shadow-sm shadow-plum-900/5">
       <div className="flex items-start justify-between gap-2">
         <SectionHeading
           icon={Search}
           title="食物營養搜尋"
           subtitle={`TFDA 開放資料 · ${TFDA_META.foodCount.toLocaleString()} 種`}
         />
-        <span className="flex shrink-0 items-center gap-1 rounded-full bg-emerald-50 px-2 py-1 text-[10px] font-black text-emerald-700">
+        <span className="flex shrink-0 items-center gap-1 rounded-full bg-emerald-50 px-2 py-1 text-[13px] font-black text-emerald-700">
           <Zap className="h-3 w-3" />
           即時查詢
         </span>
@@ -115,7 +115,7 @@ export function FoodSearchCard({ onAdd }: FoodSearchCardProps) {
           onChange={(event) => handleQueryChange(event.target.value)}
           placeholder="搜尋食物，例如：白飯、雞蛋、鮭魚"
           autoComplete="off"
-          className="h-12 w-full rounded-2xl border border-plum-200 bg-plum-50/60 pl-10 pr-10 text-base font-semibold text-slate-900 outline-none transition placeholder:text-sm placeholder:font-medium placeholder:text-slate-400 focus:border-plum-700 focus:bg-white"
+          className="h-12 w-full rounded-2xl border border-plum-200 bg-plum-50/60 pl-10 pr-10 text-base font-semibold text-slate-900 outline-none transition placeholder:text-[15px] placeholder:font-medium placeholder:text-slate-400 focus:border-plum-700 focus:bg-white"
         />
         {query.length > 0 && (
           <button
@@ -146,9 +146,9 @@ export function FoodSearchCard({ onAdd }: FoodSearchCardProps) {
       </div>
 
       <div className="mt-2 flex items-center justify-between gap-2">
-        <p className="text-[11px] font-bold text-slate-400">{resultLabel}</p>
+        <p className="text-[13px] font-bold text-slate-400">{resultLabel}</p>
         {result.total > 0 && (
-          <p className="text-[10px] font-medium text-slate-400">
+          <p className="text-[13px] font-medium text-slate-400">
             {deferredQuery.trim().length === 0 && category === 'all'
               ? '點選食材查看份量'
               : `共 ${result.total.toLocaleString()} 種`}
@@ -177,23 +177,23 @@ export function FoodSearchCard({ onAdd }: FoodSearchCardProps) {
                 >
                   <div className="min-w-0 flex-1">
                     <div className="flex items-center gap-1.5">
-                      <p className="truncate text-sm font-black text-slate-900">{food.name}</p>
+                      <p className="truncate text-[15px] font-black text-slate-900">{food.name}</p>
                       {food.state && (
-                        <span className="shrink-0 rounded-full bg-amber-50 px-1.5 py-0.5 text-[9px] font-black text-amber-700">
+                        <span className="shrink-0 rounded-full bg-amber-50 px-1.5 py-0.5 text-[13px] font-black text-amber-700">
                           {food.state}
                         </span>
                       )}
                     </div>
-                    <p className="mt-0.5 truncate text-[11px] font-medium text-slate-400">
+                    <p className="mt-0.5 truncate text-[13px] font-medium text-slate-400">
                       {food.category} · 每 100g
                     </p>
                   </div>
                   <div className="shrink-0 text-right">
-                    <p className="text-sm font-black leading-none text-plum-900 tabular-nums">
+                    <p className="text-[15px] font-black leading-none text-plum-900 tabular-nums">
                       {formatCalories(food.nutrients.calories)}
-                      <span className="ml-0.5 text-[9px] font-bold text-slate-400">kcal</span>
+                      <span className="ml-0.5 text-[13px] font-bold text-slate-400">kcal</span>
                     </p>
-                    <p className="mt-1 text-[10px] font-medium text-slate-400">
+                    <p className="mt-1 text-[13px] font-medium text-slate-400">
                       蛋白質 {formatNutrient(food.nutrients.protein)}g
                     </p>
                   </div>
@@ -223,15 +223,15 @@ export function FoodSearchCard({ onAdd }: FoodSearchCardProps) {
           <div className="mx-auto grid h-11 w-11 place-items-center rounded-full bg-white text-plum-300 shadow-sm">
             <Search className="h-5 w-5" />
           </div>
-          <p className="mt-2.5 text-sm font-black text-slate-600">找不到符合的食物</p>
-          <p className="mt-1 text-[11px] leading-relaxed text-slate-400">
+          <p className="mt-2.5 text-[15px] font-black text-slate-600">找不到符合的食物</p>
+          <p className="mt-1 text-[13px] leading-relaxed text-slate-400">
             試試更短的關鍵字，或切換到「全部」分類。
           </p>
           {category !== 'all' && (
             <button
               type="button"
               onClick={() => handleCategoryChange('all')}
-              className="mt-2.5 rounded-full border border-plum-200 bg-white px-3 py-1.5 text-[11px] font-bold text-plum-800 transition hover:bg-plum-50"
+              className="mt-2.5 rounded-full border border-plum-200 bg-white px-3 py-1.5 text-[13px] font-bold text-plum-800 transition hover:bg-plum-50"
             >
               清除分類篩選
             </button>
@@ -243,14 +243,14 @@ export function FoodSearchCard({ onAdd }: FoodSearchCardProps) {
         <button
           type="button"
           onClick={() => setLimit((current) => current + 20)}
-          className="mt-2.5 h-10 w-full rounded-xl border border-plum-200 bg-plum-50/60 text-xs font-black text-plum-800 transition hover:bg-plum-100 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-plum-900"
+          className="mt-2.5 h-10 w-full rounded-xl border border-plum-200 bg-plum-50/60 text-[13px] font-black text-plum-800 transition hover:bg-plum-100 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-plum-900"
         >
           顯示更多
         </button>
       )}
 
       <div className="mt-3 rounded-xl border border-plum-100 bg-plum-50/60 px-3 py-2.5">
-        <p className="flex items-start gap-1.5 text-[10px] leading-relaxed text-slate-500">
+        <p className="flex items-start gap-1.5 text-[13px] leading-relaxed text-slate-500">
           <Database className="mt-0.5 h-3.5 w-3.5 shrink-0 text-plum-600" />
           <span>
             資料來源：{TFDA_META.provider}《{TFDA_META.title}》（{TFDA_META.license}）。數值以每
@@ -269,7 +269,7 @@ export function FoodSearchCard({ onAdd }: FoodSearchCardProps) {
         </p>
       </div>
 
-      <p className="mt-2 flex items-center justify-center gap-1 text-[10px] font-medium text-slate-400">
+      <p className="mt-2 flex items-center justify-center gap-1 text-[13px] font-medium text-slate-400">
         <ShieldCheck className="h-3 w-3 text-emerald-600" />
         搜尋、計算與紀錄都在本機完成，不會上傳個人資料。
       </p>
@@ -289,7 +289,7 @@ function CategoryChip({ active, label, onClick }: CategoryChipProps) {
       type="button"
       onClick={onClick}
       aria-pressed={active}
-      className={`shrink-0 rounded-full px-3 py-1.5 text-[11px] font-black transition ${
+      className={`shrink-0 rounded-full px-3 py-1.5 text-[13px] font-black transition ${
         active
           ? 'bg-plum-900 text-white shadow-sm shadow-plum-900/20'
           : 'border border-plum-200 bg-white text-slate-500 hover:bg-plum-50 hover:text-plum-800'

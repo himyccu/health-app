@@ -80,7 +80,7 @@ export function OnboardingWizard({
         role="dialog"
         aria-modal="true"
         aria-labelledby="onboarding-title"
-        className="animate-fade-up flex max-h-[94dvh] w-full max-w-md flex-col overflow-hidden rounded-t-[32px] bg-[#fcfaff] shadow-2xl shadow-slate-950/30 sm:rounded-[32px]"
+        className="animate-fade-up flex max-h-[94dvh] w-full max-w-md flex-col overflow-hidden rounded-t-[32px] bg-[#fcfaff] shadow-2xl shadow-slate-950/30 sm:rounded-[28px]"
       >
         <div className="shrink-0 border-b border-slate-100 bg-white/90 px-4 pb-3 pt-4 backdrop-blur">
           <div className="flex items-center justify-between gap-3">
@@ -89,10 +89,10 @@ export function OnboardingWizard({
                 <Sparkles className="h-4 w-4" />
               </span>
               <div>
-                <p className="text-[10px] font-black tracking-[0.16em] text-plum-600">
+                <p className="text-[13px] font-black tracking-[0.16em] text-plum-600">
                   STEP {step + 1} OF 3
                 </p>
-                <p className="text-sm font-black text-slate-900">{STEPS[step]}</p>
+                <p className="text-[15px] font-black text-slate-900">{STEPS[step]}</p>
               </div>
             </div>
             <button
@@ -123,7 +123,7 @@ export function OnboardingWizard({
                 <div className="grid h-20 w-20 place-items-center rounded-full bg-plum-50 text-plum-800 shadow-lg shadow-plum-900/10 ring-4 ring-white">
                   <Heart className="h-9 w-9" strokeWidth={1.8} />
                 </div>
-                <p className="mt-4 text-[11px] font-black tracking-[0.2em] text-plum-600">
+                <p className="mt-4 text-[13px] font-black tracking-[0.2em] text-plum-600">
                   WELCOME
                 </p>
                 <h2
@@ -134,7 +134,7 @@ export function OnboardingWizard({
                   <br />
                   把健康走成日常
                 </h2>
-                <p className="mt-2.5 max-w-[19rem] text-sm leading-6 text-slate-500">
+                <p className="mt-2.5 max-w-[19rem] text-[15px] leading-6 text-slate-500">
                   先花一分鐘建立基本資料，之後的步數、距離與熱量，都會依你的身體數據計算。
                 </p>
               </div>
@@ -168,7 +168,7 @@ export function OnboardingWizard({
               <button
                 type="button"
                 onClick={onClose}
-                className="mt-1.5 w-full rounded-xl py-2.5 text-sm font-bold text-slate-400 transition hover:bg-slate-50 hover:text-slate-600"
+                className="mt-1.5 w-full rounded-xl py-2.5 text-[15px] font-bold text-slate-400 transition hover:bg-slate-50 hover:text-slate-600"
               >
                 先逛逛首頁
               </button>
@@ -180,13 +180,13 @@ export function OnboardingWizard({
               <h2 id="onboarding-title" className="text-xl font-black text-slate-900">
                 建立你的健康基準
               </h2>
-              <p className="mt-1 text-sm leading-6 text-slate-500">
+              <p className="mt-1 text-[15px] leading-6 text-slate-500">
                 這些資料只用來計算 BMI、代謝與熱量，不會離開你的手機。
               </p>
 
               <div className="mt-4 space-y-3.5">
                 <div>
-                  <p className="mb-1.5 flex items-center gap-1.5 text-sm font-black text-slate-700">
+                  <p className="mb-1.5 flex items-center gap-1.5 text-[15px] font-black text-slate-700">
                     <User className="h-4 w-4 text-plum-500" />
                     生理性別
                   </p>
@@ -254,7 +254,7 @@ export function OnboardingWizard({
                 </div>
 
                 <div>
-                  <p className="mb-1.5 flex items-center gap-1.5 text-sm font-black text-slate-700">
+                  <p className="mb-1.5 flex items-center gap-1.5 text-[15px] font-black text-slate-700">
                     <Activity className="h-4 w-4 text-plum-500" />
                     日常活動強度
                   </p>
@@ -275,20 +275,20 @@ export function OnboardingWizard({
                           }`}
                         >
                           <span
-                            className={`block text-sm font-black ${
+                            className={`block text-[15px] font-black ${
                               selected ? 'text-plum-900' : 'text-slate-700'
                             }`}
                           >
                             {option.label}
                           </span>
-                          <span className="mt-0.5 block text-[11px] leading-snug text-slate-400">
+                          <span className="mt-0.5 block text-[13px] leading-snug text-slate-400">
                             {option.hint}
                           </span>
                         </button>
                       );
                     })}
                   </div>
-                  <p className="mt-1.5 text-xs leading-relaxed text-slate-400">
+                  <p className="mt-1.5 text-[13px] leading-relaxed text-slate-400">
                     目前選擇：{getActivityOption(activity).label}。之後可在設定中修改。
                   </p>
                 </div>
@@ -297,7 +297,7 @@ export function OnboardingWizard({
               {error && (
                 <p
                   role="alert"
-                  className="mt-3 rounded-xl border border-rose-200 bg-rose-50 px-3 py-2 text-sm font-bold text-rose-700"
+                  className="mt-3 rounded-xl border border-rose-200 bg-rose-50 px-3 py-2 text-[15px] font-bold text-rose-700"
                 >
                   {error}
                 </p>
@@ -314,7 +314,7 @@ export function OnboardingWizard({
               <button
                 type="button"
                 onClick={() => setStep(0)}
-                className="mt-1.5 flex w-full items-center justify-center gap-1.5 rounded-xl py-2.5 text-sm font-bold text-slate-400 transition hover:bg-slate-50 hover:text-slate-600"
+                className="mt-1.5 flex w-full items-center justify-center gap-1.5 rounded-xl py-2.5 text-[15px] font-bold text-slate-400 transition hover:bg-slate-50 hover:text-slate-600"
               >
                 <ArrowLeft className="h-4 w-4" />
                 上一步
@@ -331,7 +331,7 @@ export function OnboardingWizard({
                 <h2 id="onboarding-title" className="mt-4 text-2xl font-black text-slate-900">
                   設定完成
                 </h2>
-                <p className="mt-1.5 max-w-[19rem] text-sm leading-6 text-slate-500">
+                <p className="mt-1.5 max-w-[19rem] text-[15px] leading-6 text-slate-500">
                   你的專屬健康基準已建立。接下來，從今天的第一段步行開始吧。
                 </p>
               </div>
@@ -343,14 +343,14 @@ export function OnboardingWizard({
                 <SummaryItem label="體重" value={`${weight} kg`} />
               </div>
               <div className="mt-2 rounded-2xl bg-plum-50 px-3.5 py-3">
-                <p className="text-xs font-bold text-plum-600">日常活動強度</p>
-                <p className="mt-0.5 text-sm font-black text-plum-900">
+                <p className="text-[13px] font-bold text-plum-600">日常活動強度</p>
+                <p className="mt-0.5 text-[15px] font-black text-plum-900">
                   {getActivityOption(activity).label}
                 </p>
               </div>
 
               <div className="mt-4 space-y-2 rounded-2xl border border-emerald-100 bg-emerald-50/70 p-3.5">
-                <p className="flex items-center gap-2 text-sm font-black text-emerald-900">
+                <p className="flex items-center gap-2 text-[15px] font-black text-emerald-900">
                   <ShieldCheck className="h-4 w-4" />
                   接下來你可以
                 </p>
@@ -375,7 +375,7 @@ export function OnboardingWizard({
               <button
                 type="button"
                 onClick={onClose}
-                className="mt-1.5 w-full rounded-xl py-2.5 text-sm font-bold text-slate-400 transition hover:bg-slate-50 hover:text-slate-600"
+                className="mt-1.5 w-full rounded-xl py-2.5 text-[15px] font-bold text-slate-400 transition hover:bg-slate-50 hover:text-slate-600"
               >
                 回到首頁
               </button>
@@ -400,7 +400,7 @@ function Highlight({ icon: Icon, title, description }: HighlightProps) {
         <Icon className="h-5 w-5" strokeWidth={2.2} />
       </span>
       <div>
-        <p className="text-sm font-black text-slate-900">{title}</p>
+        <p className="text-[15px] font-black text-slate-900">{title}</p>
         <p className="mt-0.5 text-[13px] leading-5 text-slate-500">{description}</p>
       </div>
     </div>
@@ -434,7 +434,7 @@ function Field({
 }: FieldProps) {
   return (
     <label className="block" htmlFor={id}>
-      <span className="mb-1.5 flex items-center gap-1.5 text-sm font-black text-slate-700">
+      <span className="mb-1.5 flex items-center gap-1.5 text-[15px] font-black text-slate-700">
         <Icon className="h-4 w-4 text-plum-500" />
         {label}
       </span>
@@ -449,9 +449,9 @@ function Field({
           placeholder={placeholder}
           value={value}
           onChange={(event) => onChange(event.target.value)}
-          className="h-12 w-full min-w-0 bg-transparent px-3.5 text-lg font-bold text-slate-900 outline-none placeholder:text-sm placeholder:font-medium placeholder:text-slate-400"
+          className="h-12 w-full min-w-0 bg-transparent px-3.5 text-lg font-bold text-slate-900 outline-none placeholder:text-[15px] placeholder:font-medium placeholder:text-slate-400"
         />
-        <span className="pr-3.5 text-xs font-bold text-slate-400">{unit}</span>
+        <span className="pr-3.5 text-[13px] font-bold text-slate-400">{unit}</span>
       </div>
     </label>
   );
@@ -460,7 +460,7 @@ function Field({
 function SummaryItem({ label, value }: { label: string; value: string }) {
   return (
     <div className="rounded-2xl bg-white px-3.5 py-3 ring-1 ring-slate-100">
-      <p className="text-xs font-bold text-slate-400">{label}</p>
+      <p className="text-[13px] font-bold text-slate-400">{label}</p>
       <p className="mt-0.5 text-lg font-black leading-none text-slate-900 tabular-nums">{value}</p>
     </div>
   );

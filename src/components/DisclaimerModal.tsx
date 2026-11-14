@@ -41,7 +41,7 @@ export function DisclaimerModal({ open, required, onAccept, onClose }: Disclaime
               <HeartPulse className="h-6 w-6" />
             </div>
             <div>
-              <p className="text-[10px] font-black tracking-[0.18em] text-plum-700">
+              <p className="text-[13px] font-black tracking-[0.18em] text-plum-700">
                 健康資訊使用同意
               </p>
               <h2 id="disclaimer-title" className="text-lg font-black leading-tight text-slate-900">
@@ -62,11 +62,11 @@ export function DisclaimerModal({ open, required, onAccept, onClose }: Disclaime
         </div>
 
         <div className="mt-4 rounded-2xl border border-plum-100 bg-plum-50/80 p-3.5">
-          <p className="flex items-center gap-1.5 text-xs font-black text-plum-900">
+          <p className="flex items-center gap-1.5 text-[13px] font-black text-plum-900">
             <BookOpen className="h-4 w-4" />
             資料來源
           </p>
-          <ul className="mt-2 space-y-1.5 text-xs leading-relaxed text-slate-600">
+          <ul className="mt-2 space-y-1.5 text-[13px] leading-relaxed text-slate-600">
             <li>• 衛生福利部國民健康署《每日飲食指南手冊》</li>
             <li>• 衛生福利部成人健康體位定義（BMI 18.5–24 為正常範圍）</li>
             <li>
@@ -86,16 +86,16 @@ export function DisclaimerModal({ open, required, onAccept, onClose }: Disclaime
         </div>
 
         <div className="mt-3 rounded-2xl border border-amber-200 bg-amber-50 p-3.5">
-          <p className="flex items-center gap-1.5 text-xs font-black text-amber-800">
+          <p className="flex items-center gap-1.5 text-[13px] font-black text-amber-800">
             <ShieldCheck className="h-4 w-4" />
             免責聲明
           </p>
-          <p className="mt-2 text-sm font-medium leading-6 text-slate-700">
+          <p className="mt-2 text-[15px] font-medium leading-6 text-slate-700">
             本應用程式所提供之健康資訊、營養建議及身體組成標準僅供參考，不能取代專業醫療診斷、建議或治療。在做出任何醫療決定前，務必要諮詢合格的醫療專業人員。
           </p>
         </div>
 
-        <p className="mt-3 text-xs leading-relaxed text-slate-500">
+        <p className="mt-3 text-[13px] leading-relaxed text-slate-500">
           若您有慢性疾病、懷孕、哺乳或特殊飲食需求，請先諮詢醫師或營養師。您的生理數據、步數與飲食紀錄僅儲存在本機瀏覽器，不會上傳至任何伺服器。
         </p>
 
@@ -109,7 +109,7 @@ export function DisclaimerModal({ open, required, onAccept, onClose }: Disclaime
         </button>
 
         {required && (
-          <p className="mt-2.5 text-center text-xs text-slate-400">
+          <p className="mt-2.5 text-center text-[13px] text-slate-400">
             點擊後即表示您已閱讀並同意以上說明
           </p>
         )}

@@ -14,7 +14,7 @@ export function SectionHeading({ icon: Icon, title, subtitle }: SectionHeadingPr
       </div>
       <div>
         <h3 className="text-base font-black leading-tight text-slate-900">{title}</h3>
-        {subtitle && <p className="mt-0.5 text-xs leading-relaxed text-slate-500">{subtitle}</p>}
+        {subtitle && <p className="mt-0.5 text-[13px] leading-relaxed text-slate-500">{subtitle}</p>}
       </div>
     </div>
   );

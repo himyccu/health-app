@@ -172,9 +172,8 @@ export function ExercisePage({
   return (
     <div>
       <PageHeader
-        eyebrow="TRAINING"
         title="運動訓練"
-        description="用動作模式與肌群，記錄每一次認真的訓練。"
+        description="基礎動作教學與今日訓練紀錄。"
         onHome={onGoHome}
       />
 
@@ -197,9 +196,9 @@ export function ExercisePage({
             <Timer className="h-4 w-4" />
           </span>
           <span>
-            <span className="block text-sm font-black">運動紀錄</span>
+            <span className="block text-[15px] font-black">運動紀錄</span>
             <span
-              className={`mt-0.5 block text-xs font-semibold ${
+              className={`mt-0.5 block text-[13px] font-semibold ${
                 view === 'training' ? 'text-plum-200' : 'text-slate-400'
               }`}
             >
@@ -222,11 +221,11 @@ export function ExercisePage({
             <Dumbbell className="h-4 w-4" />
           </span>
           <span className="min-w-0">
-            <span className="block text-[13px] font-black leading-tight sm:text-sm">
+            <span className="block text-[13px] font-black leading-tight sm:text-[15px]">
               運動知識庫
             </span>
             <span
-              className={`mt-0.5 block truncate text-xs font-semibold ${
+              className={`mt-0.5 block truncate text-[13px] font-semibold ${
                 view !== 'training' ? 'text-plum-800' : 'text-slate-500'
               }`}
             >
@@ -252,21 +251,21 @@ export function ExercisePage({
       ) : (
         <>
       <section className="overflow-hidden rounded-[28px] bg-plum-900 p-5 text-white shadow-lg shadow-plum-900/20">
-        <p className="text-sm font-bold text-plum-200">今日運動</p>
+        <p className="text-[15px] font-bold text-plum-200">今日運動</p>
         <div className="relative mt-2 grid grid-cols-2 gap-3">
           <div>
             <p className="flex items-baseline gap-1">
               <span className="text-4xl font-black leading-none tabular-nums">{totalMinutes}</span>
-              <span className="text-sm font-bold text-plum-200">分鐘</span>
+              <span className="text-[15px] font-bold text-plum-200">分鐘</span>
             </p>
-            <p className="mt-1 text-xs font-semibold text-plum-300">累積運動時間</p>
+            <p className="mt-1 text-[13px] font-semibold text-plum-300">累積運動時間</p>
           </div>
           <div>
             <p className="flex items-baseline gap-1">
               <span className="text-4xl font-black leading-none tabular-nums">{totalCalories}</span>
-              <span className="text-sm font-bold text-plum-200">kcal</span>
+              <span className="text-[15px] font-bold text-plum-200">kcal</span>
             </p>
-            <p className="mt-1 text-xs font-semibold text-plum-300">MET 估算消耗</p>
+            <p className="mt-1 text-[13px] font-semibold text-plum-300">MET 估算消耗</p>
           </div>
         </div>
 
@@ -275,13 +274,13 @@ export function ExercisePage({
             trainedMuscles.map((muscle) => (
               <span
                 key={muscle}
-                className="rounded-full bg-white/10 px-2.5 py-1 text-xs font-bold text-amber-100"
+                className="rounded-full bg-white/10 px-2.5 py-1 text-[13px] font-bold text-amber-100"
               >
                 {muscle}
               </span>
             ))
           ) : (
-            <span className="text-sm font-semibold text-plum-200">
+            <span className="text-[15px] font-semibold text-plum-200">
               今天還沒有訓練紀錄，選一個動作開始吧。
             </span>
           )}
@@ -291,25 +290,25 @@ export function ExercisePage({
       {selected && (
         <section
           ref={detailRef}
-          className="animate-fade-up mt-4 rounded-[26px] border border-plum-200 bg-white p-4 shadow-sm shadow-plum-900/10"
+          className="animate-fade-up mt-4 rounded-[24px] border border-plum-200 bg-white p-4 shadow-sm shadow-plum-900/10"
         >
           <div className="flex items-start justify-between gap-2">
             <div className="min-w-0">
               <div className="flex flex-wrap items-center gap-1.5">
-                <span className="rounded-full bg-plum-100 px-2 py-0.5 text-xs font-black text-plum-800">
+                <span className="rounded-full bg-plum-100 px-2 py-0.5 text-[13px] font-black text-plum-800">
                   {CATEGORY_LABELS[selected.category]}
                 </span>
-                <span className="rounded-full bg-amber-50 px-2 py-0.5 text-xs font-black text-amber-800">
+                <span className="rounded-full bg-amber-50 px-2 py-0.5 text-[13px] font-black text-amber-800">
                   {PATTERN_LABELS[selected.pattern]}｜MET {selected.met}
                 </span>
               </div>
               <h3 className="mt-2 text-2xl font-black tracking-tight text-slate-900">
                 {selected.name}
-                <span className="ml-1.5 text-sm font-bold text-slate-400">
+                <span className="ml-1.5 text-[15px] font-bold text-slate-400">
                   {selected.englishName}
                 </span>
               </h3>
-              <p className="mt-1 text-xs font-semibold text-slate-500">
+              <p className="mt-1 text-[13px] font-semibold text-slate-500">
                 {selected.intensity} · 器材：{selected.equipment}
               </p>
             </div>
@@ -324,12 +323,12 @@ export function ExercisePage({
           </div>
 
           <div className="mt-3">
-            <p className="text-xs font-black text-slate-500">主要肌群</p>
+            <p className="text-[13px] font-black text-slate-500">主要肌群</p>
             <div className="mt-1.5 flex flex-wrap gap-1.5">
               {selected.primaryMuscles.map((muscle) => (
                 <span
                   key={muscle}
-                  className="rounded-full bg-plum-900 px-3 py-1 text-xs font-black text-amber-100"
+                  className="rounded-full bg-plum-900 px-3 py-1 text-[13px] font-black text-amber-100"
                 >
                   {MUSCLE_LABELS[muscle]}
                 </span>
@@ -337,7 +336,7 @@ export function ExercisePage({
               {selected.secondaryMuscles.map((muscle) => (
                 <span
                   key={muscle}
-                  className="rounded-full border border-plum-200 bg-plum-50 px-3 py-1 text-xs font-bold text-plum-700"
+                  className="rounded-full border border-plum-200 bg-plum-50 px-3 py-1 text-[13px] font-bold text-plum-700"
                 >
                   {MUSCLE_LABELS[muscle]}
                 </span>
@@ -354,19 +353,19 @@ export function ExercisePage({
               />
 
               <div className="mt-2 flex flex-wrap gap-1.5">
-                <span className="rounded-lg bg-slate-50 px-2 py-1 text-[11px] font-bold text-slate-600">
+                <span className="rounded-lg bg-slate-50 px-2 py-1 text-[13px] font-bold text-slate-600">
                   層級：{selectedAnatomy.classification.utility}
                 </span>
-                <span className="rounded-lg bg-slate-50 px-2 py-1 text-[11px] font-bold text-slate-600">
+                <span className="rounded-lg bg-slate-50 px-2 py-1 text-[13px] font-bold text-slate-600">
                   關節：{selectedAnatomy.classification.mechanics}
                 </span>
-                <span className="rounded-lg bg-slate-50 px-2 py-1 text-[11px] font-bold text-slate-600">
+                <span className="rounded-lg bg-slate-50 px-2 py-1 text-[13px] font-bold text-slate-600">
                   方向：{selectedAnatomy.classification.force}
                 </span>
               </div>
 
               <div className="mt-2 rounded-2xl border border-sky-100 bg-sky-50/60 p-3">
-                <p className="text-xs font-black text-sky-900">關節動作</p>
+                <p className="text-[13px] font-black text-sky-900">關節動作</p>
                 <ul className="mt-1.5 space-y-1">
                   {selectedAnatomy.jointActions.map((item) => (
                     <li
@@ -383,7 +382,7 @@ export function ExercisePage({
               </div>
 
               {selectedAnatomy.extraMuscles && (
-                <p className="mt-2 flex items-start gap-1.5 rounded-xl bg-slate-50 px-3 py-2.5 text-[12px] leading-5 text-slate-500">
+                <p className="mt-2 flex items-start gap-1.5 rounded-xl bg-slate-50 px-3 py-2.5 text-[13px] leading-5 text-slate-500">
                   <Info className="mt-0.5 h-3.5 w-3.5 shrink-0" />
                   {selectedAnatomy.extraMuscles}
                 </p>
@@ -391,7 +390,7 @@ export function ExercisePage({
 
               <div className="mt-2 grid gap-2">
                 <div className="rounded-2xl bg-slate-50 p-3">
-                  <p className="text-xs font-black text-slate-600">先退階：動作還不穩時</p>
+                  <p className="text-[13px] font-black text-slate-600">先退階：動作還不穩時</p>
                   <ul className="mt-1.5 space-y-1">
                     {selectedAnatomy.regressions.map((item) => (
                       <li key={item} className="flex gap-1.5 text-[13px] leading-6 text-slate-600">
@@ -402,7 +401,7 @@ export function ExercisePage({
                   </ul>
                 </div>
                 <div className="rounded-2xl bg-plum-50 p-3">
-                  <p className="text-xs font-black text-plum-800">再進階：動作穩定之後</p>
+                  <p className="text-[13px] font-black text-plum-800">再進階：動作穩定之後</p>
                   <ul className="mt-1.5 space-y-1">
                     {selectedAnatomy.progressions.map((item) => (
                       <li key={item} className="flex gap-1.5 text-[13px] leading-6 text-plum-900/85">
@@ -423,7 +422,7 @@ export function ExercisePage({
                 <button
                   type="button"
                   onClick={() => onOpenArticle(relatedArticleId)}
-                  className="mt-2 flex h-11 w-full items-center justify-center gap-1.5 rounded-xl bg-plum-900 text-sm font-black text-white transition hover:bg-plum-800 active:scale-[0.99]"
+                  className="mt-2 flex h-11 w-full items-center justify-center gap-1.5 rounded-xl bg-plum-900 text-[15px] font-black text-white transition hover:bg-plum-800 active:scale-[0.99]"
                 >
                   看完整的「{PATTERN_ARTICLES[relatedArticleId].title.split('：')[0]}」教學
                   <ArrowRight className="h-4 w-4" />
@@ -434,10 +433,10 @@ export function ExercisePage({
 
           <div className="mt-3 grid gap-2">
             <div className="rounded-2xl bg-emerald-50/70 p-3">
-              <p className="text-xs font-black text-emerald-800">動作要點</p>
+              <p className="text-[13px] font-black text-emerald-800">動作要點</p>
               <ul className="mt-1.5 space-y-1.5">
                 {selected.cues.map((cue) => (
-                  <li key={cue} className="flex gap-1.5 text-sm leading-relaxed text-emerald-900">
+                  <li key={cue} className="flex gap-1.5 text-[15px] leading-relaxed text-emerald-900">
                     <Check className="mt-0.5 h-4 w-4 shrink-0" strokeWidth={3} />
                     {cue}
                   </li>
@@ -445,10 +444,10 @@ export function ExercisePage({
               </ul>
             </div>
             <div className="rounded-2xl bg-rose-50/70 p-3">
-              <p className="text-xs font-black text-rose-800">常見錯誤</p>
+              <p className="text-[13px] font-black text-rose-800">常見錯誤</p>
               <ul className="mt-1.5 space-y-1.5">
                 {selected.mistakes.map((mistake) => (
-                  <li key={mistake} className="flex gap-1.5 text-sm leading-relaxed text-rose-900">
+                  <li key={mistake} className="flex gap-1.5 text-[15px] leading-relaxed text-rose-900">
                     <X className="mt-0.5 h-4 w-4 shrink-0" strokeWidth={3} />
                     {mistake}
                   </li>
@@ -460,7 +459,7 @@ export function ExercisePage({
           <div className="mt-3 rounded-2xl border border-amber-200 bg-amber-50/70 p-3">
             <div className="flex flex-wrap items-end justify-between gap-2">
               <div>
-                <p className="text-xs font-black text-amber-800">這次運動時間</p>
+                <p className="text-[13px] font-black text-amber-800">這次運動時間</p>
                 <div className="mt-1 flex items-center gap-2">
                   <input
                     type="number"
@@ -472,14 +471,14 @@ export function ExercisePage({
                     aria-label="運動時間（分鐘）"
                     className="h-11 w-20 rounded-xl border border-amber-300 bg-white px-2 text-center text-lg font-black text-slate-900 focus:border-plum-900 focus:outline-none"
                   />
-                  <span className="text-sm font-bold text-amber-800">分鐘</span>
+                  <span className="text-[15px] font-bold text-amber-800">分鐘</span>
                 </div>
               </div>
               <div className="text-right">
-                <p className="text-xs font-black text-amber-800">預估消耗</p>
+                <p className="text-[13px] font-black text-amber-800">預估消耗</p>
                 <p className="mt-0.5 text-3xl font-black leading-none tabular-nums text-amber-900">
                   {weightReady && validMinutes ? estimatedCalories : '—'}
-                  <span className="ml-1 text-xs font-bold text-amber-700">kcal</span>
+                  <span className="ml-1 text-[13px] font-bold text-amber-700">kcal</span>
                 </p>
               </div>
             </div>
@@ -494,9 +493,9 @@ export function ExercisePage({
                   onChange={(event) => setSetsInput(event.target.value)}
                   aria-label="組數"
                   placeholder="組數"
-                  className="h-10 w-16 rounded-xl border border-amber-300 bg-white px-2 text-center text-base font-bold text-slate-900 placeholder:text-xs placeholder:font-medium focus:border-plum-900 focus:outline-none"
+                  className="h-10 w-16 rounded-xl border border-amber-300 bg-white px-2 text-center text-base font-bold text-slate-900 placeholder:text-[13px] placeholder:font-medium focus:border-plum-900 focus:outline-none"
                 />
-                <span className="text-sm font-bold text-amber-800">組 ×</span>
+                <span className="text-[15px] font-bold text-amber-800">組 ×</span>
                 <input
                   type="number"
                   inputMode="numeric"
@@ -505,9 +504,9 @@ export function ExercisePage({
                   onChange={(event) => setRepsInput(event.target.value)}
                   aria-label="次數"
                   placeholder="次數"
-                  className="h-10 w-16 rounded-xl border border-amber-300 bg-white px-2 text-center text-base font-bold text-slate-900 placeholder:text-xs placeholder:font-medium focus:border-plum-900 focus:outline-none"
+                  className="h-10 w-16 rounded-xl border border-amber-300 bg-white px-2 text-center text-base font-bold text-slate-900 placeholder:text-[13px] placeholder:font-medium focus:border-plum-900 focus:outline-none"
                 />
-                <span className="text-sm font-bold text-amber-800">下</span>
+                <span className="text-[15px] font-bold text-amber-800">下</span>
               </div>
             )}
 
@@ -521,7 +520,7 @@ export function ExercisePage({
             </button>
 
             {!weightReady && (
-              <p className="mt-2 text-xs font-semibold leading-relaxed text-amber-800">
+              <p className="mt-2 text-[13px] font-semibold leading-relaxed text-amber-800">
                 尚未設定體重。熱量需要體重才能計算，請先到「設定」填寫。
               </p>
             )}
@@ -529,7 +528,7 @@ export function ExercisePage({
         </section>
       )}
 
-      <section className="mt-4 rounded-[26px] border border-amber-100 bg-white p-4 shadow-sm shadow-amber-900/5">
+      <section className="mt-4 rounded-[24px] border border-amber-100 bg-white p-4 shadow-sm shadow-amber-900/5">
         <SectionHeading icon={Dumbbell} title="選擇運動" subtitle="依動作模式與肌群挑選" />
 
         <div className="mt-3 flex gap-1.5 overflow-x-auto pb-1">
@@ -541,7 +540,7 @@ export function ExercisePage({
                 type="button"
                 onClick={() => setFilter(tab.id)}
                 aria-pressed={active}
-                className={`shrink-0 rounded-full px-4 py-2 text-sm font-black transition ${
+                className={`shrink-0 rounded-full px-4 py-2 text-[15px] font-black transition ${
                   active
                     ? 'bg-plum-900 text-white shadow-sm'
                     : 'bg-slate-100 text-slate-500 hover:bg-slate-200'
@@ -568,7 +567,7 @@ export function ExercisePage({
                 }`}
               >
                 <span
-                  className={`grid h-11 w-11 shrink-0 place-items-center rounded-xl text-sm font-black ${
+                  className={`grid h-11 w-11 shrink-0 place-items-center rounded-xl text-[15px] font-black ${
                     exercise.category === 'cardio'
                       ? 'bg-orange-50 text-orange-600'
                       : exercise.category === 'strength'
@@ -583,11 +582,11 @@ export function ExercisePage({
                 <span className="min-w-0 flex-1">
                   <span className="flex items-center gap-1.5">
                     <span className="text-base font-black text-slate-900">{exercise.name}</span>
-                    <span className="rounded-full bg-slate-100 px-2 py-0.5 text-xs font-bold text-slate-500">
+                    <span className="rounded-full bg-slate-100 px-2 py-0.5 text-[13px] font-bold text-slate-500">
                       {PATTERN_LABELS[exercise.pattern]}
                     </span>
                   </span>
-                  <span className="mt-0.5 block truncate text-xs text-slate-400">
+                  <span className="mt-0.5 block truncate text-[13px] text-slate-400">
                     MET {exercise.met} · {exercise.primaryMuscles.map((muscle) => MUSCLE_LABELS[muscle]).join('、')}
                   </span>
                 </span>
@@ -598,7 +597,7 @@ export function ExercisePage({
         </div>
       </section>
 
-      <section className="mt-4 rounded-[26px] border border-amber-100 bg-white p-4 shadow-sm shadow-amber-900/5">
+      <section className="mt-4 rounded-[24px] border border-amber-100 bg-white p-4 shadow-sm shadow-amber-900/5">
         <SectionHeading icon={Timer} title="今日訓練紀錄" subtitle="依完成時間排序" />
 
         {todayWorkouts.length > 0 ? (
@@ -612,12 +611,12 @@ export function ExercisePage({
                   <p className="text-base font-black text-slate-900">
                     {workout.name}
                     {workout.sets && workout.reps && (
-                      <span className="ml-1.5 text-xs font-bold text-slate-400">
+                      <span className="ml-1.5 text-[13px] font-bold text-slate-400">
                         {workout.sets} 組 × {workout.reps} 下
                       </span>
                     )}
                   </p>
-                  <p className="mt-0.5 text-xs font-semibold text-slate-500">
+                  <p className="mt-0.5 text-[13px] font-semibold text-slate-500">
                     {workout.minutes} 分鐘 · MET {workout.met} · 約 {workout.calories} kcal
                   </p>
                 </div>
@@ -633,24 +632,24 @@ export function ExercisePage({
             ))}
           </div>
         ) : (
-          <p className="mt-3 rounded-2xl bg-slate-50 px-3.5 py-3 text-sm leading-relaxed text-slate-500">
+          <p className="mt-3 rounded-2xl bg-slate-50 px-3.5 py-3 text-[15px] leading-relaxed text-slate-500">
             今天還沒有紀錄。從上方選擇一個動作，填寫時間後按「儲存運動紀錄」即可。
           </p>
         )}
       </section>
 
-      <section className="mt-4 rounded-[26px] border border-amber-100 bg-white p-4 shadow-sm shadow-amber-900/5">
+      <section className="mt-4 rounded-[24px] border border-amber-100 bg-white p-4 shadow-sm shadow-amber-900/5">
         <SectionHeading icon={Info} title="熱量怎麼算" subtitle="公式與資料來源" />
 
         <div className="mt-3 rounded-2xl bg-plum-50 p-3.5">
           <p className="text-base font-black text-plum-900">{MET_FORMULA_TEXT}</p>
-          <p className="mt-1.5 text-sm leading-relaxed text-plum-700">
+          <p className="mt-1.5 text-[15px] leading-relaxed text-plum-700">
             MET（代謝當量）代表該活動相對安靜坐著時的能量消耗倍數。例如快走約 4.3 MET，
             表示每公斤體重每小時消耗約 4.3 大卡。
           </p>
         </div>
 
-        <div className="mt-2 space-y-2 text-sm leading-relaxed text-slate-500">
+        <div className="mt-2 space-y-2 text-[15px] leading-relaxed text-slate-500">
           <p className="flex gap-1.5">
             <Flame className="mt-0.5 h-4 w-4 shrink-0 text-orange-400" />
             以 60 公斤的人快走 30 分鐘為例：4.3 × 60 × 0.5 ≈ 129 kcal。

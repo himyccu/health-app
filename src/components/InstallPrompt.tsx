@@ -72,13 +72,13 @@ export function InstallPrompt() {
   };
 
   return (
-    <section className="animate-fade-up mt-4 overflow-hidden rounded-[26px] border border-plum-100 bg-white p-4 shadow-sm shadow-plum-900/5">
+    <section className="animate-fade-up mt-4 overflow-hidden rounded-[24px] border border-plum-100 bg-white p-4 shadow-sm shadow-plum-900/5">
       <div className="flex items-start gap-3">
         <div className="grid h-11 w-11 shrink-0 place-items-center rounded-2xl bg-plum-900 text-amber-200">
           <Smartphone className="h-5 w-5" />
         </div>
         <div className="min-w-0 flex-1">
-          <p className="text-[11px] font-black tracking-[0.14em] text-plum-600">
+          <p className="text-[13px] font-black tracking-[0.14em] text-plum-600">
             ADD TO HOME SCREEN
           </p>
           <h3 className="mt-0.5 text-base font-black text-slate-900">把健康管家放到主畫面</h3>
@@ -118,7 +118,7 @@ export function InstallPrompt() {
           type="button"
           onClick={handleInstall}
           disabled={installing}
-          className="mt-3 flex h-11 w-full items-center justify-center gap-2 rounded-xl bg-plum-900 text-sm font-black text-white transition hover:bg-plum-800 active:scale-[0.99] disabled:opacity-60"
+          className="mt-3 flex h-11 w-full items-center justify-center gap-2 rounded-xl bg-plum-900 text-[15px] font-black text-white transition hover:bg-plum-800 active:scale-[0.99] disabled:opacity-60"
         >
           <Download className="h-4 w-4" />
           {installing ? '正在開啟安裝…' : '立即安裝'}
@@ -141,7 +141,7 @@ export function InstallPrompt() {
       )}
 
       {android && canInstallNatively && (
-        <p className="mt-2 text-xs leading-5 text-slate-400">
+        <p className="mt-2 text-[13px] leading-5 text-slate-400">
           若沒有跳出安裝視窗，也可以點右上角三點選單 →「新增至主畫面」。
         </p>
       )}
@@ -152,12 +152,12 @@ export function InstallPrompt() {
             type="button"
             onClick={handleInstall}
             disabled={installing}
-            className="mt-3 flex h-11 w-full items-center justify-center gap-2 rounded-xl bg-plum-900 text-sm font-black text-white transition hover:bg-plum-800 active:scale-[0.99] disabled:opacity-60"
+            className="mt-3 flex h-11 w-full items-center justify-center gap-2 rounded-xl bg-plum-900 text-[15px] font-black text-white transition hover:bg-plum-800 active:scale-[0.99] disabled:opacity-60"
           >
             <Download className="h-4 w-4" />
             {installing ? '正在開啟安裝…' : '安裝健康管家'}
           </button>
-          <p className="mt-2 text-xs leading-5 text-slate-400">
+          <p className="mt-2 text-[13px] leading-5 text-slate-400">
             也可以從瀏覽器選單選擇「安裝 App」或「加到主畫面」。
           </p>
         </>

@@ -83,7 +83,7 @@ export const BMI_CATEGORIES: BmiCategory[] = [
     id: 'normal',
     label: '正常範圍',
     rangeLabel: '18.5 ≤ BMI < 24',
-    advice: '維持目前均衡飲食與規律活動，繼續保持！',
+    advice: '維持目前均衡飲食與規律活動。',
     badgeClass: 'bg-emerald-100 text-emerald-800',
     barClass: 'bg-emerald-500',
     softClass: 'bg-emerald-50 border-emerald-200',

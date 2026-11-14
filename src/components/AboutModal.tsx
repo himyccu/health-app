@@ -29,12 +29,14 @@ const SECTIONS: Section[] = [
   {
     id: 'origin',
     icon: Sprout,
-    title: 'APP 開發初衷',
+    title: 'App 定位',
     content: (
-      <p className="text-[15px] leading-7 text-slate-600">
-        這款健康紀錄 App，最初是我為了日常運動管理所設計的小工具。現在開放分享給校園同學們使用！
-        純屬個人分享，無任何商業營利行為。
-      </p>
+      <div className="space-y-2 text-[15px] leading-7 text-slate-600">
+        <p>
+          本 App 為非營利之個人健康紀錄工具，提供步行紀錄、運動紀錄、飲食紀錄、身體參數計算與動作教學。
+        </p>
+        <p>不設帳號、不上傳資料、不投放廣告，亦不提供醫療診斷或治療建議。</p>
+      </div>
     ),
   },
   {
@@ -42,17 +44,23 @@ const SECTIONS: Section[] = [
     icon: ShieldCheck,
     title: '隱私與資料安全',
     content: (
-      <div className="space-y-3">
+      <div className="space-y-2.5">
         <div className="rounded-2xl bg-emerald-50/80 p-3.5">
-          <p className="text-sm font-black text-emerald-900">零帳號、零資料收集</p>
-          <p className="mt-1 text-[14px] leading-6 text-emerald-900/80">
-            本 App 不需要註冊，開發者不會收集您的姓名、手機或任何個人隱私。
+          <p className="text-[15px] font-black text-emerald-900">不需註冊</p>
+          <p className="mt-1 text-[15px] leading-6 text-emerald-900/80">
+            不收集姓名、電話、電子郵件或帳號資料。
           </p>
         </div>
         <div className="rounded-2xl bg-emerald-50/80 p-3.5">
-          <p className="text-sm font-black text-emerald-900">資料只留存在您的手機裡</p>
-          <p className="mt-1 text-[14px] leading-6 text-emerald-900/80">
-            所有走路紀錄與計算數據，100% 只儲存在您自己的手機（LocalStorage）中，絕不會上傳到任何雲端伺服器。
+          <p className="text-[15px] font-black text-emerald-900">資料只存在這台裝置</p>
+          <p className="mt-1 text-[15px] leading-6 text-emerald-900/80">
+            步數、運動與飲食紀錄儲存在瀏覽器本機空間（localStorage），不會上傳到任何伺服器。
+          </p>
+        </div>
+        <div className="rounded-2xl bg-emerald-50/80 p-3.5">
+          <p className="text-[15px] font-black text-emerald-900">可隨時清除</p>
+          <p className="mt-1 text-[15px] leading-6 text-emerald-900/80">
+            於「設定 → 清除所有本機資料」即可一次刪除全部紀錄。
           </p>
         </div>
       </div>
@@ -64,17 +72,17 @@ const SECTIONS: Section[] = [
     title: 'GPS 定位權限說明',
     content: (
       <p className="text-[15px] leading-7 text-slate-600">
-        GPS 只用來計算步行距離，運算全部在您的手機內進行，定位資料絕不外流。您也可以隨時在手機設定中關閉定位。
+        定位只用來計算步行距離，座標不會上傳、不會儲存，也不會提供給開發者。可隨時在手機設定中關閉定位。
       </p>
     ),
   },
   {
     id: 'tips',
     icon: Lightbulb,
-    title: '友善使用小提醒',
+    title: '使用限制',
     content: (
       <p className="text-[15px] leading-7 text-slate-600">
-        本 App 所提供的運動距離與計時數據，主要提供健康管理的參考。由於各款手機硬體 GPS 晶片精準度不同，數據請以個人娛樂與運動參考為主，非專業賽事量測設備喔！
+        GPS 與計步數據會因手機硬體與環境而異，僅供健康管理參考，不作為賽事或醫療量測依據。
       </p>
     ),
   },
@@ -103,7 +111,7 @@ export function AboutModal({ open, onClose }: AboutModalProps) {
         role="dialog"
         aria-modal="true"
         aria-labelledby="about-title"
-        className="animate-fade-up flex max-h-[92dvh] w-full max-w-md flex-col overflow-hidden rounded-t-[32px] bg-[#fcfaff] shadow-2xl shadow-slate-950/30 sm:rounded-[32px]"
+        className="animate-fade-up flex max-h-[92dvh] w-full max-w-md flex-col overflow-hidden rounded-t-[28px] bg-[#fcfaff] shadow-2xl shadow-slate-950/30 sm:rounded-[28px]"
         onClick={(event) => event.stopPropagation()}
       >
         <div className="relative shrink-0 overflow-hidden bg-gradient-to-br from-plum-900 via-plum-800 to-plum-700 px-5 pb-5 pt-5 text-white">
@@ -116,26 +124,23 @@ export function AboutModal({ open, onClose }: AboutModalProps) {
                 <Heart className="h-6 w-6" fill="currentColor" strokeWidth={1.8} />
               </div>
               <div>
-                <p className="text-[11px] font-black tracking-[0.18em] text-amber-200">
-                  ABOUT & PRIVACY
-                </p>
-                <h2 id="about-title" className="mt-0.5 text-xl font-black leading-tight">
-                  關於本 App 與溫馨提示
+                <h2 id="about-title" className="text-[22px] font-black leading-tight">
+                  關於本 App
                 </h2>
               </div>
             </div>
             <button
               type="button"
               onClick={onClose}
-              aria-label="關閉溫馨說明"
-              className="grid h-9 w-9 shrink-0 place-items-center rounded-full bg-white/15 text-white transition hover:bg-white/25"
+              aria-label="關閉說明"
+              className="grid h-11 w-11 shrink-0 place-items-center rounded-full bg-white/15 text-white transition hover:bg-white/25"
             >
               <X className="h-5 w-5" />
             </button>
           </div>
 
           <p className="relative mt-4 rounded-2xl bg-white/10 px-3.5 py-3 text-[13px] font-medium leading-6 text-plum-100 ring-1 ring-white/10">
-            這個 App 沒有帳號、沒有後端。你的每一步、每一筆紀錄，都只留在自己的手機裡。
+            無帳號・無雲端・無廣告。所有紀錄僅儲存於本機裝置。
           </p>
         </div>
 
@@ -184,7 +189,7 @@ export function AboutModal({ open, onClose }: AboutModalProps) {
           })}
 
           <div className="rounded-2xl border border-plum-100 bg-plum-50/70 p-4">
-            <p className="flex items-center gap-2 text-sm font-black text-plum-900">
+            <p className="flex items-center gap-2 text-[15px] font-black text-plum-900">
               <Mail className="h-4 w-4" />
               聯繫開發者
             </p>
@@ -194,7 +199,7 @@ export function AboutModal({ open, onClose }: AboutModalProps) {
             >
               himyccu@gmail.com
             </a>
-            <p className="mt-3 flex items-center gap-1.5 text-xs font-semibold text-slate-400">
+            <p className="mt-3 flex items-center gap-1.5 text-[13px] font-semibold text-slate-400">
               <CalendarDays className="h-3.5 w-3.5" />
               最新修訂日期：2026 年 11 月 7 日
             </p>
@@ -205,9 +210,9 @@ export function AboutModal({ open, onClose }: AboutModalProps) {
           <button
             type="button"
             onClick={onClose}
-            className="h-12 w-full rounded-2xl bg-plum-900 text-base font-black text-white shadow-lg shadow-plum-900/20 transition hover:bg-plum-800 active:scale-[0.99]"
+            className="h-12 w-full rounded-2xl bg-plum-900 text-[16px] font-black text-white shadow-lg shadow-plum-900/20 transition hover:bg-plum-800 active:scale-[0.99]"
           >
-            我知道了
+            關閉
           </button>
         </div>
       </div>

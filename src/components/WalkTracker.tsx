@@ -150,17 +150,17 @@ export function WalkTracker({ todayDistanceKm, weightKg, onSave }: WalkTrackerPr
     weightKg > 0 ? Math.round(WALKING_MET * weightKg * (seconds / 3600)) : 0;
 
   return (
-    <section className="mt-4 rounded-[26px] border border-plum-100 bg-white p-4 shadow-sm shadow-amber-900/5">
+    <section className="mt-4 rounded-[24px] border border-plum-100 bg-white p-4 shadow-sm shadow-amber-900/5">
       <SectionHeading icon={Navigation} title="步行追蹤" subtitle="GPS 即時量測距離與時間" />
 
       <div className="mt-3 flex items-center justify-between rounded-2xl bg-plum-50 px-3.5 py-3">
         <div>
-          <p className="text-[11px] font-bold text-plum-600">今日 GPS 步行距離</p>
+          <p className="text-[13px] font-bold text-plum-600">今日 GPS 步行距離</p>
           <p className="mt-0.5 flex items-baseline gap-1">
             <span className="text-xl font-black leading-none tabular-nums text-plum-900">
               {todayDistanceKm.toFixed(2)}
             </span>
-            <span className="text-[10px] font-bold text-plum-500">km</span>
+            <span className="text-[13px] font-bold text-plum-500">km</span>
           </p>
         </div>
         <MapPin className="h-5 w-5 text-plum-400" />
@@ -168,11 +168,11 @@ export function WalkTracker({ todayDistanceKm, weightKg, onSave }: WalkTrackerPr
 
       {showPrivacy && !tracking && (
         <div className="animate-fade-up mt-2 rounded-2xl border border-emerald-200 bg-emerald-50 p-3.5">
-          <p className="flex items-center gap-1.5 text-xs font-black text-emerald-800">
+          <p className="flex items-center gap-1.5 text-[13px] font-black text-emerald-800">
             <ShieldCheck className="h-4 w-4" />
             定位隱私說明
           </p>
-          <ul className="mt-2 space-y-1.5 text-[11px] leading-relaxed text-emerald-900">
+          <ul className="mt-2 space-y-1.5 text-[13px] leading-relaxed text-emerald-900">
             <li className="flex gap-1.5">
               <span className="mt-1.5 h-1 w-1 shrink-0 rounded-full bg-emerald-600" />
               定位只用來計算步行距離，座標不會上傳，也不會被 App 設計者看到。
@@ -190,7 +190,7 @@ export function WalkTracker({ todayDistanceKm, weightKg, onSave }: WalkTrackerPr
             <button
               type="button"
               onClick={() => setShowPrivacy(false)}
-              className="h-10 rounded-xl border border-emerald-200 bg-white text-xs font-bold text-emerald-800 transition hover:bg-emerald-100"
+              className="h-10 rounded-xl border border-emerald-200 bg-white text-[13px] font-bold text-emerald-800 transition hover:bg-emerald-100"
             >
               先不用
             </button>
@@ -201,7 +201,7 @@ export function WalkTracker({ todayDistanceKm, weightKg, onSave }: WalkTrackerPr
                 setShowPrivacy(false);
                 startTracking();
               }}
-              className="h-10 rounded-xl bg-emerald-700 text-xs font-black text-white transition hover:bg-emerald-800"
+              className="h-10 rounded-xl bg-emerald-700 text-[13px] font-black text-white transition hover:bg-emerald-800"
             >
               我了解，開始記錄
             </button>
@@ -213,25 +213,25 @@ export function WalkTracker({ todayDistanceKm, weightKg, onSave }: WalkTrackerPr
         <div className="mt-2 rounded-2xl bg-plum-900 p-4 text-white">
           <div className="flex items-end justify-between gap-3">
             <div>
-              <p className="text-[11px] font-bold text-plum-200">本次距離</p>
+              <p className="text-[13px] font-bold text-plum-200">本次距離</p>
               <p className="mt-1 flex items-baseline gap-1">
                 <span className="text-3xl font-black leading-none tabular-nums">
                   {(meters / 1000).toFixed(2)}
                 </span>
-                <span className="text-xs font-bold text-plum-200">km</span>
+                <span className="text-[13px] font-bold text-plum-200">km</span>
               </p>
             </div>
             <div className="text-right">
-              <p className="text-[11px] font-bold text-plum-200">時間</p>
+              <p className="text-[13px] font-bold text-plum-200">時間</p>
               <p className="mt-1 text-xl font-black leading-none tabular-nums">
                 {formatDuration(seconds)}
               </p>
-              <p className="mt-1 text-[11px] font-bold text-amber-200">
+              <p className="mt-1 text-[13px] font-bold text-amber-200">
                 {weightKg > 0 ? `約 ${liveCalories} kcal` : '設定體重後估算熱量'}
               </p>
             </div>
           </div>
-          <p className="mt-3 flex items-center gap-1.5 text-[11px] font-semibold text-plum-100">
+          <p className="mt-3 flex items-center gap-1.5 text-[13px] font-semibold text-plum-100">
             <span
               className={`h-2 w-2 animate-pulse rounded-full ${
                 status === 'tracking' ? 'bg-emerald-400' : 'bg-amber-300'
@@ -245,7 +245,7 @@ export function WalkTracker({ todayDistanceKm, weightKg, onSave }: WalkTrackerPr
       <button
         type="button"
         onClick={tracking ? stop : handleStartClick}
-        className={`mt-3 flex h-12 w-full items-center justify-center gap-2 rounded-2xl text-sm font-black transition active:scale-[0.99] ${
+        className={`mt-3 flex h-12 w-full items-center justify-center gap-2 rounded-2xl text-[15px] font-black transition active:scale-[0.99] ${
           tracking
             ? 'bg-rose-600 text-white shadow-lg shadow-rose-600/20 hover:bg-rose-700'
             : 'bg-plum-900 text-white shadow-lg shadow-plum-900/20 hover:bg-plum-800'
@@ -267,13 +267,13 @@ export function WalkTracker({ todayDistanceKm, weightKg, onSave }: WalkTrackerPr
       {message && (
         <p
           role="status"
-          className="mt-2 rounded-xl border border-amber-200 bg-amber-50 px-3 py-2 text-[11px] font-semibold leading-relaxed text-amber-800"
+          className="mt-2 rounded-xl border border-amber-200 bg-amber-50 px-3 py-2 text-[13px] font-semibold leading-relaxed text-amber-800"
         >
           {message}
         </p>
       )}
 
-      <p className="mt-2 text-[11px] leading-relaxed text-slate-400">
+      <p className="mt-2 text-[13px] leading-relaxed text-slate-400">
         記錄期間請保持此頁面開啟；室內或訊號不佳時，可用下方「活動時間」手動補登。
       </p>
     </section>

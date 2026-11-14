@@ -58,15 +58,15 @@ export function FoodPortionPanel({
   return (
     <div className="animate-fade-up border-t border-plum-100 bg-plum-50/60 p-3.5">
       <div className="flex items-baseline justify-between gap-2">
-        <p className="text-[11px] font-black text-plum-900">份量與營養計算</p>
-        <p className="text-[10px] font-medium text-slate-400">
+        <p className="text-[13px] font-black text-plum-900">份量與營養計算</p>
+        <p className="text-[13px] font-medium text-slate-400">
           每 100g {format(nutrients.calories, 0)} kcal
         </p>
       </div>
 
       <div className="mt-2.5 flex items-end gap-2">
         <label className="min-w-0 flex-1" htmlFor={`grams-${food.id}`}>
-          <span className="mb-1 block text-[11px] font-bold text-slate-500">食用份量</span>
+          <span className="mb-1 block text-[13px] font-bold text-slate-500">食用份量</span>
           <div
             className={`flex items-center rounded-xl border bg-white transition ${
               isValid ? 'border-plum-200 focus-within:border-plum-700' : 'border-rose-300'
@@ -84,7 +84,7 @@ export function FoodPortionPanel({
               className="h-11 w-full min-w-0 bg-transparent px-3 text-base font-black text-slate-900 outline-none"
               aria-describedby={isValid ? undefined : `grams-error-${food.id}`}
             />
-            <span className="pr-3 text-xs font-bold text-slate-400">g</span>
+            <span className="pr-3 text-[13px] font-bold text-slate-400">g</span>
           </div>
         </label>
         <div className="grid shrink-0 grid-cols-2 gap-1.5">
@@ -93,7 +93,7 @@ export function FoodPortionPanel({
               key={quick}
               type="button"
               onClick={() => onGramsChange(String(quick))}
-              className={`h-7 rounded-lg px-2.5 text-[11px] font-black transition ${
+              className={`h-7 rounded-lg px-2.5 text-[13px] font-black transition ${
                 grams === quick
                   ? 'bg-plum-900 text-white'
                   : 'border border-plum-200 bg-white text-plum-800 hover:bg-plum-100'
@@ -109,7 +109,7 @@ export function FoodPortionPanel({
         <p
           id={`grams-error-${food.id}`}
           role="alert"
-          className="mt-1.5 flex items-center gap-1 text-[11px] font-bold text-rose-600"
+          className="mt-1.5 flex items-center gap-1 text-[13px] font-bold text-rose-600"
         >
           <AlertCircle className="h-3 w-3" />
           請輸入 1 至 2,000 公克之間的份量
@@ -119,17 +119,17 @@ export function FoodPortionPanel({
       <div className="mt-3 grid grid-cols-3 gap-1.5">
         {metrics.map((metric) => (
           <div key={metric.label} className="rounded-xl bg-white px-2 py-2 shadow-sm">
-            <p className="text-[10px] font-bold text-slate-400">{metric.label}</p>
-            <p className="mt-0.5 flex items-baseline gap-0.5 text-sm font-black leading-none text-slate-900 tabular-nums">
+            <p className="text-[13px] font-bold text-slate-400">{metric.label}</p>
+            <p className="mt-0.5 flex items-baseline gap-0.5 text-[15px] font-black leading-none text-slate-900 tabular-nums">
               {format(metric.value, metric.digits)}
-              <span className="text-[9px] font-bold text-slate-400">{metric.unit}</span>
+              <span className="text-[13px] font-bold text-slate-400">{metric.unit}</span>
             </p>
           </div>
         ))}
       </div>
 
       <div className="mt-3">
-        <p className="text-[11px] font-bold text-slate-500">加入哪一餐？</p>
+        <p className="text-[13px] font-bold text-slate-500">加入哪一餐？</p>
         <div className="mt-1.5 grid grid-cols-4 gap-1.5" role="group" aria-label="選擇餐別">
           {MEAL_TYPE_OPTIONS.map((option) => {
             const selected = mealType === option.value;
@@ -139,7 +139,7 @@ export function FoodPortionPanel({
                 type="button"
                 aria-pressed={selected}
                 onClick={() => onMealTypeChange(option.value)}
-                className={`h-8 rounded-lg text-[11px] font-black transition ${
+                className={`h-8 rounded-lg text-[13px] font-black transition ${
                   selected
                     ? 'bg-plum-900 text-white shadow-sm shadow-plum-900/20'
                     : 'border border-plum-200 bg-white text-slate-500 hover:bg-plum-100'
@@ -156,13 +156,13 @@ export function FoodPortionPanel({
         type="button"
         onClick={onAdd}
         disabled={!isValid}
-        className="mt-3 flex h-11 w-full items-center justify-center gap-1.5 rounded-xl bg-plum-900 text-sm font-black text-white shadow-md shadow-plum-900/20 transition hover:bg-plum-800 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-plum-900 active:scale-[0.99] disabled:cursor-not-allowed disabled:opacity-40"
+        className="mt-3 flex h-11 w-full items-center justify-center gap-1.5 rounded-xl bg-plum-900 text-[15px] font-black text-white shadow-md shadow-plum-900/20 transition hover:bg-plum-800 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-plum-900 active:scale-[0.99] disabled:cursor-not-allowed disabled:opacity-40"
       >
         <Plus className="h-4 w-4" strokeWidth={2.8} />
         加入今日紀錄
       </button>
 
-      <p className="mt-2 flex items-center justify-center gap-1 text-[10px] font-medium text-slate-400">
+      <p className="mt-2 flex items-center justify-center gap-1 text-[13px] font-medium text-slate-400">
         <ShieldCheck className="h-3 w-3 text-emerald-600" />
         計算與紀錄只留在這台裝置
       </p>
