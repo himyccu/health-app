@@ -177,3 +177,55 @@ export interface StepsData {
   /** 每日 GPS 實際步行距離（公里）。 */
   distanceKm: Record<string, number>;
 }
+
+/** 節段資料：五個部位。單位為公斤。 */
+export interface SegmentValues {
+  rightArm: number;
+  leftArm: number;
+  trunk: number;
+  rightLeg: number;
+  leftLeg: number;
+}
+
+/**
+ * 一筆 InBody 報告。
+ *
+ * 只收錄「有公開標準、可以判讀」的欄位。
+ * 阻抗值（FR／FREQ／RA…）、BCM、蛋白質／礦物質不建欄位：
+ * 這些不是工程參數，就是原廠沒有公開分級，硬做只會讓畫面更難懂。
+ */
+export interface BodyCompositionEntry {
+  id: string;
+  /** 量測日期（YYYY-MM-DD） */
+  date: string;
+  createdAt: string;
+
+  // 必填六項
+  weight: number;
+  /** 骨骼肌重 SMM（公斤） */
+  skeletalMuscle: number;
+  /** 體脂肪重（公斤） */
+  bodyFatMass: number;
+  /** 體脂肪率（%） */
+  bodyFatPercent: number;
+  /** 內臟脂肪等級（1–20） */
+  visceralFatLevel: number;
+  /** 原廠基礎代謝率（kcal／日） */
+  bmr: number;
+
+  // 節段（0 表示未填）
+  segmentMuscle: SegmentValues;
+  segmentFat: SegmentValues;
+
+  // 進階選填（0 表示未填）
+  /** 腰臀比 */
+  waistHipRatio: number;
+  /** 內臟脂肪面積（cm²） */
+  visceralFatArea: number;
+  /** 細胞外水分 ÷ 總水分 */
+  ecwTbw: number;
+  /** 原廠 InBody 分數（0–100） */
+  inbodyScore: number;
+  /** 原廠身體年齡 */
+  bodyAge: number;
+}

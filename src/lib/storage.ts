@@ -243,9 +243,12 @@ export function acceptDisclaimer(): void {
 
 export function clearAllData(): void {
   try {
-    [...Object.values(KEYS), ...Object.values(LEGACY_KEYS)].forEach((key) =>
-      window.localStorage.removeItem(key),
-    );
+    [
+      ...Object.values(KEYS),
+      ...Object.values(LEGACY_KEYS),
+      // InBody 紀錄另外放在自己的模組，這裡一併清除。
+      'health_app_inbody_v1',
+    ].forEach((key) => window.localStorage.removeItem(key));
   } catch {
     // 忽略無法清除的情況。
   }

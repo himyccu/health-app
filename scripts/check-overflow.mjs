@@ -48,6 +48,12 @@ const ROUTES = [
     clickAria: '推：',
   },
   { name: '健康', url: `${BASE_URL}/?tab=health` },
+  { name: '身體組成', url: `${BASE_URL}/?tab=health`, click: '查看身體組成判讀' },
+  {
+    name: '身體組成-表單',
+    url: `${BASE_URL}/?tab=health`,
+    click: ['查看身體組成判讀', '新增一筆'],
+  },
   { name: '飲食', url: `${BASE_URL}/?tab=nutrition` },
   { name: '設定', url: `${BASE_URL}/?tab=settings` },
 ];
@@ -104,6 +110,16 @@ async function main() {
         localStorage.setItem('health_app_profile_v1', JSON.stringify({
           gender: 'female', age: 42, height: 162, weight: 58, activity: 'light'
         }));
+        // 身體組成需要一筆紀錄才能看到判讀畫面，否則只會停在空白表單。
+        localStorage.setItem('health_app_inbody_v1', JSON.stringify([{
+          id: 'seed-1', date: '2026-11-10', createdAt: '2026-11-10T08:00:00.000Z',
+          weight: 58.2, skeletalMuscle: 20.4, bodyFatMass: 17.1, bodyFatPercent: 29.4,
+          visceralFatLevel: 6, bmr: 1248,
+          segmentMuscle: { rightArm: 2.1, leftArm: 2.0, trunk: 19.8, rightLeg: 6.4, leftLeg: 6.3 },
+          segmentFat: { rightArm: 1.7, leftArm: 1.8, trunk: 7.9, rightLeg: 2.6, leftLeg: 2.6 },
+          waistHipRatio: 0.86, visceralFatArea: 92, ecwTbw: 0.381,
+          inbodyScore: 72, bodyAge: 44
+        }]));
       } catch (error) { /* ignore */ }
     `,
   });
@@ -182,14 +198,17 @@ async function main() {
       await sleep(1100);
 
       if (route.click) {
-        await evaluate(`(() => {
-          const label = ${JSON.stringify(route.click)};
-          const button = [...document.querySelectorAll('button')]
-            .find((node) => (node.textContent || '').replace(/\\s+/g, '').includes(label.replace(/\\s+/g, '')));
-          if (button) button.click();
-          return Boolean(button);
-        })()`);
-        await sleep(700);
+        const labels = Array.isArray(route.click) ? route.click : [route.click];
+        for (const label of labels) {
+          await evaluate(`(() => {
+            const label = ${JSON.stringify(label)};
+            const button = [...document.querySelectorAll('button')]
+              .find((node) => (node.textContent || '').replace(/\\s+/g, '').includes(label.replace(/\\s+/g, '')));
+            if (button) button.click();
+            return Boolean(button);
+          })()`);
+          await sleep(700);
+        }
       }
 
       if (route.clickAria) {

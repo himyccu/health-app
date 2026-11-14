@@ -184,6 +184,8 @@ export default function App() {
           {activeTab === 'health' && (
             <HealthPage
               profile={profile}
+              onNotify={notify}
+              onOpenGuide={handleOpenGuide}
               onOpenSettings={() => setActiveTab('settings')}
               onGoHome={() => setActiveTab('home')}
             />

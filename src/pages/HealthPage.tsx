@@ -1,6 +1,8 @@
+import { useState } from 'react';
 import {
   Activity,
   ArrowRight,
+  ChevronRight,
   Flame,
   Heart,
   Info,
@@ -20,11 +22,16 @@ import {
   getIdealWeightRange,
   isProfileComplete,
 } from '../lib/health';
+import { loadBodyCompositions } from '../lib/bodyCompositionStorage';
+import type { GuideId } from '../data/guides';
 import { PageHeader } from '../components/PageHeader';
 import { SectionHeading } from '../components/SectionHeading';
+import { InBodyPage } from './InBodyPage';
 
 interface HealthPageProps {
   profile: Profile;
+  onNotify: (message: string) => void;
+  onOpenGuide: (guideId: GuideId) => void;
   onOpenSettings: () => void;
   onGoHome: () => void;
 }
@@ -40,7 +47,27 @@ function gaugePercent(value: number): number {
   return Math.min(100, Math.max(0, ((value - 15) / 20) * 100));
 }
 
-export function HealthPage({ profile, onOpenSettings, onGoHome }: HealthPageProps) {
+export function HealthPage({
+  profile,
+  onNotify,
+  onOpenGuide,
+  onOpenSettings,
+  onGoHome,
+}: HealthPageProps) {
+  const [view, setView] = useState<'main' | 'inbody'>('main');
+
+  if (view === 'inbody') {
+    return (
+      <InBodyPage
+        profile={profile}
+        onBack={() => setView('main')}
+        onGoHome={onGoHome}
+        onNotify={onNotify}
+        onOpenGuide={onOpenGuide}
+      />
+    );
+  }
+
   // 首次使用（尚未建立生理數據）時，不顯示任何預設的計算數字。
   if (!isProfileComplete(profile)) {
     return (
@@ -80,6 +107,9 @@ export function HealthPage({ profile, onOpenSettings, onGoHome }: HealthPageProp
   const ideal = getIdealWeightRange(profile.height);
   const suggestions = getCalorieSuggestions(profile);
   const markerPercent = gaugePercent(bmiRaw);
+
+  // 體脂、肌肉、節段、內臟脂肪只在「身體組成」頁呈現，健康頁只放摘要。
+  const latestBody = loadBodyCompositions()[0] ?? null;
 
   return (
     <div>
@@ -187,6 +217,53 @@ export function HealthPage({ profile, onOpenSettings, onGoHome }: HealthPageProp
           </p>
         </div>
       </div>
+
+      <section className="mt-4 rounded-[24px] border border-plum-100 bg-white p-4 shadow-sm shadow-plum-900/5">
+        <SectionHeading
+          icon={Sparkles}
+          title="身體組成"
+          subtitle={latestBody ? `最新量測 ${latestBody.date}` : '依 InBody 報告填寫'}
+        />
+
+        {latestBody ? (
+          <div className="mt-3 grid grid-cols-3 gap-2">
+            <div className="min-w-0 rounded-2xl bg-rose-50 px-2.5 py-3">
+              <p className="text-[13px] font-bold text-rose-700">體脂肪率</p>
+              <p className="mt-1 flex flex-wrap items-baseline gap-0.5 text-[18px] font-black leading-none tabular-nums text-rose-900">
+                {latestBody.bodyFatPercent.toFixed(1)}
+                <span className="text-[13px] font-bold text-rose-600">%</span>
+              </p>
+            </div>
+            <div className="min-w-0 rounded-2xl bg-emerald-50 px-2.5 py-3">
+              <p className="text-[13px] font-bold text-emerald-700">骨骼肌重</p>
+              <p className="mt-1 flex flex-wrap items-baseline gap-0.5 text-[18px] font-black leading-none tabular-nums text-emerald-900">
+                {latestBody.skeletalMuscle.toFixed(1)}
+                <span className="text-[13px] font-bold text-emerald-600">kg</span>
+              </p>
+            </div>
+            <div className="min-w-0 rounded-2xl bg-amber-50 px-2.5 py-3">
+              <p className="text-[13px] font-bold text-amber-700">內臟脂肪</p>
+              <p className="mt-1 flex flex-wrap items-baseline gap-0.5 text-[18px] font-black leading-none tabular-nums text-amber-900">
+                {latestBody.visceralFatLevel}
+                <span className="text-[13px] font-bold text-amber-600">級</span>
+              </p>
+            </div>
+          </div>
+        ) : (
+          <p className="mt-3 rounded-2xl bg-slate-50 px-4 py-3.5 text-[15px] leading-relaxed text-slate-500">
+            還沒有身體組成紀錄。填入 InBody 報告的數值後，會顯示體脂、肌肉、節段與內臟脂肪判讀。
+          </p>
+        )}
+
+        <button
+          type="button"
+          onClick={() => setView('inbody')}
+          className="mt-3 flex min-h-12 w-full items-center justify-between gap-2 rounded-2xl bg-plum-900 px-4 text-left text-[16px] font-black text-white shadow-lg shadow-plum-900/20 transition hover:bg-plum-800 active:scale-[0.99]"
+        >
+          {latestBody ? '查看身體組成判讀' : '記錄身體組成'}
+          <ChevronRight className="h-5 w-5 shrink-0" />
+        </button>
+      </section>
 
       <section className="mt-4 rounded-[24px] border border-amber-100 bg-white p-4 shadow-sm shadow-amber-900/5">
         <SectionHeading
