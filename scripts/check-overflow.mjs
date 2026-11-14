@@ -42,6 +42,12 @@ const ROUTES = [
   { name: '運動', url: `${BASE_URL}/?tab=exercise` },
   { name: '運動-暖身', url: `${BASE_URL}/?tab=exercise`, click: '暖身與筋膜放鬆' },
   { name: '運動-安全', url: `${BASE_URL}/?tab=exercise`, click: '運動安全' },
+  { name: '運動-滾筒', url: `${BASE_URL}/?tab=exercise`, click: '滾筒放鬆' },
+  {
+    name: '運動-滾筒-來源',
+    url: `${BASE_URL}/?tab=exercise`,
+    click: ['滾筒放鬆', '資料來源'],
+  },
   {
     name: '運動-動作文章',
     url: `${BASE_URL}/?tab=exercise`,
@@ -202,10 +208,22 @@ async function main() {
         for (const label of labels) {
           await evaluate(`(() => {
             const label = ${JSON.stringify(label)};
+            const normalize = (text) => (text || '').replace(/\\s+/g, '');
+            const target = normalize(label);
             const button = [...document.querySelectorAll('button')]
-              .find((node) => (node.textContent || '').replace(/\\s+/g, '').includes(label.replace(/\\s+/g, '')));
-            if (button) button.click();
-            return Boolean(button);
+              .find((node) => normalize(node.textContent).includes(target));
+            if (button) {
+              button.click();
+              return true;
+            }
+            // 沒有按鈕時（例如 <summary>），改點可展開的元素
+            const expandable = [...document.querySelectorAll('summary, [role="button"], a')]
+              .find((node) => normalize(node.textContent).includes(target));
+            if (expandable) {
+              expandable.click();
+              return true;
+            }
+            return false;
           })()`);
           await sleep(700);
         }

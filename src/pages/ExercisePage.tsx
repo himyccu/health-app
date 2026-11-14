@@ -33,7 +33,8 @@ import { AnatomyFigure } from '../components/AnatomyFigure';
 import { KnowledgeArticle } from '../components/KnowledgeArticle';
 import { GuideArticle } from '../components/GuideArticle';
 import { MovementCards } from '../components/MovementCards';
-import { GUIDE_ORDER, GUIDES, type GuideId } from '../data/guides';
+import { EXERCISE_GUIDE_ORDER, GUIDES, type GuideId } from '../data/guides';
+import { FoamRollingGuide } from '../components/FoamRollingGuide';
 import {
   ARTICLE_ID_BY_PATTERN,
   PATTERN_ARTICLES,
@@ -190,6 +191,13 @@ export function ExercisePage({
           article={PATTERN_ARTICLES[articleId]}
           onBack={() => setView('main')}
         />
+      ) : view === 'guide' && guideId === 'foamRolling' ? (
+        <FoamRollingGuide
+          key={guideId}
+          summary={GUIDES.foamRolling.summary}
+          minutes={GUIDES.foamRolling.minutes}
+          onBack={() => setView('main')}
+        />
       ) : view === 'guide' && guideId ? (
         <GuideArticle key={guideId} guide={GUIDES[guideId]} onBack={() => setView('main')} />
       ) : (
@@ -198,10 +206,10 @@ export function ExercisePage({
             <SectionHeading
               icon={ShieldCheck}
               title="① 開始之前"
-              subtitle="兩篇共約 8 分鐘"
+              subtitle={`三篇共約 ${EXERCISE_GUIDE_ORDER.reduce((sum, id) => sum + GUIDES[id].minutes, 0)} 分鐘`}
             />
             <div className="mt-4 space-y-2.5">
-              {GUIDE_ORDER.map((id) => {
+              {EXERCISE_GUIDE_ORDER.map((id) => {
                 const guide = GUIDES[id];
                 return (
                   <button

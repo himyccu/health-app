@@ -113,6 +113,27 @@
   }
 }
 
+/* 滾筒示範動畫：來回掃動，距離由 CSS 變數控制 */
+@keyframes roll-sweep {
+  0%,
+  100% {
+    transform: translate(0, 0);
+  }
+  50% {
+    transform: translate(var(--roll-dx, 0px), var(--roll-dy, 0px));
+  }
+}
+
+.roll-sweep {
+  animation: roll-sweep var(--roll-duration, 3.2s) ease-in-out infinite;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .roll-sweep {
+    animation: none !important;
+  }
+}
+
 @layer utilities {
   .no-scrollbar {
     scrollbar-width: none;

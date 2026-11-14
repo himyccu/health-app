@@ -9,6 +9,8 @@
  *   text-xs（12px）             → 13px
  *   text-[14px]、text-sm（14px）→ 15px（內文）
  *
+ * 例外：圖片授權與法務標註固定 11px，該行必須帶 data-annotation，腳本會跳過。
+ *
  * 圓角：30px / 32px → 28px、26px → 24px
  * 亮紫：text-purple-700 → text-plum-800
  *
@@ -45,9 +47,18 @@ function walk(dir) {
 let changed = 0;
 for (const file of walk(ROOT)) {
   const before = fs.readFileSync(file, 'utf8');
-  let after = before;
-  for (const [pattern, replacement] of FONT_MAP) after = after.replace(pattern, replacement);
-  for (const [pattern, replacement] of OTHER_MAP) after = after.replace(pattern, replacement);
+  const after = before
+    .split('\n')
+    .map((line) => {
+      let next = line;
+      // 圖片授權與法務標註固定 11px，不納入字級正規化
+      if (!next.includes('data-annotation')) {
+        for (const [pattern, replacement] of FONT_MAP) next = next.replace(pattern, replacement);
+      }
+      for (const [pattern, replacement] of OTHER_MAP) next = next.replace(pattern, replacement);
+      return next;
+    })
+    .join('\n');
   if (after !== before) {
     fs.writeFileSync(file, after);
     changed += 1;

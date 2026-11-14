@@ -8,7 +8,7 @@
  * 3. 每個步驟都要能直接照著做。
  */
 
-export type GuideId = 'warmup' | 'safety';
+export type GuideId = 'warmup' | 'safety' | 'foamRolling';
 
 export interface GuidePoint {
   /** 粗體標題，例如「1. 原地踏步 2 分鐘」 */
@@ -39,7 +39,7 @@ export const GUIDES: Record<GuideId, Guide> = {
   warmup: {
     id: 'warmup',
     title: '暖身與筋膜放鬆',
-    summary: '運動前 5 分鐘的動態暖身，加上三個部位的滾筒放鬆。',
+    summary: '運動前 5 分鐘的動態暖身，加上三個部位的滾筒與伸展。',
     minutes: 4,
     sections: [
       {
@@ -65,20 +65,15 @@ export const GUIDES: Record<GuideId, Guide> = {
           { label: '3. 肩部繞圈 10 次 × 2 方向', detail: '先小圈，再慢慢加大。' },
           { label: '4. 前後擺腿 10 次 × 2 腳', detail: '扶牆保持平衡，擺幅由小到大。' },
           {
-            label: '5. 滾筒放鬆 30–60 秒',
-            detail: '大腿前側、臀部、小腿各一次，速度放慢。',
+            label: '5. 滾筒放鬆 90 秒',
+            detail: '小腿、大腿後側各 90 秒，速度放慢。做法見〈滾筒放鬆〉。',
           },
         ],
       },
       {
-        heading: '滾筒怎麼用',
-        points: [
-          { label: '速度慢', detail: '每秒移動約 2–3 公分，讓壓力停留在同一點。' },
-          { label: '避開骨頭與關節', detail: '脊椎、膝蓋、腳踝骨突不要直接壓。' },
-          { label: '痛感控制在 3 分以下', detail: '滿分 10 分，痛到皺眉就是太用力。' },
-          { label: '每個部位 30–60 秒', detail: '同一點不要超過 2 分鐘，避免瘀青。' },
-        ],
-        note: '沒有滾筒時，可用軟球、毛巾捲，或直接做動態暖身，效果相近。',
+        heading: '滾筒放鬆',
+        intro: '運動前 30 分鐘內做，每個部位 90 秒至 2 分鐘，痛感維持 5–6 分。',
+        note: '六個部位的做法、滾筒怎麼選、哪些位置不能滾，見運動頁的〈滾筒放鬆〉。',
       },
       {
         heading: '這些情況先不要做',
@@ -157,7 +152,19 @@ export const GUIDES: Record<GuideId, Guide> = {
       '美國運動醫學會（ACSM）《運動測試與處方指引》',
     ],
   },
+  foamRolling: {
+    id: 'foamRolling',
+    title: '滾筒放鬆',
+    summary: '六個部位由下往上，每個 90 秒至 2 分鐘，運動前 30 分鐘內做完。',
+    minutes: 8,
+    // 內容資料在 data/foamRolling.ts，畫面由 components/FoamRollingGuide.tsx 負責。
+    sections: [],
+    sources: [],
+  },
 };
 
 /** 首頁與運動頁顯示的固定順序 */
 export const GUIDE_ORDER: GuideId[] = ['warmup', 'safety'];
+
+/** 運動頁「開始之前」的順序，比首頁多一篇滾筒放鬆 */
+export const EXERCISE_GUIDE_ORDER: GuideId[] = ['warmup', 'safety', 'foamRolling'];
