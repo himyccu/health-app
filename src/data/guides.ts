@@ -1,0 +1,163 @@
+/**
+ * 運動頁「開始之前」兩篇指南的內容。
+ *
+ * 這裡只放文字資料，畫面由 components/GuideArticle.tsx 負責。
+ * 撰寫原則：
+ * 1. 只寫有依據的內容（動態暖身、負荷原則、疼痛警訊）。
+ * 2. 不出現偏方、療效承諾或未經證實的說法。
+ * 3. 每個步驟都要能直接照著做。
+ */
+
+export type GuideId = 'warmup' | 'safety';
+
+export interface GuidePoint {
+  /** 粗體標題，例如「1. 原地踏步 2 分鐘」 */
+  label: string;
+  /** 補充說明，可省略 */
+  detail?: string;
+}
+
+export interface GuideSection {
+  heading: string;
+  intro?: string;
+  points?: GuidePoint[];
+  /** 區塊結尾的提醒，會用底色標示 */
+  note?: string;
+}
+
+export interface Guide {
+  id: GuideId;
+  title: string;
+  summary: string;
+  /** 預估閱讀時間（分鐘） */
+  minutes: number;
+  sections: GuideSection[];
+  sources: string[];
+}
+
+export const GUIDES: Record<GuideId, Guide> = {
+  warmup: {
+    id: 'warmup',
+    title: '暖身與筋膜放鬆',
+    summary: '運動前 5 分鐘的動態暖身，加上三個部位的滾筒放鬆。',
+    minutes: 4,
+    sections: [
+      {
+        heading: '為什麼運動前要暖身',
+        intro:
+          '暖身會讓體溫與肌肉溫度上升、關節潤滑增加、神經徵召變快，動作更穩，受傷機會也會降低。',
+        points: [
+          {
+            label: '動態暖身放在運動前',
+            detail: '活動關節、原地踏步、擺腿，讓身體熱起來再進入正式動作。',
+          },
+          {
+            label: '靜態伸展放在運動後',
+            detail: '單一肌群維持 30 秒以上，會短暫降低出力，因此不建議放在運動前。',
+          },
+        ],
+      },
+      {
+        heading: '5 分鐘流程',
+        points: [
+          { label: '1. 原地踏步或快走 2 分鐘', detail: '微微出汗、呼吸變快即可。' },
+          { label: '2. 髖部繞圈 10 次 × 2 方向', detail: '手扶腰，畫圓不用太大。' },
+          { label: '3. 肩部繞圈 10 次 × 2 方向', detail: '先小圈，再慢慢加大。' },
+          { label: '4. 前後擺腿 10 次 × 2 腳', detail: '扶牆保持平衡，擺幅由小到大。' },
+          {
+            label: '5. 滾筒放鬆 30–60 秒',
+            detail: '大腿前側、臀部、小腿各一次，速度放慢。',
+          },
+        ],
+      },
+      {
+        heading: '滾筒怎麼用',
+        points: [
+          { label: '速度慢', detail: '每秒移動約 2–3 公分，讓壓力停留在同一點。' },
+          { label: '避開骨頭與關節', detail: '脊椎、膝蓋、腳踝骨突不要直接壓。' },
+          { label: '痛感控制在 3 分以下', detail: '滿分 10 分，痛到皺眉就是太用力。' },
+          { label: '每個部位 30–60 秒', detail: '同一點不要超過 2 分鐘，避免瘀青。' },
+        ],
+        note: '沒有滾筒時，可用軟球、毛巾捲，或直接做動態暖身，效果相近。',
+      },
+      {
+        heading: '這些情況先不要做',
+        points: [
+          { label: '急性受傷 48 小時內', detail: '先在受傷部位冰敷與休息。' },
+          { label: '靜脈曲張或皮膚有傷口', detail: '避開該部位，不要加壓。' },
+          {
+            label: '嚴重骨質疏鬆、懷孕',
+            detail: '先諮詢醫師或物理治療師，再決定是否使用滾筒。',
+          },
+        ],
+      },
+    ],
+    sources: [
+      '衛生福利部國民健康署《全民身體活動指引》',
+      '美國運動醫學會（ACSM）《運動測試與處方指引》',
+    ],
+  },
+  safety: {
+    id: 'safety',
+    title: '運動安全',
+    summary: '三個基本原則、痠痛與受傷的差別，以及必須停止的警訊。',
+    minutes: 4,
+    sections: [
+      {
+        heading: '三個基本原則',
+        points: [
+          {
+            label: '循序負荷',
+            detail: '每週訓練量（時間、次數或重量）增加不超過 10%。',
+          },
+          {
+            label: '不憋氣',
+            detail: '用力時吐氣，回到起始位置時吸氣。血壓偏高者更不可閉氣用力。',
+          },
+          {
+            label: '先穩定再加重',
+            detail: '動作能在身體不晃動的情況下完成，才增加重量或次數。',
+          },
+        ],
+      },
+      {
+        heading: '痠痛與受傷的差別',
+        points: [
+          {
+            label: '延遲性肌肉痠痛',
+            detail: '運動後 24–48 小時出現，範圍分散，活動後會緩解。',
+          },
+          {
+            label: '傷害痛',
+            detail: '動作中立刻出現、集中在單點、特定角度才痛，可能伴隨腫脹或無力。',
+          },
+        ],
+        note: '出現傷害痛就停止該動作，不要用「撐過去」處理。',
+      },
+      {
+        heading: '立即停止並就醫的警訊',
+        points: [
+          { label: '胸悶、胸痛、呼吸困難' },
+          { label: '頭暈、眼前發黑、冒冷汗' },
+          { label: '關節腫脹、變形或無法承重' },
+          { label: '麻木、無力，或劇痛持續超過 48 小時' },
+        ],
+      },
+      {
+        heading: '運動後',
+        points: [
+          { label: '收操 5 分鐘', detail: '慢走讓心跳慢慢下降。' },
+          { label: '靜態伸展', detail: '每個肌群 30 秒 × 2 次。' },
+          { label: '補水與睡眠', detail: '恢復主要發生在休息時。' },
+        ],
+      },
+    ],
+    sources: [
+      '衛生福利部國民健康署《全民身體活動指引》',
+      '美國運動醫學會（ACSM）《運動測試與處方指引》',
+    ],
+  },
+};
+
+/** 首頁與運動頁顯示的固定順序 */
+export const GUIDE_ORDER: GuideId[] = ['warmup', 'safety'];

@@ -40,7 +40,13 @@ const ROUTES = [
   { name: '首頁', url: `${BASE_URL}/?tab=home` },
   { name: '動能', url: `${BASE_URL}/?tab=activity` },
   { name: '運動', url: `${BASE_URL}/?tab=exercise` },
-  { name: '運動-基礎動作', url: `${BASE_URL}/?tab=exercise`, click: '基礎動作' },
+  { name: '運動-暖身', url: `${BASE_URL}/?tab=exercise`, click: '暖身與筋膜放鬆' },
+  { name: '運動-安全', url: `${BASE_URL}/?tab=exercise`, click: '運動安全' },
+  {
+    name: '運動-動作文章',
+    url: `${BASE_URL}/?tab=exercise`,
+    clickAria: '推：',
+  },
   { name: '健康', url: `${BASE_URL}/?tab=health` },
   { name: '飲食', url: `${BASE_URL}/?tab=nutrition` },
   { name: '設定', url: `${BASE_URL}/?tab=settings` },
@@ -179,7 +185,18 @@ async function main() {
         await evaluate(`(() => {
           const label = ${JSON.stringify(route.click)};
           const button = [...document.querySelectorAll('button')]
-            .find((node) => (node.textContent || '').replace(/\\s+/g, '').includes(label));
+            .find((node) => (node.textContent || '').replace(/\\s+/g, '').includes(label.replace(/\\s+/g, '')));
+          if (button) button.click();
+          return Boolean(button);
+        })()`);
+        await sleep(700);
+      }
+
+      if (route.clickAria) {
+        await evaluate(`(() => {
+          const label = ${JSON.stringify(route.clickAria)};
+          const button = [...document.querySelectorAll('button')]
+            .find((node) => (node.getAttribute('aria-label') || '').includes(label));
           if (button) button.click();
           return Boolean(button);
         })()`);

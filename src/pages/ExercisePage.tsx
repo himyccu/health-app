@@ -1,12 +1,14 @@
 import { useEffect, useMemo, useRef, useState } from 'react';
 import {
   ArrowRight,
+  BookOpen,
   Check,
   ChevronRight,
   Dumbbell,
   Flame,
   Info,
   Plus,
+  ShieldCheck,
   Timer,
   Trash2,
   X,
@@ -29,7 +31,9 @@ import { PageHeader } from '../components/PageHeader';
 import { SectionHeading } from '../components/SectionHeading';
 import { AnatomyFigure } from '../components/AnatomyFigure';
 import { KnowledgeArticle } from '../components/KnowledgeArticle';
-import { KnowledgeCenter } from '../components/KnowledgeCenter';
+import { GuideArticle } from '../components/GuideArticle';
+import { MovementCards } from '../components/MovementCards';
+import { GUIDE_ORDER, GUIDES, type GuideId } from '../data/guides';
 import {
   ARTICLE_ID_BY_PATTERN,
   PATTERN_ARTICLES,
@@ -39,8 +43,9 @@ import { getExerciseAnatomy } from '../data/anatomy';
 
 interface ExercisePageProps {
   profile: Profile;
-  initialView?: 'training' | 'knowledge' | 'article';
+  initialView?: 'main' | 'article' | 'guide';
   initialArticleId?: KnowledgePatternId | null;
+  initialGuideId?: GuideId | null;
   onNotify: (message: string) => void;
   onGoHome: () => void;
   onOpenArticle: (articleId: KnowledgePatternId) => void;
@@ -60,14 +65,16 @@ function newId(): string {
 
 export function ExercisePage({
   profile,
-  initialView = 'training',
+  initialView = 'main',
   initialArticleId = null,
+  initialGuideId = null,
   onNotify,
   onGoHome,
   onOpenArticle,
 }: ExercisePageProps) {
-  const [view, setView] = useState<'training' | 'knowledge' | 'article'>(initialView);
+  const [view, setView] = useState<'main' | 'article' | 'guide'>(initialView);
   const [articleId, setArticleId] = useState<KnowledgePatternId | null>(initialArticleId);
+  const [guideId, setGuideId] = useState<GuideId | null>(initialGuideId);
   const [filter, setFilter] = useState<'all' | ExerciseCategory>('all');
   const [selectedId, setSelectedId] = useState<string | null>(null);
   const [minutesInput, setMinutesInput] = useState('20');
@@ -172,85 +179,82 @@ export function ExercisePage({
   return (
     <div>
       <PageHeader
-        title="運動訓練"
-        description="基礎動作教學與今日訓練紀錄。"
+        title="運動"
+        description="暖身、運動安全、基礎動作與訓練紀錄。"
         onHome={onGoHome}
       />
-
-      <div className="mb-4 grid grid-cols-2 gap-2">
-        <button
-          type="button"
-          onClick={() => setView('training')}
-          aria-pressed={view === 'training'}
-          className={`flex items-center gap-2.5 rounded-2xl border p-3 text-left transition active:scale-[0.98] ${
-            view === 'training'
-              ? 'border-plum-900 bg-plum-900 text-white shadow-md shadow-plum-900/20'
-              : 'border-plum-100 bg-white text-slate-600 hover:bg-plum-50'
-          }`}
-        >
-          <span
-            className={`grid h-9 w-9 shrink-0 place-items-center rounded-xl ${
-              view === 'training' ? 'bg-white/15 text-amber-200' : 'bg-plum-50 text-plum-800'
-            }`}
-          >
-            <Timer className="h-4 w-4" />
-          </span>
-          <span>
-            <span className="block text-[15px] font-black">運動紀錄</span>
-            <span
-              className={`mt-0.5 block text-[13px] font-semibold ${
-                view === 'training' ? 'text-plum-200' : 'text-slate-400'
-              }`}
-            >
-              記錄每一次訓練
-            </span>
-          </span>
-        </button>
-
-        <button
-          type="button"
-          onClick={() => setView('knowledge')}
-          aria-pressed={view !== 'training'}
-          className={`flex items-center gap-2.5 rounded-2xl border p-3 text-left transition active:scale-[0.98] ${
-            view !== 'training'
-              ? 'border-amber-500 bg-gradient-to-br from-amber-300 to-amber-200 text-plum-950 shadow-md shadow-amber-900/20'
-              : 'border-amber-200 bg-gradient-to-br from-amber-50 to-white text-slate-700 hover:border-amber-300'
-          }`}
-        >
-          <span className="grid h-9 w-9 shrink-0 place-items-center rounded-xl bg-plum-900 text-amber-200">
-            <Dumbbell className="h-4 w-4" />
-          </span>
-          <span className="min-w-0">
-            <span className="block text-[13px] font-black leading-tight sm:text-[15px]">
-              運動知識庫
-            </span>
-            <span
-              className={`mt-0.5 block truncate text-[13px] font-semibold ${
-                view !== 'training' ? 'text-plum-800' : 'text-slate-500'
-              }`}
-            >
-              圖文教學
-            </span>
-          </span>
-        </button>
-      </div>
 
       {view === 'article' && articleId ? (
         <KnowledgeArticle
           key={articleId}
           article={PATTERN_ARTICLES[articleId]}
-          onBack={() => setView('knowledge')}
+          onBack={() => setView('main')}
         />
-      ) : view === 'knowledge' ? (
-        <KnowledgeCenter
-          onOpenArticle={(nextArticleId) => {
-            setArticleId(nextArticleId);
-            setView('article');
-          }}
-        />
+      ) : view === 'guide' && guideId ? (
+        <GuideArticle key={guideId} guide={GUIDES[guideId]} onBack={() => setView('main')} />
       ) : (
         <>
-      <section className="overflow-hidden rounded-[28px] bg-plum-900 p-5 text-white shadow-lg shadow-plum-900/20">
+          <section className="rounded-[28px] border border-plum-100 bg-white p-5 shadow-sm shadow-plum-900/5">
+            <SectionHeading
+              icon={ShieldCheck}
+              title="① 開始之前"
+              subtitle="兩篇共約 8 分鐘"
+            />
+            <div className="mt-4 space-y-2.5">
+              {GUIDE_ORDER.map((id) => {
+                const guide = GUIDES[id];
+                return (
+                  <button
+                    key={id}
+                    type="button"
+                    onClick={() => {
+                      setGuideId(id);
+                      setView('guide');
+                    }}
+                    className="flex w-full items-center gap-3 rounded-2xl border border-slate-100 bg-white p-3.5 text-left transition hover:border-plum-200 hover:bg-plum-50/60 active:scale-[0.99]"
+                  >
+                    <span className="min-w-0 flex-1">
+                      <span className="block text-[16px] font-black text-slate-900">
+                        {guide.title}
+                      </span>
+                      <span className="mt-1 block text-[13px] leading-6 text-slate-500">
+                        {guide.summary}
+                      </span>
+                    </span>
+                    <ChevronRight className="h-4 w-4 shrink-0 text-plum-600" />
+                  </button>
+                );
+              })}
+            </div>
+          </section>
+
+          <section className="mt-4 rounded-[28px] border border-plum-100 bg-white p-5 shadow-sm shadow-plum-900/5">
+            <SectionHeading
+              icon={BookOpen}
+              title="② 基礎動作"
+              subtitle="五種動作模式"
+            />
+            <div className="mt-4">
+              <MovementCards
+                onOpenArticle={(nextArticleId) => {
+                  setArticleId(nextArticleId);
+                  setView('article');
+                }}
+              />
+            </div>
+            <p className="mt-3 text-[13px] leading-6 text-slate-500">
+              點字卡可看解剖圖、動作分解、五級進階訓練與常見錯誤。
+            </p>
+          </section>
+
+          <div className="mt-5">
+            <SectionHeading
+              icon={Timer}
+              title="③ 運動紀錄"
+              subtitle="今日訓練與熱量估算"
+            />
+          </div>
+      <section className="mt-3 overflow-hidden rounded-[28px] bg-plum-900 p-5 text-white shadow-lg shadow-plum-900/20">
         <p className="text-[15px] font-bold text-plum-200">今日運動</p>
         <div className="relative mt-2 grid grid-cols-2 gap-3">
           <div>

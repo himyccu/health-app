@@ -50,20 +50,10 @@ export function KnowledgeArticle({ article, onBack }: KnowledgeArticleProps) {
           </div>
         )}
         <div className="bg-plum-950 px-5 pb-5 pt-4 text-white">
-          <div className="flex flex-wrap items-center gap-2">
-            <span className="inline-flex items-center gap-1.5 rounded-full bg-amber-300 px-3 py-1 text-[13px] font-black tracking-[0.14em] text-plum-950">
-              <Dumbbell className="h-3.5 w-3.5" />
-              {article.eyebrow}
-            </span>
-            <span className="rounded-full bg-white/10 px-3 py-1 text-[13px] font-bold text-plum-100 ring-1 ring-white/15">
-              動作教學
-            </span>
-          </div>
-          <h2 className="mt-3 font-serif text-[26px] font-black leading-tight tracking-wide sm:text-[28px]">
+          <h2 className="font-serif text-[26px] font-black leading-tight tracking-wide sm:text-[28px]">
             {article.title}
           </h2>
-          <p className="mt-1 text-[15px] font-semibold text-plum-100">{article.englishTitle}</p>
-          <p className="mt-1 text-[13px] font-semibold text-plum-300">{article.subtitle}</p>
+          <p className="mt-2 text-[15px] font-semibold text-plum-200">{article.subtitle}</p>
           <p className="mt-3 text-[15px] leading-7 text-plum-100">{article.intro}</p>
         </div>
       </section>

@@ -28,21 +28,16 @@ export type KnowledgePatternId = 'push' | 'pull' | 'squat' | 'hinge' | 'locomoti
 
 export interface KnowledgeCard {
   id: KnowledgePatternId;
+  /** 字卡上的大字，例如「推」 */
   shortLabel: string;
-  eyebrow: string;
+  /** 字卡下方兩到四個字的提示，例如「胸肩」 */
+  hint: string;
   title: string;
   subtitle: string;
-  badge: string;
-  status: 'available' | 'comingSoon';
   icon: LucideIcon;
-  thumbnail?: string;
-  thumbnailAlt?: string;
-  readMoreLabel: string;
   accent: {
     icon: string;
-    badge: string;
   };
-  tip?: string;
 }
 
 export interface ArticlePhase {
@@ -129,84 +124,47 @@ export const KNOWLEDGE_CARDS: KnowledgeCard[] = [
   {
     id: 'push',
     shortLabel: '推',
-    eyebrow: 'PUSH PATTERN',
+    hint: '胸肩',
     title: '推：水平推與垂直推',
     subtitle: '胸、肩、三頭與肩胛穩定的發力順序。',
-    badge: '已上線',
-    status: 'available',
     icon: ArrowUpFromLine,
-    readMoreLabel: '閱讀教學',
-    accent: {
-      icon: 'bg-sky-50 text-sky-700',
-      badge: 'bg-sky-100 text-sky-800',
-    },
-    tip: '肩膀先穩定，手才有地方出力。',
+    accent: { icon: 'bg-sky-50 text-sky-700' },
   },
   {
     id: 'pull',
     shortLabel: '拉',
-    eyebrow: 'PULL PATTERN',
+    hint: '背部',
     title: '拉：水平拉與垂直拉',
     subtitle: '背部、二頭與肩胛控制的離心技巧。',
-    badge: '已上線',
-    status: 'available',
     icon: ArrowDownToLine,
-    readMoreLabel: '閱讀教學',
-    accent: {
-      icon: 'bg-emerald-50 text-emerald-700',
-      badge: 'bg-emerald-100 text-emerald-800',
-    },
-    tip: '先下壓肩胛，再彎手肘。',
+    accent: { icon: 'bg-emerald-50 text-emerald-700' },
   },
   {
     id: 'squat',
     shortLabel: '蹲',
-    eyebrow: 'SQUAT PATTERN',
+    hint: '臀腿',
     title: '蹲：下肢推與膝髖協調',
     subtitle: '股四頭、臀肌與足踝活動度的整合。',
-    badge: '已上線',
-    status: 'available',
     icon: PersonStanding,
-    readMoreLabel: '閱讀教學',
-    accent: {
-      icon: 'bg-amber-50 text-amber-700',
-      badge: 'bg-amber-100 text-amber-800',
-    },
-    tip: '腳掌三點踩穩，膝蓋跟著腳尖走。',
+    accent: { icon: 'bg-amber-50 text-amber-700' },
   },
   {
     id: 'hinge',
     shortLabel: '髖',
-    eyebrow: 'HINGE PATTERN',
+    hint: '臀後',
     title: '髖：硬舉與髖鉸鏈',
     subtitle: '臀腿後側動力鏈、脊柱中立與腹壓。',
-    badge: '已上線',
-    status: 'available',
     icon: MoveDown,
-    thumbnail: correctImage,
-    thumbnailAlt: '硬舉標準起始姿勢示範',
-    readMoreLabel: '閱讀教學',
-    accent: {
-      icon: 'bg-plum-50 text-plum-700',
-      badge: 'bg-plum-900 text-amber-100',
-    },
-    tip: '先求脊柱中立，再求重量進步。',
+    accent: { icon: 'bg-plum-50 text-plum-700' },
   },
   {
     id: 'locomotion',
     shortLabel: '移動',
-    eyebrow: 'LOCOMOTION',
+    hint: '全身',
     title: '移動：走路、跑步與動態穩定',
     subtitle: '步態、落地緩衝與單腳穩定的基礎。',
-    badge: '已上線',
-    status: 'available',
     icon: Footprints,
-    readMoreLabel: '閱讀教學',
-    accent: {
-      icon: 'bg-rose-50 text-rose-700',
-      badge: 'bg-rose-100 text-rose-800',
-    },
-    tip: '步頻比步幅重要，落地要輕。',
+    accent: { icon: 'bg-rose-50 text-rose-700' },
   },
 ];
 

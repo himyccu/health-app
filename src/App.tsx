@@ -23,6 +23,7 @@ import { HealthPage } from './pages/HealthPage';
 import { HomePage } from './pages/HomePage';
 import { SettingsPage } from './pages/SettingsPage';
 import type { KnowledgePatternId } from './data/knowledgeCenter';
+import type { GuideId } from './data/guides';
 
 const NutritionPage = lazy(() =>
   import('./pages/NutritionPage').then((module) => ({ default: module.NutritionPage })),
@@ -47,9 +48,10 @@ export default function App() {
   }));
   const [activeTab, setActiveTab] = useState<TabId>(() => getInitialTab());
   const [exerciseEntry, setExerciseEntry] = useState<{
-    view: 'training' | 'knowledge' | 'article';
+    view: 'main' | 'article' | 'guide';
     articleId: KnowledgePatternId | null;
-  }>({ view: 'training', articleId: null });
+    guideId: GuideId | null;
+  }>({ view: 'main', articleId: null, guideId: null });
   const [profile, setProfile] = useState<Profile>(() => bootstrap.profile);
   const [disclaimerAccepted, setDisclaimerAccepted] = useState(() => bootstrap.accepted);
   const [disclaimerOpen, setDisclaimerOpen] = useState(() => !bootstrap.accepted);
@@ -113,17 +115,22 @@ export default function App() {
   }, []);
 
   const handleTabChange = useCallback((tab: TabId) => {
-    if (tab === 'exercise') setExerciseEntry({ view: 'training', articleId: null });
+    if (tab === 'exercise') setExerciseEntry({ view: 'main', articleId: null, guideId: null });
     setActiveTab(tab);
   }, []);
 
-  const handleOpenKnowledge = useCallback((articleId?: KnowledgePatternId) => {
-    setExerciseEntry({ view: 'knowledge', articleId: articleId ?? null });
+  const handleOpenBasics = useCallback(() => {
+    setExerciseEntry({ view: 'main', articleId: null, guideId: null });
+    setActiveTab('exercise');
+  }, []);
+
+  const handleOpenGuide = useCallback((guideId: GuideId) => {
+    setExerciseEntry({ view: 'guide', articleId: null, guideId });
     setActiveTab('exercise');
   }, []);
 
   const handleOpenArticle = useCallback((articleId: KnowledgePatternId) => {
-    setExerciseEntry({ view: 'knowledge', articleId });
+    setExerciseEntry({ view: 'article', articleId, guideId: null });
     setActiveTab('exercise');
   }, []);
 
@@ -149,8 +156,8 @@ export default function App() {
             <HomePage
               profile={profile}
               onNavigate={handleTabChange}
-              onOpenKnowledge={handleOpenKnowledge}
-              onShowAbout={() => setAboutOpen(true)}
+              onOpenBasics={handleOpenBasics}
+              onOpenGuide={handleOpenGuide}
               onStartOnboarding={() => setOnboardingOpen(true)}
             />
           )}
@@ -164,10 +171,11 @@ export default function App() {
           )}
           {activeTab === 'exercise' && (
             <ExercisePage
-              key={`${exerciseEntry.view}-${exerciseEntry.articleId ?? 'none'}`}
+              key={`${exerciseEntry.view}-${exerciseEntry.articleId ?? 'none'}-${exerciseEntry.guideId ?? 'none'}`}
               profile={profile}
               initialView={exerciseEntry.view}
               initialArticleId={exerciseEntry.articleId}
+              initialGuideId={exerciseEntry.guideId}
               onNotify={notify}
               onGoHome={() => setActiveTab('home')}
               onOpenArticle={handleOpenArticle}
