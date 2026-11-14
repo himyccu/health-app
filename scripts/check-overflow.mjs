@@ -72,6 +72,27 @@ const ROUTES = [
   },
   { name: '運動-瑜伽', url: `${BASE_URL}/?tab=exercise`, click: '瑜伽' },
   { name: '運動-瑜伽-展開', url: `${BASE_URL}/?tab=exercise`, click: ['瑜伽', '下犬式'] },
+  { name: '運動-高爾夫', url: `${BASE_URL}/?tab=exercise`, click: '高爾夫' },
+  {
+    name: '運動-高爾夫-握桿',
+    url: `${BASE_URL}/?tab=exercise`,
+    click: ['高爾夫', '握桿：左手是方向盤'],
+  },
+  {
+    name: '運動-高爾夫-站姿',
+    url: `${BASE_URL}/?tab=exercise`,
+    click: ['高爾夫', '站姿：髖往後，不是彎腰'],
+  },
+  {
+    name: '運動-高爾夫-瞄準',
+    url: `${BASE_URL}/?tab=exercise`,
+    click: ['高爾夫', '瞄準：桿面先說實話'],
+  },
+  {
+    name: '運動-高爾夫-來源',
+    url: `${BASE_URL}/?tab=exercise`,
+    click: ['高爾夫', '資料來源'],
+  },
   { name: '健康', url: `${BASE_URL}/?tab=health` },
   { name: '身體組成', url: `${BASE_URL}/?tab=health`, click: '查看身體組成判讀' },
   {

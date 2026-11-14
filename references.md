@@ -83,6 +83,23 @@
 
 ---
 
+## 九、球類運動：高爾夫（golf）
+
+| 用途 | 文獻 |
+|---|---|
+| A 級：比賽規則與一場最多 14 支球桿 | The R&A and the United States Golf Association. Rules of Golf. *The R&A*. 2023. https://www.randa.org/en/rog/the-rules-of-golf (GB／US) |
+| 距離來自桿頭速度與擊球角度，準確度來自桿面控制 | Hume PA, Keogh J, Reid D. The role of biomechanics in maximising distance and accuracy of golf shots. *Sports Medicine*. 2005;35(5):429-449. doi:10.2165/00007256-200535050-00005. PMID 15896091. (AU) |
+| 弱、中性、強三種握法對手腕與桿面角度的影響 | Carson HJ, Richards J, Mazuquin B. Examining the influence of grip type on wrist and club head kinematics during the golf swing: Benefits of a local co-ordinate system. *European Journal of Sport Science*. 2019;19(3):327-335. doi:10.1080/17461391.2018.1508504. PMID 30110244. (GB) |
+| 桿面朝向幾乎由揮桿平面與桿身角度決定 | Takagi T, Yokozawa T, Inaba Y, Matsuda Y, Shiraki H. Relationships between clubshaft motions and clubface orientation during the golf swing. *Sports Biomechanics*. 2017;16(3):387-398. doi:10.1080/14763141.2017.1328528. PMID 28554300. (JP) |
+| 骨盆與肩膀分離方式不同，下桿順序沒有單一標準 | Han KH, Como C, Kim J, Hung CJ, Hasan M, Kwon YH. Effects of pelvis-shoulders torsional separation style on kinematic sequence in golf driving. *Sports Biomechanics*. 2019;18(6):663-685. doi:10.1080/14763141.2019.1629617. PMID 31543063. (US) |
+| 男女選手的胸廓與骨盆動作不同 | Horan SA, Evans K, Morris NR, Kavanagh JJ. Thorax and pelvis kinematics during the downswing of male and female skilled golfers. *Journal of Biomechanics*. 2010;43(8):1456-1462. doi:10.1016/j.jbiomech.2010.02.005. PMID 20185139. (AU) |
+| 四種釋放型態的桿頭速度沒有顯著差異 | Cheng KJ, Mori K, Lee B, Martinez A, Baek S, Alvis HB, Kwon YH. Effects of on-plane wrist release style on morphological, temporal, and kinematic swing characteristic in golf drives performed by skilled male golfers. *Sports Biomechanics*. 2025;24(12):3637-3654. doi:10.1080/14763141.2025.2547277. PMID 40815188. (US) |
+| 低差點由左肘與左肩帶動，高差點較早用手腕 | Xiao Y, Zhang T, Huang R, Ma Y, Zheng W. Statistical parametric mapping analysis of upper limb joint coordination and variability differences during the downswing phase of the golf swing. *Frontiers in Sports and Active Living*. 2026;8:1820927. doi:10.3389/fspor.2026.1820927. PMID 42293998. (CN) |
+| 7 號鐵的起飛角與後旋高於木桿與 5 號鐵 | Zhang Y, Liu H, Liu C. The effect of joint angles on shot performance during the swing with different clubs among female professional golfers. *Frontiers in Sports and Active Living*. 2026;8:1867187. doi:10.3389/fspor.2026.1867187. PMID 42440704. (CN) |
+| 沒有確切證據顯示特定揮桿動作造成下背痛 | Watson M, Coughlan D, Clement ND, Murray IR, Murray AD, Miller SC. Biomechanical parameters of the golf swing associated with lower back pain: A systematic review. *Journal of Sports Sciences*. 2023;41(24):2236-2250. doi:10.1080/02640414.2024.2319443. PMID 38446499. (GB) |
+
+---
+
 ## 撰寫規則
 
 1. 沒有 DOI 或 PMID 的文獻不收，指引與書籍除外。

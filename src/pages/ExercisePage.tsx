@@ -7,6 +7,7 @@ import {
   ChevronRight,
   Dumbbell,
   Flame,
+  Flag,
   Info,
   Plus,
   ShieldCheck,
@@ -33,12 +34,14 @@ import { SectionHeading } from '../components/SectionHeading';
 import { AnatomyFigure } from '../components/AnatomyFigure';
 import { KnowledgeArticle } from '../components/KnowledgeArticle';
 import { GuideArticle } from '../components/GuideArticle';
+import { GolfGuide } from '../components/GolfGuide';
 import { MobilityGuide } from '../components/MobilityGuide';
 import { MovementCards } from '../components/MovementCards';
 import {
   EXERCISE_GUIDE_ORDER,
   GUIDES,
   MOBILITY_GUIDE_ORDER,
+  SPORT_GUIDE_ORDER,
   type GuideId,
 } from '../data/guides';
 import { FoamRollingGuide } from '../components/FoamRollingGuide';
@@ -188,7 +191,7 @@ export function ExercisePage({
     <div>
       <PageHeader
         title="運動"
-        description="暖身、運動安全、基礎動作、伸展與訓練紀錄。"
+        description="暖身、運動安全、基礎動作、球類運動、伸展與訓練紀錄。"
         onHome={onGoHome}
       />
 
@@ -203,6 +206,12 @@ export function ExercisePage({
           key={guideId}
           summary={GUIDES.foamRolling.summary}
           minutes={GUIDES.foamRolling.minutes}
+          onBack={() => setView('main')}
+        />
+      ) : view === 'guide' && guideId === 'golf' ? (
+        <GolfGuide
+          key={guideId}
+          minutes={GUIDES.golf.minutes}
           onBack={() => setView('main')}
         />
       ) : view === 'guide' && (guideId === 'stretching' || guideId === 'yoga') ? (
@@ -266,8 +275,45 @@ export function ExercisePage({
 
           <section className="mt-4 rounded-[28px] border border-plum-100 bg-white p-5 shadow-sm shadow-plum-900/5">
             <SectionHeading
+              icon={Flag}
+              title="③ 球類運動"
+              subtitle="高爾夫：準備、握桿、站姿、瞄準"
+            />
+            <div className="mt-4 space-y-2.5">
+              {SPORT_GUIDE_ORDER.map((id) => {
+                const guide = GUIDES[id];
+                return (
+                  <button
+                    key={id}
+                    type="button"
+                    onClick={() => {
+                      setGuideId(id);
+                      setView('guide');
+                    }}
+                    className="flex w-full items-center gap-3 rounded-2xl border border-slate-100 bg-white p-3.5 text-left transition hover:border-plum-200 hover:bg-plum-50/60 active:scale-[0.99]"
+                  >
+                    <span className="min-w-0 flex-1">
+                      <span className="block text-base font-black text-slate-900">
+                        {guide.title}
+                      </span>
+                      <span className="mt-1 block text-[13px] leading-6 text-slate-500">
+                        {guide.summary}
+                      </span>
+                    </span>
+                    <ChevronRight className="h-4 w-4 shrink-0 text-plum-600" />
+                  </button>
+                );
+              })}
+            </div>
+            <p className="mt-3 text-[13px] leading-6 text-slate-500">
+              每一章固定五段：這是什麼、怎麼做、做錯會怎樣、怎麼檢查、注意。
+            </p>
+          </section>
+
+          <section className="mt-4 rounded-[28px] border border-plum-100 bg-white p-5 shadow-sm shadow-plum-900/5">
+            <SectionHeading
               icon={Activity}
-              title="③ 伸展"
+              title="④ 伸展"
               subtitle="靜態伸展 8 個部位、瑜伽 16 式"
             />
             <div className="mt-4 space-y-2.5">
@@ -304,7 +350,7 @@ export function ExercisePage({
           <div className="mt-5">
             <SectionHeading
               icon={Timer}
-              title="④ 運動紀錄"
+              title="⑤ 運動紀錄"
               subtitle="今日訓練與熱量估算"
             />
           </div>
