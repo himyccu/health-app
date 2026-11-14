@@ -48,11 +48,17 @@ const ROUTES = [
     url: `${BASE_URL}/?tab=exercise`,
     click: ['滾筒放鬆', '資料來源'],
   },
+  { name: '運動-動作文章', url: `${BASE_URL}/?tab=exercise`, clickAria: '推：' },
   {
-    name: '運動-動作文章',
+    name: '運動-動作文章-檢核',
     url: `${BASE_URL}/?tab=exercise`,
     clickAria: '推：',
+    click: ['檢核', '資料來源'],
   },
+  { name: '運動-拉', url: `${BASE_URL}/?tab=exercise`, clickAria: '拉：' },
+  { name: '運動-蹲', url: `${BASE_URL}/?tab=exercise`, clickAria: '蹲：' },
+  { name: '運動-髖', url: `${BASE_URL}/?tab=exercise`, clickAria: '髖：' },
+  { name: '運動-移動', url: `${BASE_URL}/?tab=exercise`, clickAria: '移動：' },
   { name: '健康', url: `${BASE_URL}/?tab=health` },
   { name: '身體組成', url: `${BASE_URL}/?tab=health`, click: '查看身體組成判讀' },
   {
@@ -203,6 +209,21 @@ async function main() {
       await send('Page.navigate', { url: route.url });
       await sleep(1100);
 
+      // aria 點擊先執行（例如先開文章），文字點擊後執行（例如切換分頁）
+      if (route.clickAria) {
+        const ariaLabels = Array.isArray(route.clickAria) ? route.clickAria : [route.clickAria];
+        for (const label of ariaLabels) {
+          await evaluate(`(() => {
+            const label = ${JSON.stringify(label)};
+            const button = [...document.querySelectorAll('button')]
+              .find((node) => (node.getAttribute('aria-label') || '').includes(label));
+            if (button) button.click();
+            return Boolean(button);
+          })()`);
+          await sleep(700);
+        }
+      }
+
       if (route.click) {
         const labels = Array.isArray(route.click) ? route.click : [route.click];
         for (const label of labels) {
@@ -227,17 +248,6 @@ async function main() {
           })()`);
           await sleep(700);
         }
-      }
-
-      if (route.clickAria) {
-        await evaluate(`(() => {
-          const label = ${JSON.stringify(route.clickAria)};
-          const button = [...document.querySelectorAll('button')]
-            .find((node) => (node.getAttribute('aria-label') || '').includes(label));
-          if (button) button.click();
-          return Boolean(button);
-        })()`);
-        await sleep(700);
       }
 
       if (SHOT_DIR) {

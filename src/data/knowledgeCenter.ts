@@ -1,3 +1,22 @@
+/**
+ * 五個基礎動作的完整教學。
+ *
+ * 每一篇都是同一個八段結構：
+ * 1. 為什麼學（why）
+ * 2. 肌肉圖（anatomy）
+ * 3. 白話原理（principle）
+ * 4. 步驟（technique.phases）
+ * 5. 做對的感覺（feeling）
+ * 6. 常見錯誤（errors）
+ * 7. 劑量（dose）
+ * 8. 下一步（nextStep）
+ *
+ * 撰寫原則：
+ * 1. 術語第一次出現時，要說明「身體哪裡、怎麼做、感覺像什麼」。
+ * 2. 數字要對得上 sources.ts 的文獻。
+ * 3. 只寫事實、操作說明與安全警語，不寫口號。
+ */
+
 import {
   ArrowDownToLine,
   ArrowUpFromLine,
@@ -8,21 +27,7 @@ import {
 } from 'lucide-react';
 import type { MovementPattern, MuscleInvolvement } from '../types';
 import { EXERCISE_ANATOMY } from './anatomy';
-import {
-  BREATHING_STEPS,
-  DEADLIFT_DO,
-  DEADLIFT_DONT,
-  DEADLIFT_ERRORS,
-  DEADLIFT_INTRO,
-  DEADLIFT_MUSCLES,
-  DEADLIFT_PHASES,
-  IMAGE_CREDITS,
-  SAFETY_NOTES,
-} from './weightlifting';
-import correctImage from '../assets/weightlifting/deadlift-correct.jpg';
-import startImage from '../assets/weightlifting/deadlift-start.jpg';
-import techniqueImage from '../assets/weightlifting/deadlift-technique.jpg';
-import musclesImage from '../assets/weightlifting/deadlift-muscles.jpg';
+import type { SourceId } from './sources';
 
 export type KnowledgePatternId = 'push' | 'pull' | 'squat' | 'hinge' | 'locomotion';
 
@@ -61,21 +66,10 @@ export interface ArticleError {
   fix: string;
 }
 
-export interface ArticleImage {
-  src: string;
-  alt: string;
-  caption?: string;
-}
-
-export interface ArticleComparison {
-  image: string;
-  imageAlt: string;
-  correctTitle: string;
-  correctSummary: string;
-  wrongTitle: string;
-  wrongSummary: string;
-  wrongPoints: string[];
-  spineDiagram?: boolean;
+export interface ArticleDose {
+  label: string;
+  value: string;
+  hint: string;
 }
 
 export interface PatternArticle {
@@ -89,31 +83,34 @@ export interface PatternArticle {
     icon: string;
     badge: string;
   };
-  hero?: ArticleImage;
+  /** 為什麼學：日常生活中會用到這個動作的地方 */
+  why: string;
+  /** 白話原理：身體哪裡、怎麼做、感覺像什麼 */
+  principle: string[];
   anatomy: {
     headline: string;
     summary: string;
-    image?: ArticleImage;
-    kinesiology: string[];
     muscles: MuscleInvolvement[];
     extraMuscles?: string;
     groups?: { group: string; muscles: string; role: string }[];
-    whyWorth?: string;
   };
   technique: {
-    image?: ArticleImage;
-    startCues?: string[];
+    startCues: string[];
     phases: ArticlePhase[];
     breathing?: { title: string; description: string }[];
-    coachNote?: string;
+    note?: string;
     warning?: string;
   };
+  /** 做對的感覺 */
+  feeling: string[];
+  /** 劑量：三個要記住的數字 */
+  dose: ArticleDose[];
   levels: ArticleLevel[];
   errors: ArticleError[];
-  comparison?: ArticleComparison;
   checklist: { do: string[]; dont: string[] };
   safety: string[];
-  credits?: string;
+  nextStep: { title: string; detail: string };
+  sources: SourceId[];
 }
 
 /* ------------------------------------------------------------------ */
@@ -179,21 +176,22 @@ const PUSH_ARTICLE: PatternArticle = {
   englishTitle: 'Horizontal & Vertical Push',
   subtitle: '胸、肩、三頭與肩胛穩定的發力順序',
   intro:
-    '推，是把重量從身體前方推離。伏地挺身、胸推屬於水平推，肩推屬於垂直推。看起來是手臂在動，實際上是肩胛骨先穩定、軀幹先撐住，手臂才有穩定的平台可以出力。',
+    '推，是把重量從身體前方送出去。伏地挺身、胸推屬於水平推，肩推屬於垂直推。看起來是手臂在動，實際上是肩胛骨先穩定、軀幹先撐住，手臂才有平台可以出力。',
   accent: {
     icon: 'bg-sky-50 text-sky-700',
     badge: 'bg-sky-100 text-sky-800',
   },
+  why: '伏地挺身、把行李箱放上行李架、從地上撐起身體，用的都是推。推的力量不足，這些動作會先變成肩膀與腰在代勞。',
+  principle: [
+    '肩胛骨是背後左右各一片的三角形骨頭，貼在肋骨上。推之前先把它穩住，手臂才有地方施力。',
+    '手肘與身體夾約 45 度時，肩關節前側的空間最大；張成 90 度會讓肩前側被夾住。',
+    '從頭到腳踝維持一條線，力量才不會從腰漏掉。腰一塌，推力就只剩手臂。',
+    '推到頂點時肩胛骨會自然往前滑開，這是正常的；但不要同時把肩膀聳向耳朵。',
+  ],
   anatomy: {
     headline: '推的肌肉分工',
     summary:
-      '胸大肌負責水平內收，三角肌前束與三頭肌接手完成推的末段，前鋸肌讓肩胛骨貼著胸廓滑動。核心與臀部把身體變成一塊板子，力量才不會在半途漏掉。',
-    kinesiology: [
-      '水平推：肩關節水平內收 ＋ 肘伸展，肩胛骨前伸。',
-      '垂直推：肩關節屈曲／外展 ＋ 肘伸展，肩胛骨上旋。',
-      '手肘與軀幹夾角約 45 度，能降低肩關節前側壓力。',
-      '推到底時肩胛骨可以自然前伸，但不要聳肩。',
-    ],
+      '胸大肌負責把上臂帶向身體中線，三角肌前束與三頭肌接手完成末段。前鋸肌讓肩胛骨貼著肋骨滑動，核心與臀部把身體變成一塊板子。',
     muscles: [
       {
         id: 'chest',
@@ -261,14 +259,12 @@ const PUSH_ARTICLE: PatternArticle = {
     ],
     extraMuscles:
       '前鋸肌（Serratus Anterior）負責肩胛骨前伸與貼合胸廓，旋轉肌袖負責穩定肩關節；兩者在人體圖上沒有獨立圖層，以相鄰部位呈現。',
-    whyWorth:
-      '推的力量直接影響日常的「推門、撐起身體、把東西放上高處」。先把肩胛與核心的穩定建立起來，再增加重量，肩膀才不會先抗議。',
   },
   technique: {
     startCues: [
       '手掌在肩膀正下方或略寬，指尖朝前。',
       '收緊核心與臀部，頭、背、臀、腳跟成一直線。',
-      '肩膀離開耳朵，先把肩胛骨穩定住再開始。',
+      '肩膀離開耳朵，先穩住肩胛骨再開始。',
     ],
     phases: [
       {
@@ -283,18 +279,18 @@ const PUSH_ARTICLE: PatternArticle = {
       },
       {
         step: '02',
-        title: '下降（離心）',
-        subtitle: '吸氣、控制速度',
+        title: '下降',
+        subtitle: '吸氣、慢慢放下',
         points: [
           '手肘沿著與軀幹約 45 度的方向彎曲。',
-          '胸口下降至離地約一個拳頭，不需要貼地。',
+          '胸口下降到離地約一個拳頭，不需要貼地。',
           '全程 2 秒以上，讓肌肉真正承受張力。',
         ],
       },
       {
         step: '03',
-        title: '推起（向心）',
-        subtitle: '吐氣、腳掌推地',
+        title: '推起',
+        subtitle: '吐氣、手掌推地',
         points: [
           '手掌推地，胸口往前往上離開地面。',
           '肩膀不聳起，肩胛骨可以自然向前滑動。',
@@ -312,9 +308,19 @@ const PUSH_ARTICLE: PatternArticle = {
         ],
       },
     ],
-    coachNote:
-      '推的品質取決於「肩胛穩定」而不是「手有沒有力」。如果每次推完都是脖子與肩膀痠，先降一個難度，把肩胛控制練回來。',
+    note: '推的品質取決於肩胛骨穩不穩，不是手有沒有力。每次推完都是脖子與肩膀痠，先降一級難度，把肩胛控制練回來。',
   },
+  feeling: [
+    '胸口、肩膀前側與手臂後側有痠脹感，肩膀前側沒有被夾住的痛。',
+    '推起時感覺手掌把地板推遠，整個身體一起移動。',
+    '脖子與肩膀上緣沒有先痠。',
+    '隔天痠在胸與手臂後側，不是肩頸。',
+  ],
+  dose: [
+    { label: '次數與組數', value: '8–12 下 × 2–3 組', hint: '最後 2 下吃力但動作不變形' },
+    { label: '組間休息', value: '2–3 分鐘', hint: '休息不足會讓下一組姿勢先崩' },
+    { label: '頻率', value: '每週 2 次', hint: '同一肌群之間隔 48 小時' },
+  ],
   levels: [
     {
       level: 'L1',
@@ -352,7 +358,7 @@ const PUSH_ARTICLE: PatternArticle = {
       title: '錯誤一：手肘完全外張',
       summary: '手肘張成 90 度，上臂與軀幹垂直，肩關節前側承受最大壓力。',
       harms: ['肩關節前側與旋轉肌袖負擔上升。', '胸大肌的收縮角度變差，出力反而更少。'],
-      fix: '手肘與軀幹維持約 45 度，從上方看像一個箭頭而不是 T 字。',
+      fix: '手肘與軀幹維持約 45 度，從上方看像一個箭頭，不是 T 字。',
     },
     {
       title: '錯誤二：塌腰掉臀',
@@ -393,8 +399,13 @@ const PUSH_ARTICLE: PatternArticle = {
     '肩膀曾有脫臼、夾擠或旋轉肌袖傷害，先諮詢醫師或物理治療師。',
     '推的過程出現肩前側刺痛，立即停止並降低難度。',
     '手腕不適時可使用伏地挺身握把，讓手腕維持中立。',
-    '本內容為運動知識參考，不能取代現場教練指導或醫療建議。',
+    '本內容為一般運動知識，不能取代醫療建議。',
   ],
+  nextStep: {
+    title: '下一步：把拉補上',
+    detail: '推與拉每週各 2 次。只練推容易讓肩膀往前捲，拉可以把肩胛骨帶回原位。',
+  },
+  sources: ['ratamess2009', 'cogley2005', 'kibler2010', 'hhs2018'],
 };
 
 const PULL_ARTICLE: PatternArticle = {
@@ -404,21 +415,22 @@ const PULL_ARTICLE: PatternArticle = {
   englishTitle: 'Horizontal & Vertical Pull',
   subtitle: '背部、二頭與肩胛控制的離心技巧',
   intro:
-    '拉，是把自己或重量往身體帶。划船屬於水平拉，引體向上與滑輪下拉屬於垂直拉。拉的力量從肩胛開始：先讓肩胛下沉後縮，手肘才有穩定的軌道，背闊肌才真的參與。',
+    '拉，是把自己或重量往身體帶。划船屬於水平拉，引體向上與滑輪下拉屬於垂直拉。拉的力量從肩胛開始：先讓肩胛骨下沉後收，手肘才有穩定的軌道，背闊肌才真的參與。',
   accent: {
     icon: 'bg-emerald-50 text-emerald-700',
     badge: 'bg-emerald-100 text-emerald-800',
   },
+  why: '把購物袋提到桌上、拉開抽屜、從地上把小孩抱起來，都是拉。拉的肌力不足時，這些動作會變成手腕與下背在出力。',
+  principle: [
+    '第一個動作在肩胛骨：先往下、往後收，再彎手肘。順序顛倒，就變成只用手臂拉。',
+    '背闊肌從腋下延伸到腰側。收縮時感覺腋下被夾緊、背側變厚。',
+    '回放要花 2–3 秒，這是背部訓練量最大的一半。',
+    '身體前後擺盪會把力量變成動能，背部實際做的功變少。',
+  ],
   anatomy: {
     headline: '拉的肌肉分工',
     summary:
-      '背闊肌是垂直拉的主力，菱形肌與中下斜方負責把肩胛骨往後收，二頭肌與前臂完成屈肘與握持。核心在這裡的角色是「不讓身體晃動」，因為一旦擺盪，背部就少做很多事。',
-    kinesiology: [
-      '水平拉：肩關節水平伸展 ＋ 肘屈曲，肩胛骨後縮。',
-      '垂直拉：肩關節內收／伸展 ＋ 肘屈曲，肩胛骨下壓。',
-      '啟動順序是「肩胛先動、手肘再跟」，不是反過來。',
-      '離心（回放）至少 2 秒，是背部訓練最容易忽略的一半。',
-    ],
+      '背闊肌與大圓肌把上臂往身體拉，是垂直拉與划船的主力。中下斜方肌與菱形肌負責把肩胛骨往後收，二頭肌與前臂完成屈肘與握持。',
     muscles: [
       {
         id: 'upper-back',
@@ -479,8 +491,6 @@ const PULL_ARTICLE: PatternArticle = {
     ],
     extraMuscles:
       '肱橈肌（前臂）與後三角肌共同協助屈肘與肩伸展；肩胛骨的穩定也依賴旋轉肌袖，圖層以相鄰部位呈現。',
-    whyWorth:
-      '拉的力量平衡了推，也決定站姿好不好看。現代人長時間低頭、圓肩，先把背側練回來，比一直練胸更能改善體態。',
   },
   technique: {
     startCues: [
@@ -521,7 +531,7 @@ const PULL_ARTICLE: PatternArticle = {
       },
       {
         step: '04',
-        title: '離心回放',
+        title: '回放',
         subtitle: '慢、穩、不放手',
         points: [
           '用 2–3 秒把重量放回起始位置。',
@@ -530,9 +540,19 @@ const PULL_ARTICLE: PatternArticle = {
         ],
       },
     ],
-    coachNote:
-      '如果拉完是手臂先痠、背部沒感覺，先降低重量，把「肩胛下壓」這個第一步做確實，再慢慢加回來。',
+    note: '拉完是手臂先痠、背部沒感覺，代表第一步的肩胛下壓沒有做到。先降重量，把這一步做確實再慢慢加回來。',
   },
+  feeling: [
+    '肩胛骨中間（膏肓附近）與腋下後側有收縮感。',
+    '手肘往後帶時，二頭只是跟著移動。',
+    '回放時腋下被撐開，背闊肌被拉長。',
+    '隔天痠在背，手臂沒有先沒力。',
+  ],
+  dose: [
+    { label: '次數與組數', value: '8–12 下 × 2–3 組', hint: '最後 2 下吃力但姿勢不變形' },
+    { label: '組間休息', value: '2–3 分鐘', hint: '休息不足會先用到手臂' },
+    { label: '頻率', value: '每週 2 次', hint: '與推的日子錯開，同一肌群隔 48 小時' },
+  ],
   levels: [
     {
       level: 'L1',
@@ -550,7 +570,7 @@ const PULL_ARTICLE: PatternArticle = {
       level: 'L3',
       title: '滑輪下拉',
       dosage: '10–20 下 × 3 組',
-      focus: '垂直拉的第一步，控制離心速度。',
+      focus: '垂直拉的第一步，控制回放速度。',
     },
     {
       level: 'L4',
@@ -586,7 +606,7 @@ const PULL_ARTICLE: PatternArticle = {
     },
     {
       title: '錯誤四：回放失控',
-      summary: '放手讓重量快速上升，離心階段完全沒有張力。',
+      summary: '放手讓重量快速上升，回放階段完全沒有張力。',
       harms: ['失去背部訓練最重要的一半。', '配重撞擊容易造成肩關節與手肘不適。'],
       fix: '回放至少 2 秒，感覺背闊肌被拉長再進入下一次。',
     },
@@ -611,8 +631,13 @@ const PULL_ARTICLE: PatternArticle = {
     '肩關節或手肘曾有傷害，先從彈力帶與輕重量開始。',
     '拉的時候出現肩前側或手肘內側刺痛，立即停止。',
     '引體向上不要用跳躍方式硬上，先做離心或輔助版本。',
-    '本內容為運動知識參考，不能取代現場教練指導或醫療建議。',
+    '本內容為一般運動知識，不能取代醫療建議。',
   ],
+  nextStep: {
+    title: '下一步：把回放放慢到 3 秒',
+    detail: '同一個重量下，回放 3 秒比多做 2 下更能增加背部訓練量。做得到再加重。',
+  },
+  sources: ['ratamess2009', 'lusk2010', 'youdas2010', 'kibler2010'],
 };
 
 const SQUAT_ARTICLE: PatternArticle = {
@@ -622,21 +647,22 @@ const SQUAT_ARTICLE: PatternArticle = {
   englishTitle: 'Squat Pattern',
   subtitle: '股四頭、臀肌與足踝活動度的整合',
   intro:
-    '蹲，是髖、膝、踝三個關節同時彎曲再伸直。蹲得深不深，取決於踝關節活動度與髖部控制，不是「膝蓋能不能超過腳尖」。先把腳掌踩穩，膝蓋自然會跟著腳尖走。',
+    '蹲，是髖、膝、踝三個關節同時彎曲再伸直。蹲得深不深，取決於踝關節活動度與髖部構造，不是「膝蓋能不能超過腳尖」。先把腳掌踩穩，膝蓋自然會跟著腳尖走。',
   accent: {
     icon: 'bg-amber-50 text-amber-700',
     badge: 'bg-amber-100 text-amber-800',
   },
+  why: '從椅子站起來、上廁所、蹲下來撿東西，都是蹲。蹲得好，膝蓋與下背在日常生活會輕鬆很多。',
+  principle: [
+    '蹲是髖、膝、踝三個關節同時彎曲再伸直，不是只有膝蓋在動。',
+    '膝蓋可以超過腳尖。限制深度的是踝關節活動度與每個人的髖關節構造，不是「膝蓋不能超過腳尖」這條規定。',
+    '腳掌三點（腳跟、大腳趾根部、小腳趾根部）平均受力，重心才穩。',
+    '膝蓋與腳尖同向時，膝關節的壓力分散；往內夾會讓內側集中受力。',
+  ],
   anatomy: {
     headline: '蹲的肌肉分工',
     summary:
-      '股四頭肌負責伸膝，臀大肌與內收大肌負責伸髖，小腿穩定腳踝。核心的工作是建立腹壓，讓軀幹在負重下維持剛性；臀中肌則控制膝蓋方向，避免往內夾。',
-    kinesiology: [
-      '髖關節屈曲再伸展，是蹲起的主要動力。',
-      '膝關節屈曲再伸展，股四頭肌負責最後一段伸直。',
-      '踝關節背屈不足時，身體會用腳跟離地或骨盆後傾代償。',
-      '膝蓋與腳尖同向，能分散膝關節壓力。',
-    ],
+      '股四頭肌負責伸膝，臀大肌與內收大肌負責伸髖，小腿穩定腳踝。臀中肌控制膝蓋方向，核心建立腹壓讓軀幹在負重下不塌。',
     muscles: [
       {
         id: 'quadriceps',
@@ -699,7 +725,7 @@ const SQUAT_ARTICLE: PatternArticle = {
         name: '背部肌群',
         latin: 'Upper Back',
         role: 'stabilizer',
-        note: '讓胸口保持打開，槓鈴或重量不往前掉。',
+        note: '讓胸口保持打開，重量不往前掉。',
       },
       {
         id: 'abductors',
@@ -711,8 +737,6 @@ const SQUAT_ARTICLE: PatternArticle = {
     ],
     extraMuscles:
       '深蹲時髂腰肌與髖外轉肌群負責穩定髖關節；足弓肌群則維持足底三點著地。',
-    whyWorth:
-      '蹲是從椅子站起來、上廁所、撿地上東西的基礎能力。把蹲練好，膝蓋與下背在日常活動中會輕鬆很多。',
   },
   technique: {
     startCues: [
@@ -748,7 +772,7 @@ const SQUAT_ARTICLE: PatternArticle = {
         points: [
           '骨盆不後傾、下背不彎曲（不「屁股眨眼」）。',
           '腳跟不離地，重心仍在足中。',
-          '停半秒確認穩定，不需要彈震反彈。',
+          '停半秒確認穩定，不要用彈震反彈。',
         ],
       },
       {
@@ -762,9 +786,19 @@ const SQUAT_ARTICLE: PatternArticle = {
         ],
       },
     ],
-    coachNote:
-      '每個人的髖關節構造不同，蹲的深度本來就不一樣。只要腳跟不離地、骨盆不後傾，就是你目前最好的深度。',
+    note: '每個人的髖關節構造不同，蹲的深度本來就不一樣。只要腳跟不離地、骨盆不後傾，就是你目前最好的深度。',
   },
+  feeling: [
+    '腳掌三點都貼地，腳跟沒有浮起來。',
+    '站起時臀部與大腿前側一起出力，膝蓋不會痛。',
+    '底部像坐在一張矮凳上，不是往前趴。',
+    '隔天痠在大腿前側與臀部，不是膝蓋前面或下背。',
+  ],
+  dose: [
+    { label: '次數與組數', value: '8–12 下 × 3 組', hint: '最後 2 下吃力但腳跟仍貼地' },
+    { label: '組間休息', value: '2–3 分鐘', hint: '蹲的負荷大，休息要夠' },
+    { label: '頻率', value: '每週 2–3 次', hint: '同一肌群之間隔 48 小時' },
+  ],
   levels: [
     {
       level: 'L1',
@@ -842,9 +876,14 @@ const SQUAT_ARTICLE: PatternArticle = {
   safety: [
     '膝蓋或髖關節曾有傷害，先從椅子深蹲與小幅度開始。',
     '蹲的過程出現膝蓋前側刺痛或卡住感，立即停止並諮詢專業人員。',
-    '負重深蹲請使用深蹲架與安全槓，並由教練確認動作。',
-    '本內容為運動知識參考，不能取代現場教練指導或醫療建議。',
+    '負重深蹲請使用深蹲架與安全槓，並由合格指導者確認動作。',
+    '本內容為一般運動知識，不能取代醫療建議。',
   ],
+  nextStep: {
+    title: '下一步：練髖鉸鏈',
+    detail: '蹲是膝與髖一起出力，髖鉸鏈只動髖。兩個都會，撿東西與搬重物才不會用腰。',
+  },
+  sources: ['ratamess2009', 'schoenfeld2010', 'hartmann2013', 'fry2003', 'caterisano2002'],
 };
 
 const HINGE_ARTICLE: PatternArticle = {
@@ -853,52 +892,138 @@ const HINGE_ARTICLE: PatternArticle = {
   title: '髖：硬舉與髖鉸鏈',
   englishTitle: 'Hip Hinge & Deadlift',
   subtitle: '臀腿後側動力鏈、脊柱中立與腹壓',
-  intro: DEADLIFT_INTRO,
+  intro:
+    '髖鉸鏈是「臀部向後推、上半身向前傾」，膝蓋只微彎。硬舉就是加上重量的髖鉸鏈。動作的引擎是臀部與大腿後側，下背的工作是保持不動。',
   accent: {
     icon: 'bg-plum-50 text-plum-700',
     badge: 'bg-plum-900 text-amber-100',
   },
-  hero: {
-    src: correctImage,
-    alt: '硬舉標準起始姿勢示範',
-  },
+  why: '彎腰撿東西、把地上的箱子搬起來，都應該是髖鉸鏈。用臀部出力，下背就不必代勞；這是最常被忽略、也最容易受傷的日常動作。',
+  principle: [
+    '髖鉸鏈是「臀部向後推、上半身向前傾」，膝蓋只微彎，像用屁股把身後的門關上。',
+    '引擎是臀大肌與大腿後側；下背的工作是「不要動」，不是「把重量拉起來」。',
+    '重量越靠近身體，下背的力臂越短，力矩越小。',
+    '起槓前先吸氣、核心撐住，讓腹部變成一個充氣的氣囊，脊柱才有支撐。',
+  ],
   anatomy: {
     headline: '硬舉主導肌群',
     summary:
-      '硬舉不是單一肌肉的動作，而是全身後側動力鏈的協作：臀大肌與膕繩肌負責伸髖，豎脊肌與核心維持脊柱中立，背闊肌與握力讓槓鈴貼近身體。',
-    image: {
-      src: musclesImage,
-      alt: '硬舉主要肌群解剖圖：臀大肌、膕繩肌、豎脊肌、背闊肌與股四頭肌',
-      caption: '紅色為主要發力肌群，橘色為中度參與，黃色為輔助穩定肌群。',
-    },
-    kinesiology: [
-      '髖關節伸展是主導動作，膝關節只在起始階段協助推蹬。',
-      '槓鈴越貼近身體，下背的力臂越短，壓力越小。',
-      '起槓前建立腹壓，讓脊柱在負重下維持中立。',
-      '頂點站直即可，不需要腰椎後仰。',
-    ],
+      '臀大肌與膕繩肌負責伸髖，豎脊肌與核心維持脊柱中立，背闊肌與握力讓重量貼近身體。股四頭肌在起始段推蹬地面。',
     muscles: EXERCISE_ANATOMY.deadlift.muscles,
-    groups: DEADLIFT_MUSCLES,
-    whyWorth:
-      '硬舉同時訓練後側動力鏈、軀幹穩定與握力。動作品質比重量更重要；在脊柱中立的前提下逐步增加負荷，才能把力量有效傳導到全身。',
+    groups: [
+      {
+        group: '後側動力鏈',
+        muscles: '臀大肌、膕繩肌',
+        role: '負責伸髖的主導發力，是硬舉最重要的引擎。',
+      },
+      {
+        group: '軀幹與脊柱穩定',
+        muscles: '豎脊肌、腹橫肌、腹斜肌',
+        role: '提供抗屈曲的剛性，讓脊柱在負重下維持中立。',
+      },
+      {
+        group: '上背與握力鎖定',
+        muscles: '背闊肌、斜方肌、前臂握力',
+        role: '背闊肌防止槓鈴前移，斜方肌與握力讓槓鈴穩定貼身。',
+      },
+      {
+        group: '下肢推蹬',
+        muscles: '股四頭肌、小腿肌群',
+        role: '從地面啟動時推蹬地面，與伸髖動作同步完成。',
+      },
+    ],
   },
   technique: {
-    image: {
-      src: startImage,
-      alt: '教練確認硬舉起始位置：足中對準槓鈴、背部保持直線、雙手位於雙腿外側',
-      caption: '足中對準槓鈴正下方，臀部向後推，背部維持直立，雙手握在雙腿外側。',
-    },
     startCues: [
-      '背部保持直線，肩膀略微超出槓鈴前側。',
-      '腋下向後收緊（夾緊背闊肌）。',
-      '大腿約與地面成傾斜夾角，而不是過低的深蹲位置。',
+      '雙腳站距與髖同寬，足中對準槓鈴正下方。',
+      '臀部向後推，背部保持直線，肩膀略在槓鈴前方。',
+      '腋下向後收緊、夾緊背闊肌，雙手握在雙腿外側。',
     ],
-    phases: DEADLIFT_PHASES,
-    breathing: BREATHING_STEPS,
-    coachNote:
-      '起槓前先建立腹壓、夾緊背闊肌，再推蹬地面。重量是結果，順序才是原因。',
-    warning: '初學者可先以自然呼吸搭配核心收緊；有血壓或心血管相關問題，請先諮詢醫師。',
+    phases: [
+      {
+        step: '01',
+        title: '預備姿勢',
+        subtitle: '站距、握距與屈髖',
+        points: [
+          '雙腳站距與髖同寬，腳尖自然朝前或微微外開。',
+          '足中對準槓鈴正下方，讓重力線保持垂直。',
+          '臀部向後下方推，膝蓋不往前跪，小腿接近垂直地面。',
+          '手臂自然下垂握槓，雙臂維持垂直拉力線。',
+        ],
+      },
+      {
+        step: '02',
+        title: '建立剛性',
+        subtitle: '背部、肩胛與核心',
+        points: [
+          '背部保持直線，肩膀略在槓鈴前方，腋下向後收緊。',
+          '大腿與地面形成自然傾斜角，不是過低的深蹲位置。',
+          '深吸氣填滿腹腔，腹部全向收緊，建立腹壓。',
+          '視線看向前下方約 2 公尺，頸椎與脊柱維持中立。',
+        ],
+      },
+      {
+        step: '03',
+        title: '發力上升',
+        subtitle: '推蹬、伸髖、貼腿',
+        points: [
+          '重心落在足中，腳掌三點穩穩踩地，向地面推蹬。',
+          '槓鈴緊貼小腿與大腿上升，讓力臂維持最小。',
+          '股四頭肌與臀肌同步伸展，過膝後加速推髖。',
+          '肩膀與髖部同步上升，避免臀部先抬或上半身先起。',
+        ],
+      },
+      {
+        step: '04',
+        title: '頂點鎖定',
+        subtitle: '站直、夾臀、不後仰',
+        points: [
+          '站直時臀大肌夾緊，軀幹保持直立。',
+          '肩膀、髖關節與腳踝大致在同一垂直線上。',
+          '避免腰椎過度後仰，否則會擠壓腰椎後側關節。',
+          '吐氣並維持核心安定，再控制下放。',
+        ],
+      },
+      {
+        step: '05',
+        title: '控制下放',
+        subtitle: '先屈髖、再屈膝',
+        points: [
+          '先將臀部向後推，槓鈴沿大腿下降。',
+          '過膝後再屈膝，讓槓鈴回到足中位置。',
+          '全程保持背部中立與核心張力，不讓槓鈴遠離身體。',
+          '輕放或控制觸地，不刻意砸地，也不瞬間放鬆。',
+        ],
+      },
+    ],
+    breathing: [
+      {
+        title: '深吸氣填滿腹腔',
+        description: '橫膈膜下沉，把空氣壓入腹腔，形成內部高壓。',
+      },
+      {
+        title: '核心全向收緊',
+        description: '腹部與腰側一起收緊，建立支撐脊柱的氣墊。',
+      },
+      {
+        title: '鎖定後再發力',
+        description: '腹壓穩定後才起槓，讓力量有效傳導到槓鈴。',
+      },
+    ],
+    note: '起槓前先建立腹壓、夾緊背闊肌，再推蹬地面。重量是結果，順序才是原因。',
+    warning: '初學者可先用自然呼吸搭配核心收緊；有血壓或心血管相關問題，先諮詢醫師。',
   },
+  feeling: [
+    '臀部向後推時，大腿後側被拉長。',
+    '背部全程是一條直線，下背沒有擠壓感。',
+    '起槓時腳掌把地板踩穿，臀與腿同時伸直。',
+    '隔天痠在臀部與大腿後側，不是下背。',
+  ],
+  dose: [
+    { label: '次數與組數', value: '6–10 下 × 3 組', hint: '重量大，次數少，每下都要完整' },
+    { label: '組間休息', value: '2–3 分鐘', hint: '讓腹壓與握力恢復再下一組' },
+    { label: '頻率', value: '每週 1–2 次', hint: '恢復需求高，不與深蹲排在同一天' },
+  ],
   levels: [
     {
       level: 'L1',
@@ -910,7 +1035,7 @@ const HINGE_ARTICLE: PatternArticle = {
       level: 'L2',
       title: '輕重量羅馬尼亞硬舉',
       dosage: '20 下 × 3 組',
-      focus: '練習髖向後推與膕繩肌的離心控制。',
+      focus: '練習髖向後推與大腿後側的離心控制。',
     },
     {
       level: 'L3',
@@ -920,7 +1045,7 @@ const HINGE_ARTICLE: PatternArticle = {
     },
     {
       level: 'L4',
-      title: '髖外展控制（Hip Airplane）',
+      title: '髖外展控制',
       dosage: '每側 10 下 × 3 組',
       focus: '訓練單腳站立時的髖部旋轉控制。',
     },
@@ -931,31 +1056,59 @@ const HINGE_ARTICLE: PatternArticle = {
       focus: '完整動作，維持脊柱中立與槓鈴貼身。',
     },
   ],
-  errors: DEADLIFT_ERRORS.map((error) => ({
-    ...error,
-    fix:
-      error.title.includes('抬腰')
-        ? '起槓前先把胸口抬到肩膀略在槓鈴前方，臀部自然會停在較低的位置。'
-        : error.title.includes('仰頭')
-          ? '視線固定在前下方約 2 公尺的地面，讓頸椎跟著胸椎走。'
-          : '降低重量，先確認背部能在全程維持中立，再逐步加回負荷。',
-  })),
-  comparison: {
-    image: techniqueImage,
-    imageAlt: '硬舉正確姿勢：脊柱中立、槓鈴貼近身體',
-    correctTitle: '脊柱中立・槓鈴貼腿・肩髖同步',
-    correctSummary: '力量平均分散，後側動力鏈有效參與。',
-    wrongTitle: '圓背・預先抬腰・仰頭',
-    wrongSummary: '剪切力集中在下背，椎間盤風險升高。',
-    wrongPoints: ['起始時臀部先抬高', '拉起過程仰頭', '頂峰腰椎過度後仰'],
-    spineDiagram: true,
-  },
+  errors: [
+    {
+      title: '錯誤一：預先抬腰',
+      summary: '臀部過早拉高，腿部肌群脫離發力位置，壓力瞬間轉到下背。',
+      harms: ['豎脊肌承受過大的張力。', '下背的剪力增加。', '下肢沒有參與，變成彎腰拉重量。'],
+      fix: '起槓前先把胸口抬到肩膀略在槓鈴前方，臀部自然會停在較低的位置。',
+    },
+    {
+      title: '錯誤二：頭部過度仰伸',
+      summary: '仰頭會破壞脊柱的中立排列，也讓核心的張力傳導中斷。',
+      harms: ['頸椎後側關節被壓迫。', '背闊肌的鎖定效果變差。', '視線離開前下方，頸椎與胸椎失去中立。'],
+      fix: '視線固定在前下方約 2 公尺的地面，讓頸椎跟著胸椎走。',
+    },
+    {
+      title: '錯誤三：圓背',
+      summary: '背部彎曲又同時拉起重物，脊柱後側的韌帶被拉到極限。',
+      harms: ['肌肉無法維持結構剛性。', '腰椎間盤承受反覆剪力。', '長期提高腰椎間盤突出的風險。'],
+      fix: '降低重量，先確認背部能在全程維持中立，再逐步加回負荷。',
+    },
+    {
+      title: '錯誤四：槓鈴遠離身體',
+      summary: '槓鈴往前飄，下背的力臂變長，力矩跟著放大。',
+      harms: ['下背負荷明顯上升。', '重心前移，容易失去平衡。'],
+      fix: '起槓前夾緊背闊肌，讓槓鈴全程貼著小腿與大腿上升。',
+    },
+  ],
   checklist: {
-    do: DEADLIFT_DO,
-    dont: DEADLIFT_DONT,
+    do: [
+      '槓鈴全程貼緊下肢移動。',
+      '起槓前先建立腹壓。',
+      '視線維持前下方約 2 公尺。',
+      '肩膀與髖部同步上升。',
+      '頂點站直夾臀，不後仰。',
+    ],
+    dont: [
+      '起動時先抬高臀部代償。',
+      '拉起過程中仰頭。',
+      '頂點鎖定時腰椎過度後仰。',
+      '圓背、駝背或讓槓鈴遠離身體。',
+      '用猛拉或彈震的方式起槓。',
+    ],
   },
-  safety: SAFETY_NOTES,
-  credits: IMAGE_CREDITS,
+  safety: [
+    '初學者先以空槓或輕重量練習，確認動作模式後再逐步加重量。',
+    '有下背、心血管、關節或血壓相關問題，先諮詢醫師或合格指導者。',
+    '憋氣用力會短暫提高腹壓與血壓，不適時立即停止。',
+    '本內容為一般運動知識，不能取代醫療建議。',
+  ],
+  nextStep: {
+    title: '下一步：換六角槓',
+    detail: '六角槓讓重量更靠近身體，髖與膝的力矩都比傳統硬舉小，適合剛學會髖鉸鏈的人。',
+  },
+  sources: ['ratamess2009', 'hackett2013', 'swinton2011', 'bengtsson2018'],
 };
 
 const LOCOMOTION_ARTICLE: PatternArticle = {
@@ -965,21 +1118,22 @@ const LOCOMOTION_ARTICLE: PatternArticle = {
   englishTitle: 'Locomotion',
   subtitle: '步態、落地緩衝與單腳穩定的基礎',
   intro:
-    '移動是日常最常發生的動作模式：走路、快走、慢跑。步態分成支撐期與擺盪期，落地緩衝與單腳穩定決定膝蓋與足底要承受多少負擔。把走路走好，是最划算的訓練。',
+    '移動是日常最常發生的動作模式：走路、快走、慢跑。步態分成支撐期與擺盪期，落地緩衝與單腳穩定決定膝蓋與足底要承受多少負擔。',
   accent: {
     icon: 'bg-rose-50 text-rose-700',
     badge: 'bg-rose-100 text-rose-800',
   },
+  why: '走路是每天都會發生、也最容易持續的運動。把步頻與落地品質顧好，膝蓋與足底才不會提早抗議。',
+  principle: [
+    '走路分成支撐期（單腳承重）與擺盪期（另一腳往前）。問題通常出在支撐期。',
+    '步頻比步幅重要。跨大步會讓腳跟變成煞車，衝擊往上傳到膝蓋與下背。',
+    '單腳支撐時骨盆要保持水平，靠的是臀部外側的臀中肌。',
+    '落地緩衝靠膝蓋微彎與足弓，不是靠鞋底的厚度。',
+  ],
   anatomy: {
     headline: '移動的肌肉分工',
     summary:
       '臀大肌與小腿負責推進，股四頭肌承接體重，臀中肌在單腳支撐時固定骨盆。核心與豎脊肌不直接產生位移，但沒有它們，每一步的力量都會漏掉一部分。',
-    kinesiology: [
-      '支撐期：腳跟著地 → 足弓吸震 → 重心通過足中 → 前腳掌推離。',
-      '擺盪期：髖屈曲帶腿向前，膝屈曲縮短擺長避免絆到地面。',
-      '步頻比步幅更重要；跨大步會形成煞車力，往上傳到膝蓋與下背。',
-      '單腳支撐時骨盆保持水平，是臀中肌最重要的工作。',
-    ],
     muscles: [
       {
         id: 'gluteal',
@@ -1045,8 +1199,6 @@ const LOCOMOTION_ARTICLE: PatternArticle = {
         note: '維持腰椎中立，避免走路時塌腰。',
       },
     ],
-    whyWorth:
-      '走路是最容易持續的運動。與其追求一次走很久，不如每天走一點，並且把步頻與落地品質顧好，膝蓋與足底才不會提早抗議。',
   },
   technique: {
     startCues: [
@@ -1106,9 +1258,19 @@ const LOCOMOTION_ARTICLE: PatternArticle = {
         ],
       },
     ],
-    coachNote:
-      '走路時可以默數步頻。多數人加快步頻後，跨大步與腳跟重落地的問題會自然減少，膝蓋也比較舒服。',
+    note: '走路時可以默數步頻。多數人加快步頻後，跨大步與腳跟重落地的問題會自然減少，膝蓋也比較舒服。',
   },
+  feeling: [
+    '腳步聲小，落地輕。',
+    '單腳支撐時骨盆保持水平，不會左右晃。',
+    '還能說出完整句子，代表強度在中等地帶。',
+    '小腿沒有先緊繃，臀部有微微出力。',
+  ],
+  dose: [
+    { label: '每週總量', value: '150 分鐘', hint: '中等強度；或 75 分鐘高強度' },
+    { label: '單次時間', value: '10 分鐘以上', hint: '分段累計也有效，不必一次走完' },
+    { label: '每日步數', value: '7,000–8,000 步', hint: '8,000 步相較 4,000 步，全因死亡率低約一半' },
+  ],
   levels: [
     {
       level: 'L1',
@@ -1184,11 +1346,16 @@ const LOCOMOTION_ARTICLE: PatternArticle = {
     ],
   },
   safety: [
-    '步行或跑步時出現胸悶、頭暈或膝蓋刺痛，請立即停止。',
+    '步行或跑步時出現胸悶、頭暈或膝蓋刺痛，立即停止。',
     '足底筋膜炎、膝關節或髖關節疼痛期間，先降低時間與強度。',
     '戶外步行請選擇安全路線，夜間穿著反光衣物。',
-    '本內容為運動知識參考，不能取代現場教練指導或醫療建議。',
+    '本內容為一般運動知識，不能取代醫療建議。',
   ],
+  nextStep: {
+    title: '下一步：把快走排進每天',
+    detail: '每天 10 分鐘快走，一週就有 70 分鐘。剩下 80 分鐘用週末補，比一次走很久更容易持續。',
+  },
+  sources: ['hhs2018', 'saintmaurice2020', 'tudorlocke2004', 'heiderscheit2011'],
 };
 
 export const PATTERN_ARTICLES: Record<KnowledgePatternId, PatternArticle> = {

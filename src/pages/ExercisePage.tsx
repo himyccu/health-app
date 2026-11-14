@@ -251,7 +251,7 @@ export function ExercisePage({
               />
             </div>
             <p className="mt-3 text-[13px] leading-6 text-slate-500">
-              點字卡可看解剖圖、動作分解、五級進階訓練與常見錯誤。
+              點字卡可看肌肉圖、白話原理、步驟、劑量與常見錯誤。
             </p>
           </section>
 

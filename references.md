@@ -28,6 +28,46 @@
 | 柔軟度訓練頻率與時間 | American College of Sports Medicine. *ACSM's Guidelines for Exercise Testing and Prescription*. 11th ed. Wolters Kluwer; 2018. (US) |
 | 成人身體活動量 | U.S. Department of Health and Human Services. *Physical Activity Guidelines for Americans*. 2nd ed. 2018. https://health.gov/our-work/nutrition-physical-activity/physical-activity-guidelines (US) |
 
+## 三、推（push）
+
+| 用途 | 文獻 |
+|---|---|
+| 阻力訓練劑量：8–12 下、2–3 組、組間 2–3 分鐘、每週 2–3 次 | American College of Sports Medicine. American College of Sports Medicine position stand. Progression models in resistance training for healthy adults. *Medicine and Science in Sports and Exercise*. 2009;41(3):687-708. doi:10.1249/MSS.0b013e3181915670. PMID 19204579. (US) |
+| 伏地挺身手掌位置改變肌肉參與 | Cogley RM, Archambault TA, Fibeger JF, Koverman MM, Youdas JW, Hollman JH. Comparison of muscle activation using various hand positions during the push-up exercise. *Journal of Strength and Conditioning Research*. 2005;19(3):628-633. doi:10.1519/15094.1. PMID 16095413. (US) |
+| 肩胛骨控制與肩關節空間 | Kibler WB, Sciascia A. Current concepts: scapular dyskinesis. *British Journal of Sports Medicine*. 2010;44(5):300-305. doi:10.1136/bjsm.2009.058834. PMID 19996329. (US) |
+
+## 四、拉（pull）
+
+| 用途 | 文獻 |
+|---|---|
+| 滑輪下拉的握距與前臂方向 | Lusk SJ, Hale BD, Russell DM. Grip width and forearm orientation effects on muscle activity during the lat pull-down. *Journal of Strength and Conditioning Research*. 2010;24(7):1895-1900. doi:10.1519/JSC.0b013e3181ddb0ab. PMID 20543740. (US) |
+| 引體向上與反握引體的肌肉參與 | Youdas JW, Amundson CL, Cicero KS, Hahn JJ, Harezlak DT, Hollman JH. Surface electromyographic activation patterns and elbow joint motion during a pull-up, chin-up, or perfect-pullup rotational exercise. *Journal of Strength and Conditioning Research*. 2010;24(12):3404-3414. doi:10.1519/JSC.0b013e3181f1598c. PMID 21068680. (US) |
+
+## 五、蹲（squat）
+
+| 用途 | 文獻 |
+|---|---|
+| 蹲的運動學與動力學 | Schoenfeld BJ. Squatting kinematics and kinetics and their application to exercise performance. *Journal of Strength and Conditioning Research*. 2010;24(12):3497-3506. doi:10.1519/JSC.0b013e3181bac2d7. PMID 20182386. (US) |
+| 蹲深與膝、腰椎負荷 | Hartmann H, Wirth K, Klusemann M. Analysis of the load on the knee joint and vertebral column with changes in squatting depth and weight load. *Sports Medicine*. 2013;43(10):993-1008. doi:10.1007/s40279-013-0073-6. PMID 23821469. (DE) |
+| 限制膝蓋不能超過腳尖的影響 | Fry AC, Smith JC, Schilling BK. Effect of knee position on hip and knee torques during the barbell squat. *Journal of Strength and Conditioning Research*. 2003;17(4):629-633. doi:10.1519/1533-4287(2003)017<0629:EOKPOH>2.0.CO;2. PMID 14636100. (US) |
+| 蹲深與臀大肌參與 | Caterisano A, Moss RF, Pellinger TK, Woodruff K, Lewis VC, Booth W, Khadra T. The effect of back squat depth on the EMG activity of 4 superficial hip and thigh muscles. *Journal of Strength and Conditioning Research*. 2002;16(3):428-432. PMID 12173958. (US) |
+
+## 六、髖（hinge / deadlift）
+
+| 用途 | 文獻 |
+|---|---|
+| 憋氣用力與腹內壓、血壓 | Hackett DA, Chow CM. The Valsalva maneuver: its effect on intra-abdominal pressure and safety issues during resistance exercise. *Journal of Strength and Conditioning Research*. 2013;27(8):2338-2345. doi:10.1519/JSC.0b013e31827de07d. PMID 23222073. (AU) |
+| 傳統硬舉與六角槓硬舉的力矩比較 | Swinton PA, Stewart A, Agouris I, Keogh JW, Lloyd R. A biomechanical analysis of straight and hexagonal barbell deadlifts using submaximal loads. *Journal of Strength and Conditioning Research*. 2011;25(7):2000-2009. doi:10.1519/JSC.0b013e3181e73f87. PMID 21659894. (GB) |
+| 健力傷害部位與負荷管理 | Bengtsson V, Berglund L, Aasa U. Narrative review of injuries in powerlifting with special reference to their association to the squat, bench press and deadlift. *BMJ Open Sport & Exercise Medicine*. 2018;4(1):e000382. doi:10.1136/bmjsem-2018-000382. PMID 30057777. (SE) |
+
+## 七、移動（locomotion）
+
+| 用途 | 文獻 |
+|---|---|
+| 每日步數與全因死亡率 | Saint-Maurice PF, Troiano RP, Bassett DR Jr, Graubard BI, Carlson SA, Shiroma EJ, Fulton JE, Matthews CE. Association of Daily Step Count and Step Intensity With Mortality Among US Adults. *JAMA*. 2020;323(12):1151-1160. doi:10.1001/jama.2020.1382. PMID 32207799. (US) |
+| 每日步數分級 | Tudor-Locke C, Bassett DR Jr. How many steps/day are enough? Preliminary pedometer indices for public health. *Sports Medicine*. 2004;34(1):1-8. doi:10.2165/00007256-200434010-00001. PMID 14715035. (US) |
+| 步頻提高 5–10% 對關節負荷的影響 | Heiderscheit BC, Chumanov ES, Michalski MP, Wille CM, Ryan MB. Effects of step rate manipulation on joint mechanics during running. *Medicine and Science in Sports and Exercise*. 2011;43(2):296-302. doi:10.1249/MSS.0b013e3181ebedf4. PMID 20581720. (US) |
+
 ---
 
 ## 撰寫規則
