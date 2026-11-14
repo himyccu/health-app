@@ -93,6 +93,21 @@ const ROUTES = [
     url: `${BASE_URL}/?tab=exercise`,
     click: ['高爾夫', '資料來源'],
   },
+  {
+    name: '運動-高爾夫-上桿',
+    url: `${BASE_URL}/?tab=exercise`,
+    click: ['高爾夫', '上桿：髖轉一點，胸廓轉更多'],
+  },
+  {
+    name: '運動-高爾夫-下桿',
+    url: `${BASE_URL}/?tab=exercise`,
+    click: ['高爾夫', '下桿：下半身先動，手最後到'],
+  },
+  {
+    name: '運動-高爾夫-收桿',
+    url: `${BASE_URL}/?tab=exercise`,
+    click: ['高爾夫', '收桿：煞車，不是擺姿勢'],
+  },
   { name: '健康', url: `${BASE_URL}/?tab=health` },
   { name: '身體組成', url: `${BASE_URL}/?tab=health`, click: '查看身體組成判讀' },
   {

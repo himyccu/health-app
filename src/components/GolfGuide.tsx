@@ -23,6 +23,9 @@ import { ClubChart } from './golf/ClubChart';
 import { GripDiagram } from './golf/GripDiagram';
 import { SetupDiagram } from './golf/SetupDiagram';
 import { AimDiagram } from './golf/AimDiagram';
+import { TorsoRotation3D } from './golf/TorsoRotation3D';
+import { ForearmRotation } from './golf/ForearmRotation';
+import { SwingSequence } from './golf/SwingSequence';
 import { SourceChips, SourcePanel } from './SourceList';
 
 interface GolfGuideProps {
@@ -61,6 +64,37 @@ const VISUALS: Record<
       '目標。站在球的正後方先看目標。',
       '球與目標之間的中間點，桿面對準這裡。',
       '球與桿面。7 號鐵的球位在雙腳中央略前。',
+    ],
+  },
+  torso: {
+    render: () => <TorsoRotation3D />,
+    caption: '三層樓：骨盆、腰椎、胸廓',
+    note: '由下往上看：腰椎能轉的角度最小，主要旋轉來自髖關節與胸椎。',
+    legend: [
+      '胸廓（上層）：轉得最多，是上桿主要的旋轉來源。',
+      '腰椎（中層）：每一節約 2 度，整段大約 10–13 度；不是「轉腰」的部位。',
+      '骨盆（下層）：轉一點，方向與胸廓相反，兩者的差距就是分離。',
+    ],
+  },
+  forearm: {
+    render: () => <ForearmRotation />,
+    caption: '前臂旋轉：旋後與旋前',
+    note: '前臂的兩根骨頭（橈骨、尺骨）平行或交叉，手掌與桿面就跟著轉。',
+    legend: [
+      '旋後：掌心轉向上，橈骨與尺骨平行；左前臂在下桿時轉到這個位置。',
+      '旋前：掌心轉向下，橈骨跨過尺骨；右前臂在下桿時轉到這個位置。',
+      '常聽到的「轉手腕」是在描述這個感覺，真正在轉的是前臂，不是手腕。',
+    ],
+  },
+  swing: {
+    render: () => <SwingSequence />,
+    caption: '四個位置：起桿、頂點、擊球、收桿',
+    note: '四張圖都是側面、右打者。看肩膀位置、雙手高度與球桿角度怎麼變。',
+    legend: [
+      '起桿：球桿沿目標線後移，重心大致不變。',
+      '頂點：雙手到右肩高度，球桿在身後。',
+      '擊球：重心到前腳，手的位置超過球。',
+      '收桿：重心完全在前腳，球桿繞到左肩後方。',
     ],
   },
 };
@@ -215,6 +249,8 @@ function ChapterCard({ chapter, defaultOpen }: { chapter: GolfChapter; defaultOp
 export function GolfGuide({ minutes, onBack }: GolfGuideProps) {
   const usedIds = [...new Set<SourceId>(GOLF_CHAPTERS.flatMap((chapter) => chapter.sources))];
   const [intro, ...rest] = GOLF_CHAPTERS;
+  const basics = rest.filter((chapter) => ['1', '2', '3'].includes(chapter.number));
+  const swing = rest.filter((chapter) => ['4', '5', '6'].includes(chapter.number));
 
   return (
     <div className="animate-fade-up">
@@ -287,11 +323,22 @@ export function GolfGuide({ minutes, onBack }: GolfGuideProps) {
 
       <div className="mt-4 flex items-center justify-between gap-2">
         <h3 className="text-[16px] font-black text-slate-900">第 1–3 章 · 動作基礎</h3>
-        <span className="shrink-0 text-[13px] font-bold text-slate-400">{rest.length} 章</span>
+        <span className="shrink-0 text-[13px] font-bold text-slate-400">{basics.length} 章</span>
       </div>
 
       <div className="mt-2 space-y-2">
-        {rest.map((chapter) => (
+        {basics.map((chapter) => (
+          <ChapterCard key={chapter.id} chapter={chapter} defaultOpen={false} />
+        ))}
+      </div>
+
+      <div className="mt-4 flex items-center justify-between gap-2">
+        <h3 className="text-[16px] font-black text-slate-900">第 4–6 章 · 揮桿</h3>
+        <span className="shrink-0 text-[13px] font-bold text-slate-400">{swing.length} 章</span>
+      </div>
+
+      <div className="mt-2 space-y-2">
+        {swing.map((chapter) => (
           <ChapterCard key={chapter.id} chapter={chapter} defaultOpen={false} />
         ))}
       </div>
