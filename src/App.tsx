@@ -49,9 +49,11 @@ export default function App() {
   const [activeTab, setActiveTab] = useState<TabId>(() => getInitialTab());
   const [exerciseEntry, setExerciseEntry] = useState<{
     view: 'main' | 'article' | 'guide';
+    tab: 'log' | 'teach';
     articleId: KnowledgePatternId | null;
     guideId: GuideId | null;
-  }>({ view: 'main', articleId: null, guideId: null });
+  }>({ view: 'main', tab: 'log', articleId: null, guideId: null });
+  const [exerciseNonce, setExerciseNonce] = useState(0);
   const [profile, setProfile] = useState<Profile>(() => bootstrap.profile);
   const [disclaimerAccepted, setDisclaimerAccepted] = useState(() => bootstrap.accepted);
   const [disclaimerOpen, setDisclaimerOpen] = useState(() => !bootstrap.accepted);
@@ -115,22 +117,26 @@ export default function App() {
   }, []);
 
   const handleTabChange = useCallback((tab: TabId) => {
-    if (tab === 'exercise') setExerciseEntry({ view: 'main', articleId: null, guideId: null });
+    if (tab === 'exercise') {
+      setExerciseEntry({ view: 'main', tab: 'log', articleId: null, guideId: null });
+      // 再次點底部「運動」時回到清單最上層，不停在動作說明頁
+      setExerciseNonce((value) => value + 1);
+    }
     setActiveTab(tab);
   }, []);
 
   const handleOpenBasics = useCallback(() => {
-    setExerciseEntry({ view: 'main', articleId: null, guideId: null });
+    setExerciseEntry({ view: 'main', tab: 'teach', articleId: null, guideId: null });
     setActiveTab('exercise');
   }, []);
 
   const handleOpenGuide = useCallback((guideId: GuideId) => {
-    setExerciseEntry({ view: 'guide', articleId: null, guideId });
+    setExerciseEntry({ view: 'guide', tab: 'teach', articleId: null, guideId });
     setActiveTab('exercise');
   }, []);
 
   const handleOpenArticle = useCallback((articleId: KnowledgePatternId) => {
-    setExerciseEntry({ view: 'article', articleId, guideId: null });
+    setExerciseEntry({ view: 'article', tab: 'teach', articleId, guideId: null });
     setActiveTab('exercise');
   }, []);
 
@@ -171,9 +177,10 @@ export default function App() {
           )}
           {activeTab === 'exercise' && (
             <ExercisePage
-              key={`${exerciseEntry.view}-${exerciseEntry.articleId ?? 'none'}-${exerciseEntry.guideId ?? 'none'}`}
+              key={`${exerciseNonce}-${exerciseEntry.view}-${exerciseEntry.tab}-${exerciseEntry.articleId ?? 'none'}-${exerciseEntry.guideId ?? 'none'}`}
               profile={profile}
               initialView={exerciseEntry.view}
+              initialTab={exerciseEntry.tab}
               initialArticleId={exerciseEntry.articleId}
               initialGuideId={exerciseEntry.guideId}
               onNotify={notify}

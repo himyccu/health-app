@@ -236,7 +236,7 @@ export function InBodyPage({ profile, onBack, onGoHome, onNotify, onOpenGuide }:
       {editing ? (
         <div className="space-y-4">
           <section className="rounded-[28px] border border-plum-100 bg-white p-5 shadow-sm shadow-plum-900/5">
-            <SectionHeading icon={Plus} title="① 基本資料" subtitle="六項必填" />
+            <SectionHeading icon={Plus} title="基本資料" subtitle="六項必填" />
 
             <label className="mt-4 block">
               <span className="text-[13px] font-bold text-slate-500">量測日期</span>
@@ -287,7 +287,7 @@ export function InBodyPage({ profile, onBack, onGoHome, onNotify, onOpenGuide }:
           </section>
 
           <section className="rounded-[28px] border border-plum-100 bg-white p-5 shadow-sm shadow-plum-900/5">
-            <SectionHeading icon={Plus} title="② 節段肌肉" subtitle="選填，填了才能算 SMI" />
+            <SectionHeading icon={Plus} title="節段肌肉" subtitle="選填，填了才能算 SMI" />
             <div className="mt-4 grid grid-cols-2 gap-3">
               {MUSCLE_FIELDS.map((field) => (
                 <label key={field.key} className="min-w-0">
@@ -310,7 +310,7 @@ export function InBodyPage({ profile, onBack, onGoHome, onNotify, onOpenGuide }:
           </section>
 
           <section className="rounded-[28px] border border-plum-100 bg-white p-5 shadow-sm shadow-plum-900/5">
-            <SectionHeading icon={Plus} title="③ 節段脂肪" subtitle="選填" />
+            <SectionHeading icon={Plus} title="節段脂肪" subtitle="選填" />
             <div className="mt-4 grid grid-cols-2 gap-3">
               {FAT_FIELDS.map((field) => (
                 <label key={field.key} className="min-w-0">
@@ -333,7 +333,7 @@ export function InBodyPage({ profile, onBack, onGoHome, onNotify, onOpenGuide }:
           </section>
 
           <section className="rounded-[28px] border border-plum-100 bg-white p-5 shadow-sm shadow-plum-900/5">
-            <SectionHeading icon={Sparkles} title="④ 進階數據" subtitle="選填，沒有就留空" />
+            <SectionHeading icon={Sparkles} title="進階數據" subtitle="選填，沒有就留空" />
             <div className="mt-4 grid grid-cols-2 gap-3">
               {ADVANCED_FIELDS.map((field) => (
                 <label key={field.key} className="min-w-0">

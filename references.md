@@ -27,6 +27,7 @@
 |---|---|
 | 柔軟度訓練頻率與時間 | American College of Sports Medicine. *ACSM's Guidelines for Exercise Testing and Prescription*. 11th ed. Wolters Kluwer; 2018. (US) |
 | 成人身體活動量 | U.S. Department of Health and Human Services. *Physical Activity Guidelines for Americans*. 2nd ed. 2018. https://health.gov/our-work/nutrition-physical-activity/physical-activity-guidelines (US) |
+| 各項運動的 MET 值 | Ainsworth BE, Haskell WL, Herrmann SD, Meckes N, Bassett DR Jr, Tudor-Locke C, Greer JL, Vezina J, Whitt-Glover MC, Leon AS. 2011 Compendium of Physical Activities: a second update of codes and MET values. *Medicine and Science in Sports and Exercise*. 2011;43(8):1575-1581. doi:10.1249/MSS.0b013e31821ece12. PMID 21681120. (US) |
 
 ## 三、推（push）
 

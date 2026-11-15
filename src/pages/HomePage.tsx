@@ -16,6 +16,7 @@ import type { Profile, TabId } from '../types';
 import { getStepMetrics, isProfileComplete } from '../lib/health';
 import { dateKey, loadSteps, loadWorkouts } from '../lib/storage';
 import { SectionHeading } from '../components/SectionHeading';
+import { GuideRow } from '../components/GuideRow';
 import { InstallPrompt } from '../components/InstallPrompt';
 import dogPhoto from '../assets/dog.png';
 
@@ -47,31 +48,19 @@ const SETUP_STEPS = [
   },
 ];
 
-// 首頁的學習順序：暖身 → 安全 → 動作。編號固定，不可打亂。
+// 首頁的閱讀順序：暖身 → 安全。基礎動作已由上方大按鈕進入。
 const START_HERE = [
   {
     id: 'warmup' as const,
-    step: '1',
     icon: Wind,
     title: '暖身與筋膜放鬆',
     description: '運動前 5 分鐘的動態暖身與滾筒放鬆。',
-    action: '閱讀',
   },
   {
     id: 'safety' as const,
-    step: '2',
     icon: ShieldCheck,
     title: '運動安全',
     description: '疼痛警訊、呼吸方式與負荷原則。',
-    action: '閱讀',
-  },
-  {
-    id: 'basics' as const,
-    step: '3',
-    icon: BookOpen,
-    title: '基礎動作',
-    description: '推、拉、蹲、髖、移動五種動作模式。',
-    action: '查看',
   },
 ];
 
@@ -158,11 +147,6 @@ export function HomePage({
   const weekCalories = weekWalkingCalories + weekTrainingCalories;
 
   const chartMax = Math.max(...week.map((day) => day.steps), snapshot.steps.goal, 1);
-
-  const handleStartHere = (id: 'warmup' | 'safety' | 'basics') => {
-    if (id === 'basics') onOpenBasics();
-    else onOpenGuide(id);
-  };
 
   return (
     <div>
@@ -293,38 +277,20 @@ export function HomePage({
         <SectionHeading
           icon={ShieldCheck}
           title="開始之前"
-          subtitle="依照編號順序，三到五分鐘讀完。"
+          subtitle="依序讀完約 8 分鐘。"
         />
 
         <div className="mt-4 space-y-2.5">
-          {START_HERE.map((item) => {
-            const Icon = item.icon;
-            return (
-              <button
-                key={item.id}
-                type="button"
-                onClick={() => handleStartHere(item.id)}
-                className="flex w-full items-center gap-3 rounded-2xl border border-slate-100 bg-white p-3.5 text-left transition hover:border-plum-200 hover:bg-plum-50/60 active:scale-[0.99]"
-              >
-                <span className="grid h-7 w-7 shrink-0 place-items-center rounded-full bg-plum-900 text-[13px] font-black text-amber-100">
-                  {item.step}
-                </span>
-                <span className="min-w-0 flex-1">
-                  <span className="flex items-center gap-1.5">
-                    <Icon className="h-4 w-4 shrink-0 text-plum-700" />
-                    <span className="text-[16px] font-black text-slate-900">{item.title}</span>
-                  </span>
-                  <span className="mt-1 block text-[13px] leading-6 text-slate-500">
-                    {item.description}
-                  </span>
-                </span>
-                <span className="flex shrink-0 items-center gap-0.5 text-[13px] font-black text-plum-700">
-                  {item.action}
-                  <ChevronRight className="h-4 w-4" />
-                </span>
-              </button>
-            );
-          })}
+          {START_HERE.map((item) => (
+            <GuideRow
+              key={item.id}
+              icon={item.icon}
+              title={item.title}
+              description={item.description}
+              meta="閱讀"
+              onClick={() => onOpenGuide(item.id)}
+            />
+          ))}
         </div>
       </section>
 

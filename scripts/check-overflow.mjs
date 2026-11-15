@@ -40,93 +40,126 @@ const ROUTES = [
   { name: '首頁', url: `${BASE_URL}/?tab=home` },
   { name: '動能', url: `${BASE_URL}/?tab=activity` },
   { name: '運動', url: `${BASE_URL}/?tab=exercise` },
-  { name: '運動-暖身', url: `${BASE_URL}/?tab=exercise`, click: '暖身與筋膜放鬆' },
-  { name: '運動-安全', url: `${BASE_URL}/?tab=exercise`, click: '運動安全' },
-  { name: '運動-滾筒', url: `${BASE_URL}/?tab=exercise`, click: '滾筒放鬆' },
+  { name: '運動-教學', url: `${BASE_URL}/?tab=exercise`, click: '教學' },
+  {
+    name: '運動-暖身',
+    url: `${BASE_URL}/?tab=exercise`,
+    click: ['教學', '暖身與筋膜放鬆'],
+  },
+  { name: '運動-安全', url: `${BASE_URL}/?tab=exercise`, click: ['教學', '運動安全'] },
+  { name: '運動-滾筒', url: `${BASE_URL}/?tab=exercise`, click: ['教學', '滾筒放鬆'] },
   {
     name: '運動-滾筒-來源',
     url: `${BASE_URL}/?tab=exercise`,
-    click: ['滾筒放鬆', '資料來源'],
+    click: ['教學', '滾筒放鬆', '資料來源'],
   },
-  { name: '運動-動作文章', url: `${BASE_URL}/?tab=exercise`, clickAria: '推：' },
+  {
+    name: '運動-動作文章',
+    url: `${BASE_URL}/?tab=exercise`,
+    preClick: '教學',
+    clickAria: '推：',
+  },
   {
     name: '運動-動作文章-檢核',
     url: `${BASE_URL}/?tab=exercise`,
+    preClick: '教學',
     clickAria: '推：',
     click: ['檢核', '資料來源'],
   },
-  { name: '運動-拉', url: `${BASE_URL}/?tab=exercise`, clickAria: '拉：' },
-  { name: '運動-蹲', url: `${BASE_URL}/?tab=exercise`, clickAria: '蹲：' },
-  { name: '運動-髖', url: `${BASE_URL}/?tab=exercise`, clickAria: '髖：' },
-  { name: '運動-移動', url: `${BASE_URL}/?tab=exercise`, clickAria: '移動：' },
-  { name: '運動-伸展', url: `${BASE_URL}/?tab=exercise`, click: '靜態伸展' },
+  {
+    name: '運動-拉',
+    url: `${BASE_URL}/?tab=exercise`,
+    preClick: '教學',
+    clickAria: '拉：',
+  },
+  {
+    name: '運動-蹲',
+    url: `${BASE_URL}/?tab=exercise`,
+    preClick: '教學',
+    clickAria: '蹲：',
+  },
+  {
+    name: '運動-髖',
+    url: `${BASE_URL}/?tab=exercise`,
+    preClick: '教學',
+    clickAria: '髖：',
+  },
+  {
+    name: '運動-移動',
+    url: `${BASE_URL}/?tab=exercise`,
+    preClick: '教學',
+    clickAria: '移動：',
+  },
+  { name: '運動-伸展', url: `${BASE_URL}/?tab=exercise`, click: ['教學', '靜態伸展'] },
   {
     name: '運動-伸展-展開',
     url: `${BASE_URL}/?tab=exercise`,
-    click: ['靜態伸展', '小腿後側伸展'],
+    click: ['教學', '靜態伸展', '小腿後側伸展'],
   },
   {
     name: '運動-伸展-來源',
     url: `${BASE_URL}/?tab=exercise`,
-    click: ['靜態伸展', '資料來源'],
+    click: ['教學', '靜態伸展', '資料來源'],
   },
-  { name: '運動-瑜伽', url: `${BASE_URL}/?tab=exercise`, click: '瑜伽' },
-  { name: '運動-瑜伽-展開', url: `${BASE_URL}/?tab=exercise`, click: ['瑜伽', '下犬式'] },
-  { name: '運動-高爾夫', url: `${BASE_URL}/?tab=exercise`, click: '高爾夫' },
+  { name: '運動-瑜伽', url: `${BASE_URL}/?tab=exercise`, click: ['教學', '瑜伽'] },
+  { name: '運動-瑜伽-展開', url: `${BASE_URL}/?tab=exercise`, click: ['教學', '瑜伽', '下犬式'] },
+  { name: '運動-深蹲', url: `${BASE_URL}/?tab=exercise`, click: '深蹲' },
+  { name: '運動-桌球', url: `${BASE_URL}/?tab=exercise`, click: '桌球' },
+  { name: '運動-高爾夫', url: `${BASE_URL}/?tab=exercise`, click: ['高爾夫（練習場）', '學習指南'] },
   {
     name: '運動-高爾夫-握桿',
     url: `${BASE_URL}/?tab=exercise`,
-    click: ['高爾夫', '握桿：左手是方向盤'],
+    click: ['高爾夫（練習場）', '學習指南', '握桿：左手是方向盤'],
   },
   {
     name: '運動-高爾夫-站姿',
     url: `${BASE_URL}/?tab=exercise`,
-    click: ['高爾夫', '站姿：髖往後，不是彎腰'],
+    click: ['高爾夫（練習場）', '學習指南', '站姿：髖往後，不是彎腰'],
   },
   {
     name: '運動-高爾夫-瞄準',
     url: `${BASE_URL}/?tab=exercise`,
-    click: ['高爾夫', '瞄準：桿面先說實話'],
+    click: ['高爾夫（練習場）', '學習指南', '瞄準：桿面先說實話'],
   },
   {
     name: '運動-高爾夫-來源',
     url: `${BASE_URL}/?tab=exercise`,
-    click: ['高爾夫', '資料來源'],
+    click: ['高爾夫（練習場）', '學習指南', '資料來源'],
   },
   {
     name: '運動-高爾夫-上桿',
     url: `${BASE_URL}/?tab=exercise`,
-    click: ['高爾夫', '上桿：髖轉一點，胸廓轉更多'],
+    click: ['高爾夫（練習場）', '學習指南', '上桿：髖轉一點，胸廓轉更多'],
   },
   {
     name: '運動-高爾夫-下桿',
     url: `${BASE_URL}/?tab=exercise`,
-    click: ['高爾夫', '下桿：下半身先動，手最後到'],
+    click: ['高爾夫（練習場）', '學習指南', '下桿：下半身先動，手最後到'],
   },
   {
     name: '運動-高爾夫-收桿',
     url: `${BASE_URL}/?tab=exercise`,
-    click: ['高爾夫', '收桿：煞車，不是擺姿勢'],
+    click: ['高爾夫（練習場）', '學習指南', '收桿：煞車，不是擺姿勢'],
   },
   {
     name: '運動-高爾夫-短切推桿',
     url: `${BASE_URL}/?tab=exercise`,
-    click: ['高爾夫', '短切與推桿：分數在這裡'],
+    click: ['高爾夫（練習場）', '學習指南', '短切與推桿：分數在這裡'],
   },
   {
     name: '運動-高爾夫-練習計畫',
     url: `${BASE_URL}/?tab=exercise`,
-    click: ['高爾夫', '練習計畫：一次只練一件事'],
+    click: ['高爾夫（練習場）', '學習指南', '練習計畫：一次只練一件事'],
   },
   {
     name: '運動-高爾夫-附錄A',
     url: `${BASE_URL}/?tab=exercise`,
-    click: ['高爾夫', '附錄 A · 球桿怎麼選'],
+    click: ['高爾夫（練習場）', '學習指南', '附錄 A · 球桿怎麼選'],
   },
   {
     name: '運動-高爾夫-附錄B',
     url: `${BASE_URL}/?tab=exercise`,
-    click: ['高爾夫', '附錄 B · 球場與規則'],
+    click: ['高爾夫（練習場）', '學習指南', '附錄 B · 球場與規則'],
   },
   { name: '健康', url: `${BASE_URL}/?tab=health` },
   { name: '身體組成', url: `${BASE_URL}/?tab=health`, click: '查看身體組成判讀' },
@@ -277,6 +310,26 @@ async function main() {
       });
       await send('Page.navigate', { url: route.url });
       await sleep(1100);
+
+      // preClick 先切換頁內分頁（例如運動頁的「教學」），再進行 aria 點擊
+      if (route.preClick) {
+        const labels = Array.isArray(route.preClick) ? route.preClick : [route.preClick];
+        for (const label of labels) {
+          await evaluate(`(() => {
+            const label = ${JSON.stringify(label)};
+            const normalize = (text) => (text || '').replace(/\\s+/g, '');
+            const target = normalize(label);
+            const button = [...document.querySelectorAll('button')]
+              .find((node) => normalize(node.textContent).includes(target));
+            if (button) {
+              button.click();
+              return true;
+            }
+            return false;
+          })()`);
+          await sleep(700);
+        }
+      }
 
       // aria 點擊先執行（例如先開文章），文字點擊後執行（例如切換分頁）
       if (route.clickAria) {

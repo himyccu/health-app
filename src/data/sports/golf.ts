@@ -5,7 +5,7 @@ import type { SourceId } from '../sources';
  *
  * 撰寫原則：
  * 1. 動作先行、知識後置：先讓讀者拿一支 7 號鐵站好、握好、瞄好。
- * 2. 每一章固定五段：這是什麼／怎麼做／做錯會怎樣／怎麼檢查／注意。
+ * 2. 每一節固定五段：這是什麼／怎麼做／做錯會怎樣／怎麼檢查／注意。
  * 3. 教學法（例如「坐骨對著地」）一律標示為教學法，不寫成標準或事實。
  * 4. 數值與主張集中在 sources，畫面只留白話結論。
  */
@@ -22,7 +22,7 @@ export interface GolfMistake {
 
 export interface GolfChapter {
   id: string;
-  /** 章節編號，字串以保留「0」 */
+  /** 排序編號，字串以保留「0」；只用於分組，畫面不顯示 */
   number: string;
   title: string;
   englishTitle: string;
@@ -85,7 +85,7 @@ export const GOLF_START_CHECKLIST = [
   },
 ];
 
-/** 球桿分類，給第 0 章的球桿圖使用 */
+/** 球桿分類，給開頭的球桿圖使用 */
 export const GOLF_CLUBS = [
   {
     group: '木桿',

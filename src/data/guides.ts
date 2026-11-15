@@ -8,7 +8,14 @@
  * 3. 每個步驟都要能直接照著做。
  */
 
-export type GuideId = 'warmup' | 'safety' | 'foamRolling' | 'stretching' | 'yoga' | 'golf';
+export type GuideId =
+  | 'warmup'
+  | 'safety'
+  | 'foamRolling'
+  | 'stretching'
+  | 'yoga'
+  | 'golf'
+  | 'tennis';
 
 export interface GuidePoint {
   /** 粗體標題，例如「1. 原地踏步 2 分鐘」 */
@@ -182,9 +189,18 @@ export const GUIDES: Record<GuideId, Guide> = {
   golf: {
     id: 'golf',
     title: '高爾夫',
-    summary: '第 0–3 章：準備、握桿、站姿、瞄準。每次 20–30 顆球，先把方向做對。',
+    summary: '準備、握桿、站姿、瞄準、揮桿、短切推桿與練習。',
     minutes: 12,
     // 內容資料在 data/sports/golf.ts，畫面由 components/GolfGuide.tsx 負責。
+    sections: [],
+    sources: [],
+  },
+  tennis: {
+    id: 'tennis',
+    title: '網球',
+    summary: '球拍、握拍、準備姿勢、正反手、發球與肩肘預防。',
+    minutes: 12,
+    // 內容資料在 data/sports/tennis.ts，畫面由 components/TennisGuide.tsx 負責。
     sections: [],
     sources: [],
   },
@@ -200,4 +216,4 @@ export const EXERCISE_GUIDE_ORDER: GuideId[] = ['warmup', 'safety', 'foamRolling
 export const MOBILITY_GUIDE_ORDER: GuideId[] = ['stretching', 'yoga'];
 
 /** 運動頁「球類運動」區塊的順序 */
-export const SPORT_GUIDE_ORDER: GuideId[] = ['golf'];
+export const SPORT_GUIDE_ORDER: GuideId[] = ['golf', 'tennis'];

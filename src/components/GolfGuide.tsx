@@ -113,10 +113,6 @@ function ChapterCard({ chapter, defaultOpen }: { chapter: GolfChapter; defaultOp
         aria-expanded={open}
         className="flex w-full items-start gap-3 rounded-[24px] p-4 text-left transition hover:bg-plum-50/50 active:scale-[0.995]"
       >
-        <span className="grid h-9 w-9 shrink-0 place-items-center rounded-2xl bg-plum-900 text-[16px] font-black text-amber-100">
-          {chapter.number}
-        </span>
-
         <span className="min-w-0 flex-1">
           <span className="flex items-start justify-between gap-2">
             <span className="min-w-0">
@@ -362,7 +358,7 @@ export function GolfGuide({ minutes, onBack }: GolfGuideProps) {
       </section>
 
       <div className="mt-4 flex items-center justify-between gap-2">
-        <h3 className="text-[16px] font-black text-slate-900">第 0 章 · 先從這裡開始</h3>
+        <h3 className="text-[16px] font-black text-slate-900">先從這裡開始</h3>
         <span className="shrink-0 text-[13px] font-bold text-slate-400">一頁結論</span>
       </div>
 
@@ -384,8 +380,8 @@ export function GolfGuide({ minutes, onBack }: GolfGuideProps) {
       </section>
 
       <div className="mt-4 flex items-center justify-between gap-2">
-        <h3 className="text-[16px] font-black text-slate-900">第 1–3 章 · 動作基礎</h3>
-        <span className="shrink-0 text-[13px] font-bold text-slate-400">{basics.length} 章</span>
+        <h3 className="text-[16px] font-black text-slate-900">動作基礎</h3>
+        <span className="shrink-0 text-[13px] font-bold text-slate-400">{basics.length} 節</span>
       </div>
 
       <div className="mt-2 space-y-2">
@@ -395,8 +391,8 @@ export function GolfGuide({ minutes, onBack }: GolfGuideProps) {
       </div>
 
       <div className="mt-4 flex items-center justify-between gap-2">
-        <h3 className="text-[16px] font-black text-slate-900">第 4–6 章 · 揮桿</h3>
-        <span className="shrink-0 text-[13px] font-bold text-slate-400">{swing.length} 章</span>
+        <h3 className="text-[16px] font-black text-slate-900">揮桿</h3>
+        <span className="shrink-0 text-[13px] font-bold text-slate-400">{swing.length} 節</span>
       </div>
 
       <div className="mt-2 space-y-2">
@@ -406,8 +402,8 @@ export function GolfGuide({ minutes, onBack }: GolfGuideProps) {
       </div>
 
       <div className="mt-4 flex items-center justify-between gap-2">
-        <h3 className="text-[16px] font-black text-slate-900">第 7–8 章 · 得分與練習</h3>
-        <span className="shrink-0 text-[13px] font-bold text-slate-400">{scoring.length} 章</span>
+        <h3 className="text-[16px] font-black text-slate-900">得分與練習</h3>
+        <span className="shrink-0 text-[13px] font-bold text-slate-400">{scoring.length} 節</span>
       </div>
 
       <div className="mt-2 space-y-2">
