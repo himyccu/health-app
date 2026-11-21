@@ -359,7 +359,7 @@ export function SettingsPage({
             完整免責聲明
           </p>
           <p className="mt-2 text-[13px] font-medium leading-6 text-slate-700">
-            本應用程式所提供之健康資訊、營養建議及身體組成標準僅供參考，不能取代專業醫療診斷、建議或治療。在做出任何醫療決定前，務必要諮詢合格的醫療專業人員。
+            本應用程式所提供之健康資訊與營養建議僅供參考，不能取代專業醫療診斷、建議或治療。在做出任何醫療決定前，務必要諮詢合格的醫療專業人員。
           </p>
         </div>
 
@@ -399,6 +399,10 @@ export function SettingsPage({
           <li className="flex gap-2">
             <span className="mt-1.5 h-1.5 w-1.5 shrink-0 rounded-full bg-amber-500" />
             同一台裝置的不同瀏覽器、或不同裝置之間資料不會自動同步；清除瀏覽器資料後也無法復原。
+          </li>
+          <li className="flex gap-2">
+            <span className="mt-1.5 h-1.5 w-1.5 shrink-0 rounded-full bg-amber-500" />
+            加到手機主畫面的 App 與瀏覽器分頁，資料是分開儲存的，兩邊不會互通；請固定用其中一種方式記錄。
           </li>
         </ul>
 

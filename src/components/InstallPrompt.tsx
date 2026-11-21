@@ -110,6 +110,9 @@ export function InstallPrompt() {
               按鈕，選擇「加入主畫面」即可獲得獨立 App 體驗。
             </span>
           </p>
+          <p className="mt-2 text-[13px] leading-6 text-slate-500">
+            主畫面 App 與 Safari 分頁的資料分開儲存，兩邊不會互通。建議先加入主畫面，再開始記錄。
+          </p>
         </div>
       )}
 

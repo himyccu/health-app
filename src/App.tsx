@@ -167,14 +167,15 @@ export default function App() {
               onStartOnboarding={() => setOnboardingOpen(true)}
             />
           )}
-          {activeTab === 'activity' && (
+          {/* 步行記錄進行中不能被切換頁籤中斷，因此活動頁保持掛載，只切換顯示。 */}
+          <div className={activeTab === 'activity' ? undefined : 'hidden'}>
             <ActivityPage
               profile={profile}
               onNotify={notify}
               onOpenExercise={() => handleTabChange('exercise')}
               onGoHome={() => setActiveTab('home')}
             />
-          )}
+          </div>
           {activeTab === 'exercise' && (
             <ExercisePage
               key={`${exerciseNonce}-${exerciseEntry.view}-${exerciseEntry.tab}-${exerciseEntry.articleId ?? 'none'}-${exerciseEntry.guideId ?? 'none'}`}
@@ -191,8 +192,6 @@ export default function App() {
           {activeTab === 'health' && (
             <HealthPage
               profile={profile}
-              onNotify={notify}
-              onOpenGuide={handleOpenGuide}
               onOpenSettings={() => setActiveTab('settings')}
               onGoHome={() => setActiveTab('home')}
             />

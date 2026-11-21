@@ -91,7 +91,7 @@ export function DisclaimerModal({ open, required, onAccept, onClose }: Disclaime
             免責聲明
           </p>
           <p className="mt-2 text-[15px] font-medium leading-6 text-slate-700">
-            本應用程式所提供之健康資訊、營養建議及身體組成標準僅供參考，不能取代專業醫療診斷、建議或治療。在做出任何醫療決定前，務必要諮詢合格的醫療專業人員。
+            本應用程式所提供之健康資訊與營養建議僅供參考，不能取代專業醫療診斷、建議或治療。在做出任何醫療決定前，務必要諮詢合格的醫療專業人員。
           </p>
         </div>
 

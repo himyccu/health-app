@@ -42,11 +42,13 @@ function readJson(key: string): unknown {
   }
 }
 
-function writeJson(key: string, value: unknown): void {
+function writeJson(key: string, value: unknown): boolean {
   try {
     window.localStorage.setItem(key, JSON.stringify(value));
+    return true;
   } catch {
     // localStorage 可能因隱私模式或容量限制而無法寫入，維持目前畫面狀態即可。
+    return false;
   }
 }
 
@@ -147,8 +149,8 @@ export function loadSteps(): StepsData {
   };
 }
 
-export function saveSteps(data: StepsData): void {
-  writeJson(KEYS.steps, data);
+export function saveSteps(data: StepsData): boolean {
+  return writeJson(KEYS.steps, data);
 }
 
 function isFoodGroups(value: unknown): value is FoodGroups {
@@ -246,7 +248,7 @@ export function clearAllData(): void {
     [
       ...Object.values(KEYS),
       ...Object.values(LEGACY_KEYS),
-      // InBody 紀錄另外放在自己的模組，這裡一併清除。
+      // 舊版身體組成（InBody）資料已停止使用，一併清除不留殘檔。
       'health_app_inbody_v1',
     ].forEach((key) => window.localStorage.removeItem(key));
   } catch {

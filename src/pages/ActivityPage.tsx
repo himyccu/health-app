@@ -69,9 +69,9 @@ export function ActivityPage({ profile, onNotify, onOpenExercise, onGoHome }: Ac
   const circumference = 2 * Math.PI * radius;
   const dashOffset = circumference * (1 - ringProgress);
 
-  const commit = (next: StepsData) => {
+  const commit = (next: StepsData): boolean => {
     setData(next);
-    saveSteps(next);
+    return saveSteps(next);
   };
 
   const updateTodaySteps = (value: number) => {
@@ -139,7 +139,7 @@ export function ActivityPage({ profile, onNotify, onOpenExercise, onGoHome }: Ac
   const handleSaveWalk = (distanceKm: number, minutes: number, calories: number) => {
     const nextDistance =
       Math.round(((data.distanceKm[today] ?? 0) + distanceKm) * 100) / 100;
-    commit({
+    const saved = commit({
       ...data,
       distanceKm: { ...data.distanceKm, [today]: nextDistance },
       activeMinutes: { ...data.activeMinutes, [today]: activeMinutes + minutes },
@@ -158,6 +158,14 @@ export function ActivityPage({ profile, onNotify, onOpenExercise, onGoHome }: Ac
         calories,
       };
       saveWorkouts([...loadWorkouts(), entry]);
+    }
+
+    if (!saved) {
+      // 寫入失敗（例如無痕模式或儲存空間已滿）一定要講出來，不能讓紀錄無聲消失。
+      onNotify(
+        `步行 ${distanceKm.toFixed(2)} 公里、${minutes} 分鐘只顯示在畫面上，寫入手機儲存失敗，請確認瀏覽器未封鎖本機儲存空間。`,
+      );
+      return;
     }
 
     onNotify(`已記錄步行 ${distanceKm.toFixed(2)} 公里、${minutes} 分鐘`);
